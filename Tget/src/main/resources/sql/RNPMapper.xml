@@ -27,7 +27,7 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="InsertReview"		parameterType="review" >
 	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
+		INTO transaction( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
 		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
 							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
 	 </insert>
