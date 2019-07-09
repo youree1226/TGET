@@ -16,6 +16,8 @@
 		<result property="eventLocation" 			column="event_location" 		jdbcType="VARCHAR" />
 		<result property="eventDate" 				column="event_date" 					jdbcType="DATE" />
 		<result property="eventTime" 			column="event_time" 				jdbcType="VARCHAR"  />
+		<result property="interestedCategoryNo" 			column="interested_category_no" 				jdbcType="NUMERIC"  />
+		<result property="userId" 			column="user_id" 				jdbcType="VARCHAR"  />
 	</resultMap>
 	
 	<resultMap id="recommEventSelectMap" type="recommEvent">
@@ -61,8 +63,8 @@
 		WHERE event_id = #{eventId}
 	 </update>
 	 
-	 <select 	id="selectListInterestedEvent"	parameterType="string"	resultMap="purchaseSelectMap">
-		 SELECT u.interested_category_no, u.user_id, u.category_two_no, u.event_id
+	 <select 	id="selectListInterestedEvent"	parameterType="string"	resultMap="eventSelectMap">
+		 SELECT u.interested_category_no, u.user_id, u.category_two_no, u.event_id, e.event_name, e.event_location, e.event_date, e.event_time
 		 FROM user_interested u, event e
 		 WHERE u.event_id = e.event_id
 		 AND user_id = #{userId} 
@@ -70,9 +72,8 @@
 	 
 	 <insert 	id="InsertInterestedEvent"		parameterType="event" >
 	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
-		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+		INTO user_interested(interested_category_no, user_id, category_two_no, event_id) 
+		VALUES	 (	#{interestedCategoryNo} , #{userId} , #{categoryTwoNo} , #{eventId}  )
 	 </insert>
 	 
 	 <delete id="deleteInterestedEvent" parameterType="int">
