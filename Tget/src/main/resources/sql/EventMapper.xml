@@ -16,6 +16,8 @@
 		<result property="eventLocation" 			column="event_location" 		jdbcType="VARCHAR" />
 		<result property="eventDate" 				column="event_date" 					jdbcType="DATE" />
 		<result property="eventTime" 			column="event_time" 				jdbcType="VARCHAR"  />
+		<result property="interestedCategoryNo" 			column="interested_category_no" 				jdbcType="NUMERIC"  />
+		<result property="userId" 			column="user_id" 				jdbcType="VARCHAR"  />
 	</resultMap>
 	
 	<resultMap id="recommEventSelectMap" type="recommEvent">
@@ -26,6 +28,13 @@
 		<result property="recommEventDetail" 			column="recomm_event_detail" 		jdbcType="VARCHAR" />
 	</resultMap>
 	
+	<resultMap id="categorySelectMap" type="category">
+		<result property="categoryTwoNo"	column="category_two_no" 		jdbcType="NUMERIC" />
+		<result property="categoryOneCode" 	column="category_one_code" 		jdbcType="CHAR" />
+		<result property="categoryTwoName" 				column="category_two_name" 					jdbcType="VARCHAR" />
+		<result property="categoryTwoEng" 				column="category_two_eng" 					jdbcType="VARCHAR" />
+	</resultMap>
+	
 	
 	<insert 	id="InsertEvent"		parameterType="event" >
 	 	INSERT
@@ -34,23 +43,31 @@
 							#{eventName} , #{eventLocation:VARCHAR} , #{eventDate} , #{eventTime} )
 	 </insert>
 	 
-	  <select 	id="selectEvent"	parameterType="string"	resultMap="eventSelectMap">
+	  <select 	id="selectEvent"	parameterType="map" 	resultMap="eventSelectMap">
 		 SELECT event_id, view_count, category_two_no, event_image, event_name, event_location, event_date, event_time
 		 FROM event
-		 WHERE event_id = #{eventId}
+		 <if test="searchKeyword == 'eventId'">WHERE event_id = #{eventId}</if>
+		 <if test="searchKeyword == 'eventName'">WHERE event_name = #{eventName}</if>
 	 </select>
 	 
-	 <select 	id="selectListEvent"	parameterType="string"	resultMap="eventSelectMap">
-		 SELECT event_id, view_count, category_two_no, event_image, event_name, event_location, event_date, event_time
-		 FROM event
-		 WHERE event_name = #{eventName} 
+	 <select 	id="selectEventCount"	parameterType="map"	 resultType="int">
+		SELECT COUNT(*)
+	  	FROM( SELECT event_id, view_count, category_two_no, event_image, event_name, event_location, event_date, event_time
+		 				FROM event
+						<if test="searchKeyword == 'eventId'">WHERE event_id = #{eventId}</if>
+		 				<if test="searchKeyword == 'eventName'">WHERE event_name = #{eventName}</if>)  countTable	
 	 </select>
+<!-- 	 <select 	id="selectListEvent"	parameterType="string"	resultMap="eventSelectMap"> -->
+<!-- 		 SELECT event_id, view_count, category_two_no, event_image, event_name, event_location, event_date, event_time -->
+<!-- 		 FROM event -->
+<!-- 		 WHERE event_name = #{eventName}  -->
+<!-- 	 </select> -->
 	 
-	 <update	id="updateEvent"	parameterType="search" >
+	 <update	id="updateEvent"	parameterType="map" >
 	 	UPDATE event 
 	 	<set>
-	 		<if test="searchCondition == 0" >view_count = #{searchKeyword:NUMERIC}</if>
-			<if test="searchCondition == 1" >event_image = #{searchKeyword:VARCHAR}</if>
+	 		<if test="search.searchCondition == 0" >view_count = #{search.searchKeyword:NUMERIC}</if>
+			<if test="search.searchCondition == 1" >event_image = #{search.searchKeyword:VARCHAR}</if>
 <!-- 	 		event_id = #{string:VARCHAR},  -->
 <!-- 	 		category_two_no = #{string:NUMERIC}, -->
 <!-- 	 		event_name = #{string:VARCHAR},  -->
@@ -61,123 +78,148 @@
 		WHERE event_id = #{eventId}
 	 </update>
 	 
-	 <select 	id="selectListInterestedEvent"	parameterType="string"	resultMap="purchaseSelectMap">
-		 SELECT u.interested_category_no, u.user_id, u.category_two_no, u.event_id
+	 <select 	id="selectListInterestedEvent"	parameterType="string"	resultMap="eventSelectMap">
+		 SELECT u.interested_category_no, u.user_id, u.category_two_no, u.event_id, e.event_name, e.event_location, e.event_date, e.event_time
 		 FROM user_interested u, event e
 		 WHERE u.event_id = e.event_id
 		 AND user_id = #{userId} 
 	 </select>
 	 
+	 <select 	id="selectListInterestedEventCount"	parameterType="string"	resultType="int">
+		SELECT COUNT(*)
+	  	FROM( SELECT u.interested_category_no, u.user_id, u.category_two_no, u.event_id, e.event_name, e.event_location, e.event_date, e.event_time
+		 				FROM user_interested u, event e
+		 				WHERE u.event_id = e.event_id
+						AND user_id = #{userId} )  countTable	
+	 </select>
+	 
 	 <insert 	id="InsertInterestedEvent"		parameterType="event" >
 	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
-		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+		INTO user_interested(interested_category_no, user_id, category_two_no, event_id) 
+		VALUES	 (	seq_user_Interested_no.nextval , #{userId} , #{categoryTwoNo} , #{eventId}  )
 	 </insert>
 	 
-	 <delete id="deleteInterestedEvent" parameterType="int">
+	 <delete id="deleteInterestedEvent" parameterType="event">
 	  	DELETE 
-	  	FROM transaction 
-	  	WHERE tran_no = #{value}
+	  	FROM user_interested 
+	  	WHERE event_id = #{eventId} AND user_id = #{userId}
   	</delete>
 
-	 <insert 	id="InsertYoutubeVideo"		parameterType="event" >
+	 <insert 	id="InsertYoutubeVideo"		parameterType="map" >
 	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
-		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+		INTO youtube( youtube_no , youtube_id , event_name) 
+		VALUES	 (seq_youtube_youtube_no.nextval , #{youtubeId} , #{eventName})
 	 </insert>	 
 	 
-	 <select 	id="selectListPopularEvent"	parameterType="string"	resultMap="purchaseSelectMap">
-		  SELECT t.tran_no, t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.demailaddr, t.dlvy_request, 
-		t.tran_status_code, t.order_data, t.dlvy_date, t.cart_prod_no, t.purchase_quantity, t.total_cost, t.payment, p.prod_name, p.price
-		 FROM transaction t, product p
-		 WHERE t.prod_no = p.prod_no
-		 AND t.prod_no = #{value} 
+	 <select 	id="selectListYoutubeId"	parameterType="string"	resultType="list">
+		 SELECT youtube_id 
+		 FROM youtube
+		 WHERE event_name = #{eventName} 
 	 </select>
 	 
-	 <select 	id="selectListRecommendedEvent"	parameterType="string"	resultMap="purchaseSelectMap">
-		  SELECT t.tran_no, t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.demailaddr, t.dlvy_request, 
-		t.tran_status_code, t.order_data, t.dlvy_date, t.cart_prod_no, t.purchase_quantity, t.total_cost, t.payment, p.prod_name, p.price
-		 FROM transaction t, product p
-		 WHERE t.prod_no = p.prod_no
-		 AND t.prod_no = #{value} 
+	 <select 	id="selectListYoutubeIdCount"	parameterType="string"	resultType="int">
+		 SELECT COUNT(*)
+	  	FROM( SELECT youtube_id 
+		 				FROM youtube
+		 				WHERE event_name = #{eventName} )  countTable	
 	 </select>
 	 
-	 <select 	id="selectRecommendedEvent"	parameterType="string"	resultMap="purchaseSelectMap">
-		  SELECT t.tran_no, t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.demailaddr, t.dlvy_request, 
-		t.tran_status_code, t.order_data, t.dlvy_date, t.cart_prod_no, t.purchase_quantity, t.total_cost, t.payment, p.prod_name, p.price
-		 FROM transaction t, product p
-		 WHERE t.prod_no = p.prod_no
-		 AND t.prod_no = #{value} 
+	 <select 	id="selectListPopularEvent"	resultMap="eventSelectMap">
+	 	 SELECT vt.*, ROWNUM
+	 	 FROM		(SELECT event_id, event_name, view_count
+		 					FROM event
+		 					ORDER BY view_count DESC) vt
+		 WHERE ROWNUM &lt;= 10 
 	 </select>
 	 
-	 <insert 	id="InsertRecommendedEvent"		parameterType="event" >
+<!-- 	 <select 	id="selectListRecommendedEvent" 	parameterType="map"	resultMap="recommEvent"> -->
+<!-- 		 SELECT recomm_event_no, event_name, video_name, recomm_event_name, recomm_event_detail -->
+<!-- 		 FROM recommended_event  -->
+<!-- 	 </select> -->
+	 
+	 <select 	id="selectRecommendedEvent"	parameterType="int"	resultType="recommEvent">
+		 SELECT recomm_event_no, event_name, video_name, recomm_event_name, recomm_event_detail
+		 FROM recommended_event
+		 <if test="recommEventNo != null" >WHERE recomm_event_no = #{recommEventNo} </if>
+	 </select>
+	 
+	 <insert 	id="InsertRecommendedEvent"		parameterType="recommEvent" >
 	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
-		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+		INTO recommended_event( recomm_event_no, event_name, video_name, recomm_event_name, recomm_event_detail) 
+		VALUES	 (	#{recommEventNo} , #{eventName} , #{videoName}, #{recommEventName}, #{recommEventDetail} )
 	 </insert>	 
 	 
-	 <update	id="updateRecommendedEvent"	parameterType="purchase" >
-	 	UPDATE transaction 
+	 <update	id="updateRecommendedEvent"	parameterType="recommEvent" >
+	 	UPDATE recommended_event 
 	 	<set>
-	 		payment_option	= #{paymentOption:VARCHAR},
-	 		receiver_name = #{receiverName:VARCHAR},
-	 		receiver_phone = #{receiverPhone:VARCHAR},
-			demailaddr = #{divyAddr:VARCHAR}, 
-			dlvy_request = #{divyRequest:VARCHAR}
-			<if test="divyDate != null" >, dlvy_date = TO_DATE(#{divyDate:DATE},'YYYY-MM-DD'))</if>
+	 		event_name	= #{eventName},
+	 		video_name = #{videoName},
+	 		recomm_event_name = #{recommEventName},
+			recomm_event_detail = #{recommEventDetail}
 		</set>
-		WHERE tran_no = #{tranNo}
+		WHERE recomm_event_no = #{recommEventNo}
 	 </update>
 	 
 	 <delete id="deleteRecommendedEvent" parameterType="int">
 	  	DELETE 
-	  	FROM transaction 
-	  	WHERE tran_no = #{value}
+	  	FROM recommended_event 
+	  	WHERE recomm_event_no = #{recommEventNo}
   	</delete>
   	
-  	<select 	id="selectListCategory"	parameterType="string"	resultMap="purchaseSelectMap">
-		  SELECT t.tran_no, t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.demailaddr, t.dlvy_request, 
-		t.tran_status_code, t.order_data, t.dlvy_date, t.cart_prod_no, t.purchase_quantity, t.total_cost, t.payment, p.prod_name, p.price
-		 FROM transaction t, product p
-		 WHERE t.prod_no = p.prod_no
-		 AND t.prod_no = #{value} 
-	 </select>
+<!--   	<select 	id="selectListCategory"	 resultMap="categorySelectMap"> -->
+<!-- 		 SELECT category_two_no,category_one_code,category_two_name,category_two_eng -->
+<!-- 		 FROM category_two -->
+<!-- 	 </select> -->
 	 
-	 <insert 	id="InsertCategoryTwo"		parameterType="event" >
+	 <insert 	id="InsertCategoryTwo"		parameterType="category" >
 	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
-		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+		INTO category_two( category_two_no,category_one_code,category_two_name,category_two_eng) 
+		VALUES	 (seq_category_two_no.nextval , #{categoryOneCode} , #{categoryTwoName}, #{categoryTwoEng} )
 	 </insert>	 
 	 
-	 <update	id="updateCategoryTwo"	parameterType="purchase" >
-	 	UPDATE transaction 
+	 <update	id="updateCategoryTwo"	parameterType="category" >
+	 	UPDATE category_two 
 	 	<set>
-	 		payment_option	= #{paymentOption:VARCHAR},
-	 		receiver_name = #{receiverName:VARCHAR},
-	 		receiver_phone = #{receiverPhone:VARCHAR},
-			demailaddr = #{divyAddr:VARCHAR}, 
-			dlvy_request = #{divyRequest:VARCHAR}
-			<if test="divyDate != null" >, dlvy_date = TO_DATE(#{divyDate:DATE},'YYYY-MM-DD'))</if>
+	 		category_one_code	= #{categoryOneCode},
+	 		category_two_name = #{categoryTwoName},
+	 		category_two_eng = #{categoryTwoEng}
 		</set>
-		WHERE tran_no = #{tranNo}
+		WHERE category_two_no = #{categoryTwoNo}
 	 </update>
 	 
-	 <select 	id="selectCategory"	parameterType="string"	resultMap="purchaseSelectMap">
-		  SELECT t.tran_no, t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.demailaddr, t.dlvy_request, 
-		t.tran_status_code, t.order_data, t.dlvy_date, t.cart_prod_no, t.purchase_quantity, t.total_cost, t.payment, p.prod_name, p.price
-		 FROM transaction t, product p
-		 WHERE t.prod_no = p.prod_no
-		 AND t.prod_no = #{value} 
+	 <select 	id="selectCategory"	parameterType="int"	resultMap="categorySelectMap">
+		 SELECT category_one_code,category_two_name,category_two_eng 
+		 FROM category_two
+		 <if test="recommEventNo != null" >WHERE category_two_no = #{categoryTwoNo}</if>
+	 </select>
+	 
+	 <select 	id="selectCategoryCount"	 parameterType="int"	resultType="int">
+		SELECT COUNT(*)
+	  	FROM( SELECT category_one_code,category_two_name,category_two_eng 
+		 				FROM category_two
+		 				<if test="recommEventNo != null" >WHERE category_two_no = #{categoryTwoNo}</if>)  countTable	
 	 </select>
 	 
 	 <delete id="deleteCategoryTwo" parameterType="int">
 	  	DELETE 
-	  	FROM transaction 
-	  	WHERE tran_no = #{value}
+	  	FROM category_two 
+	  	WHERE category_two_no = #{categoryTwoNo}
   	</delete>
   	
+  	<select 	id="selectInterestedByUser"	parameterType="search"	 resultMap="eventSelectMap">
+		 SELECT user_id 
+		 FROM user_interested 
+		 <if test="searchCondition == 0" >WHERE interested_category_no = #{searchKeyword}</if>
+		 <if test="searchCondition == 1" >WHERE event_id = #{searchKeyword}</if>
+	 </select>
+	 
+	 <select 	id="selectInterestedByUserCount"	parameterType="search"	 resultMap="eventSelectMap">
+		 SELECT COUNT(*)
+	  	FROM( SELECT user_id 
+		 				FROM user_interested 
+		 				<if test="searchCondition == 0" >WHERE interested_category_no = #{searchKeyword}</if>
+		 				<if test="searchCondition == 1" >WHERE event_id = #{searchKeyword}</if>)  countTable	
+	 </select>
+	 
+	 
 </mapper>
