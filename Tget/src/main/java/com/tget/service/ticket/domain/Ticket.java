@@ -23,6 +23,11 @@ public class Ticket {
 		private int couponNo;
 		private String couponCode;
 		
+		public Ticket() {
+			// TODO Auto-generated constructor stub
+		}
+		
+		//M
 		public int getTicketNo() {
 			return ticketNo;
 		}
