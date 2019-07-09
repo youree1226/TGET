@@ -12,7 +12,7 @@ import com.tget.service.rnp.domain.Review;
 //==> 회원관리에서 CRUD 추상화/캡슐화한 DAO Interface Definition
 public interface RNPDao {
 	
-	public void InsertReview(Review review) throws Exception;
+//	public void InsertReview(Review review) throws Exception;
 
 	public Map<String,Object> selectPointHistory(String userId)  throws Exception;
 	

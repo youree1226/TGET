@@ -29,9 +29,10 @@ public class RNPDaoImpl implements RNPDao {
 		System.out.println(this.getClass());
 	}
 
-	public void InsertReview(Review review) throws Exception{
-		sqlSession.insert("RNPMapper.InsertReview",review);
-	}
+//	public void InsertReview(Review review) throws Exception{
+//		sqlSession.insert("RNPMapper.InsertReview",review);
+//	}
+	//애초에 transaction 테이블 안의 리뷰 관련 칼럼에 값을 넣는 거라서 insert문을 쓸 수 없다. 무조건 update 쿼리날려야함
 
 	public Map<String,Object> selectPointHistory(String userId)  throws Exception{
 		sqlSession.selectList("RNPMapper.selectPointHistory",userId);

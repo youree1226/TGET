@@ -24,7 +24,7 @@ public class RNPServiceImpl implements RNPService{
 
 	///M
 	public void addReview(Review review) throws Exception{
-		rNPDao.InsertReview(review);
+		rNPDao.updateReview(review);
 	}
 	
 	public Map<String,Object> getPointHistory(String userId) throws Exception{
