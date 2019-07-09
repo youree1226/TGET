@@ -25,18 +25,48 @@
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
-	<insert 	id="addUser"		parameterType="user" >
+	<insert 	id="InsertReview"		parameterType="review" >
 	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
+		INTO transaction( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
 		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
 							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
 	 </insert>
 	 
-	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
+	 <select 	id="selectPointHistory"	parameterType="string"	resultType="pointHistory">
 		SELECT
 		u.user_id , u.user_name , u.password , u.role ,  u.cell_phone ,  u.addr , u.email , u.reg_date, k.kakao_id, k.kaccount_email 
 		FROM users u, kakao k
 		WHERE u.user_id = #{value} AND u.user_id = k.user_id(+)
 	 </select>
 	 
+	 <select 	id="selectReviewList"	parameterType="search"	 resultType="review">
+		SELECT
+		u.user_id , u.user_name , u.password , u.role ,  u.cell_phone ,  u.addr , u.email , u.reg_date, k.kakao_id, k.kaccount_email 
+		FROM users u, kakao k
+		WHERE u.user_id = #{value} AND u.user_id = k.user_id(+)
+	 </select>
+	 
+	 <select 	id="selectReview"	parameterType="int"	resultType="review">
+		SELECT
+		u.user_id , u.user_name , u.password , u.role ,  u.cell_phone ,  u.addr , u.email , u.reg_date, k.kakao_id, k.kaccount_email 
+		FROM users u, kakao k
+		WHERE u.user_id = #{value} AND u.user_id = k.user_id(+)
+	 </select>
+	 
+	 <update	id="updateReview"	parameterType="review" >
+	 	UPDATE category_two 
+	 	<set>
+	 		category_one_code	= #{categoryOneCode},
+	 		category_two_name = #{categoryTwoName},
+	 		category_two_eng = #{categoryTwoEng}
+		</set>
+		WHERE category_two_no = #{categoryTwoNo}
+	 </update>
+	 
+	 <insert 	id="insertPointHistory"		parameterType="pointHistory" >
+	 	INSERT
+		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
+		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
+							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+	 </insert>
 </mapper>

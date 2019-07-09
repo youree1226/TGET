@@ -41,19 +41,19 @@ public class EventServiceImpl implements EventService{
 	}
 	
 	
-	public void updateEventViewCount(int viewCount) throws Exception{
+	public void updateEventViewCount(int viewCount,String eventId) throws Exception{
 		Search search = new Search();
 		search.setSearchCondition("0");
 		search.setSearchKeyword(String.valueOf(viewCount));
-		eventDao.updateEvent(search);
+		eventDao.updateEvent(search,eventId);
 	}
 	
 	
-	public void updateEventImage(String imageName) throws Exception{
+	public void updateEventImage(String imageName,String eventId) throws Exception{
 		Search search = new Search();
 		search.setSearchCondition("1");
 		search.setSearchKeyword(imageName);
-		eventDao.updateEvent(search);
+		eventDao.updateEvent(search,eventId);
 	}
 	
 	

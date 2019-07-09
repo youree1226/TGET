@@ -1,15 +1,17 @@
 package com.tget.service.coupon.domain;
 
-public class coupon {
+import java.sql.Date;
+
+public class Coupon {
 
 	private int couponNo;
 	private String couponCode;
 	private String userId;
-	private String couponUseDate;
-	private String couponRegDate;
+	private Date couponUseDate;
+	private Date couponRegDate;
 	private String couponStatement;
 	
-	public coupon() {
+	public Coupon() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -37,19 +39,19 @@ public class coupon {
 		this.userId = userId;
 	}
 
-	public String getCouponUseDate() {
+	public Date getCouponUseDate() {
 		return couponUseDate;
 	}
 
-	public void setCouponUseDate(String couponUseDate) {
+	public void setCouponUseDate(Date couponUseDate) {
 		this.couponUseDate = couponUseDate;
 	}
 
-	public String getCouponRegDate() {
+	public Date getCouponRegDate() {
 		return couponRegDate;
 	}
 
-	public void setCouponRegDate(String couponRegDate) {
+	public void setCouponRegDate(Date couponRegDate) {
 		this.couponRegDate = couponRegDate;
 	}
 

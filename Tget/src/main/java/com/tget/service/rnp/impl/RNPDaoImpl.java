@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tget.service.rnp.domain.PointHistory;
 import com.tget.service.rnp.domain.Review;
+import com.tget.common.domain.Search;
 import com.tget.service.event.EventDao;
 import com.tget.service.rnp.RNPDao;
 
@@ -28,29 +29,45 @@ public class RNPDaoImpl implements RNPDao {
 		System.out.println(this.getClass());
 	}
 
-	public void InsertReview(Review review) throws Exception{}
+	public void InsertReview(Review review) throws Exception{
+		sqlSession.insert("RNPMapper.InsertReview",review);
+	}
 
-	public Map<String,Object> selectPointHistory()  throws Exception{
+	public Map<String,Object> selectPointHistory(String userId)  throws Exception{
+		sqlSession.selectList("RNPMapper.selectPointHistory",userId);
 		return null;
 	}
 	
-	public Map<String,Object> selectReviewList()  throws Exception{
+	public Map<String,Object> selectReviewList(String buyerId)  throws Exception{
+		//searchCondition==0 buyerId 로 검색
+		Search search = new Search();
+		search.setSearchCondition("0");
+		search.setSearchKeyword(buyerId);
+		sqlSession.selectList("RNPMapper.selectReviewList",search);
 		return null;
 	}
 	
-	public Map<String,Object> selectSellerEstimationList()  throws Exception{
+	public Map<String,Object> selectSellerEstimationList(String sellerId)  throws Exception{
+		//searchCondition==1  sellerId 로 검색
+		Search search = new Search();
+		search.setSearchCondition("1");
+		search.setSearchKeyword(sellerId);
+		sqlSession.selectList("RNPMapper.selectReviewList",search);
 		return null;
 	}
 	
-	public void updateReview(Review review)  throws Exception{}
-	
-	public void updatePoint(PointHistory pointHistory)  throws Exception{}
-	
-	public PointHistory selectPoint()  throws Exception{
-		return null;
+	public Review selectReview(int tranNo)  throws Exception{
+		return sqlSession.selectOne("RNPMapper.selectReview",tranNo);
 	}
 	
-	public Review selectReview()  throws Exception{
-		return null;
+	public void updateReview(Review review)  throws Exception{
+		sqlSession.update("RNPMapper.updateReview",review);
 	}
+	
+	public void insertPointHistory(PointHistory pointHistory)  throws Exception{
+		sqlSession.insert("RNPMapper.insertPointHistory", pointHistory);
+	}
+
+	
+	
 }
