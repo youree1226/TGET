@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="EventMapper">
+ 	
+ 	
+	<resultMap id="eventSelectMap" type="event">
+		<result property="eventId" 			column="event_id" 			jdbcType="VARCHAR"/>
+		<result property="viewCount"	column="view_count" 		jdbcType="NUMERIC" />
+		<result property="categoryTwoNo" 	column="category_two_no" 		jdbcType="NUMERIC" />
+		<result property="eventImage" 				column="event_image" 					jdbcType="VARCHAR" />
+		<result property="eventName" 				column="event_name" 					jdbcType="VARCHAR" />
+		<result property="eventLocation" 			column="event_location" 		jdbcType="VARCHAR" />
+		<result property="eventDate" 				column="event_date" 					jdbcType="DATE" />
+		<result property="eventTime" 			column="event_time" 				jdbcType="VARCHAR"  />
+	</resultMap>
+	
+	<resultMap id="recommEventSelectMap" type="recommEvent">
+		<result property="recommEventNo"	column="recomm_event_no" 		jdbcType="NUMERIC" />
+		<result property="eventName" 	column="event_name" 		jdbcType="VARCHAR" />
+		<result property="videoName" 				column="video_name" 					jdbcType="VARCHAR" />
+		<result property="recommEventName" 				column="recomm_event_name" 					jdbcType="VARCHAR" />
+		<result property="recommEventDetail" 			column="recomm_event_detail" 		jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+	<insert 	id="InsertEvent"		parameterType="event" >
+	 	INSERT
+		INTO event( event_id, view_count, category_two_no, event_image, event_name, event_location, event_date, event_time) 
+		VALUES	 (	#{eventId} , 1 , #{categoryTwoNo} , #{categoryTwoNo} , #{eventImage:VARCHAR} , 
+							#{eventName} , #{eventLocation:VARCHAR} , #{eventDate} , #{eventTime} )
+	 </insert>
+	 
+	  <select 	id="selectEvent"	parameterType="string"	resultMap="eventSelectMap">
+		 SELECT event_id, view_count, category_two_no, event_image, event_name, event_location, event_date, event_time
+		 FROM event
+		 WHERE event_id = #{eventId}
+	 </select>
+	 
+	 <select 	id="selectListEvent"	parameterType="string"	resultMap="eventSelectMap">
+		 SELECT event_id, view_count, category_two_no, event_image, event_name, event_location, event_date, event_time
+		 FROM event
+		 WHERE event_name = #{eventName} 
+	 </select>
+	 
+	 <update	id="updateEvent"	parameterType="search" >
+	 	UPDATE event 
+	 	<set>
+	 		<if test="searchCondition == 0" >view_count = #{searchKeyword:NUMERIC}</if>
+			<if test="searchCondition == 1" >event_image = #{searchKeyword:VARCHAR}</if>
+<!-- 	 		event_id = #{string:VARCHAR},  -->
+<!-- 	 		category_two_no = #{string:NUMERIC}, -->
+<!-- 	 		event_name = #{string:VARCHAR},  -->
+<!-- 	 		event_location = #{string:VARCHAR},  -->
+<!-- 	 		event_date = #{string:DATE},  -->
+<!-- 	 		event_time = #{string:VARCHAR} -->
+		</set>
+		WHERE event_id = #{eventId}
+	 </update>
+	 
+	 <select 	id="selectListInterestedEvent"	parameterType="string"	resultMap="purchaseSelectMap">
+		 SELECT u.interested_category_no, u.user_id, u.category_two_no, u.event_id
+		 FROM user_interested u, event e
+		 WHERE u.event_id = e.event_id
+		 AND user_id = #{userId} 
+	 </select>
+	 
+	 <insert 	id="InsertInterestedEvent"		parameterType="event" >
+	 	INSERT
+		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
+		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
+							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+	 </insert>
+	 
+	 <delete id="deleteInterestedEvent" parameterType="int">
+	  	DELETE 
+	  	FROM transaction 
+	  	WHERE tran_no = #{value}
+  	</delete>
+
+	 <insert 	id="InsertYoutubeVideo"		parameterType="event" >
+	 	INSERT
+		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
+		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
+							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+	 </insert>	 
+	 
+	 <select 	id="selectListPopularEvent"	parameterType="string"	resultMap="purchaseSelectMap">
+		  SELECT t.tran_no, t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.demailaddr, t.dlvy_request, 
+		t.tran_status_code, t.order_data, t.dlvy_date, t.cart_prod_no, t.purchase_quantity, t.total_cost, t.payment, p.prod_name, p.price
+		 FROM transaction t, product p
+		 WHERE t.prod_no = p.prod_no
+		 AND t.prod_no = #{value} 
+	 </select>
+	 
+	 <select 	id="selectListRecommendedEvent"	parameterType="string"	resultMap="purchaseSelectMap">
+		  SELECT t.tran_no, t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.demailaddr, t.dlvy_request, 
+		t.tran_status_code, t.order_data, t.dlvy_date, t.cart_prod_no, t.purchase_quantity, t.total_cost, t.payment, p.prod_name, p.price
+		 FROM transaction t, product p
+		 WHERE t.prod_no = p.prod_no
+		 AND t.prod_no = #{value} 
+	 </select>
+	 
+	 <select 	id="selectRecommendedEvent"	parameterType="string"	resultMap="purchaseSelectMap">
+		  SELECT t.tran_no, t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.demailaddr, t.dlvy_request, 
+		t.tran_status_code, t.order_data, t.dlvy_date, t.cart_prod_no, t.purchase_quantity, t.total_cost, t.payment, p.prod_name, p.price
+		 FROM transaction t, product p
+		 WHERE t.prod_no = p.prod_no
+		 AND t.prod_no = #{value} 
+	 </select>
+	 
+	 <insert 	id="InsertRecommendedEvent"		parameterType="event" >
+	 	INSERT
+		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
+		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
+							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+	 </insert>	 
+	 
+	 <update	id="updateRecommendedEvent"	parameterType="purchase" >
+	 	UPDATE transaction 
+	 	<set>
+	 		payment_option	= #{paymentOption:VARCHAR},
+	 		receiver_name = #{receiverName:VARCHAR},
+	 		receiver_phone = #{receiverPhone:VARCHAR},
+			demailaddr = #{divyAddr:VARCHAR}, 
+			dlvy_request = #{divyRequest:VARCHAR}
+			<if test="divyDate != null" >, dlvy_date = TO_DATE(#{divyDate:DATE},'YYYY-MM-DD'))</if>
+		</set>
+		WHERE tran_no = #{tranNo}
+	 </update>
+	 
+	 <delete id="deleteRecommendedEvent" parameterType="int">
+	  	DELETE 
+	  	FROM transaction 
+	  	WHERE tran_no = #{value}
+  	</delete>
+  	
+  	<select 	id="selectListCategory"	parameterType="string"	resultMap="purchaseSelectMap">
+		  SELECT t.tran_no, t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.demailaddr, t.dlvy_request, 
+		t.tran_status_code, t.order_data, t.dlvy_date, t.cart_prod_no, t.purchase_quantity, t.total_cost, t.payment, p.prod_name, p.price
+		 FROM transaction t, product p
+		 WHERE t.prod_no = p.prod_no
+		 AND t.prod_no = #{value} 
+	 </select>
+	 
+	 <insert 	id="InsertCategoryTwo"		parameterType="event" >
+	 	INSERT
+		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
+		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
+							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+	 </insert>	 
+	 
+	 <update	id="updateCategoryTwo"	parameterType="purchase" >
+	 	UPDATE transaction 
+	 	<set>
+	 		payment_option	= #{paymentOption:VARCHAR},
+	 		receiver_name = #{receiverName:VARCHAR},
+	 		receiver_phone = #{receiverPhone:VARCHAR},
+			demailaddr = #{divyAddr:VARCHAR}, 
+			dlvy_request = #{divyRequest:VARCHAR}
+			<if test="divyDate != null" >, dlvy_date = TO_DATE(#{divyDate:DATE},'YYYY-MM-DD'))</if>
+		</set>
+		WHERE tran_no = #{tranNo}
+	 </update>
+	 
+	 <select 	id="selectCategory"	parameterType="string"	resultMap="purchaseSelectMap">
+		  SELECT t.tran_no, t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.demailaddr, t.dlvy_request, 
+		t.tran_status_code, t.order_data, t.dlvy_date, t.cart_prod_no, t.purchase_quantity, t.total_cost, t.payment, p.prod_name, p.price
+		 FROM transaction t, product p
+		 WHERE t.prod_no = p.prod_no
+		 AND t.prod_no = #{value} 
+	 </select>
+	 
+	 <delete id="deleteCategoryTwo" parameterType="int">
+	  	DELETE 
+	  	FROM transaction 
+	  	WHERE tran_no = #{value}
+  	</delete>
+  	
+</mapper>

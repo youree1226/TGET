@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="RNPMapper">
+ 	<resultMap id="reviewSelectMap" type="review">
+		<result property="tranNo" 			column="tran_no" 			jdbcType="NUMERIC"/>
+		<result property="score"	column="review_score" 		jdbcType="NUMERIC" />
+		<result property="reviewBody" 	column="review_body" 		jdbcType="VARCHAR" />
+		<result property="regDate" 				column="review_reg_date" 					jdbcType="DATE" />
+		<result property="buyerId" 				column="buyer_id" 					jdbcType="VARCHAR" />
+		<result property="sellerId" 			column="seller_id" 		jdbcType="VARCHAR" />
+	</resultMap>
+ 	
+	<resultMap id="pointHistorySelectMap" type="pointHistory">
+		<result property="point_history_no" 			column="point_history_no" 			jdbcType="NUMERIC"/>
+		<result property="user_id"	column="user_id" 		jdbcType="VARCHAR" />
+		<result property="point_update_code" 	column="point_update_code" 		jdbcType="CHAR" />
+		<result property="reg_date" 				column="reg_date" 					jdbcType="DATE" />
+		<result property="tran_no" 				column="tran_no" 					jdbcType="NUMERIC" />
+		<result property="total_point" 			column="total_point" 		jdbcType="NUMERIC" />
+		<result property="event_time" 				column="update_point" 					jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addUser"		parameterType="user" >
+	 	INSERT
+		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
+		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
+							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+	 </insert>
+	 
+	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
+		SELECT
+		u.user_id , u.user_name , u.password , u.role ,  u.cell_phone ,  u.addr , u.email , u.reg_date, k.kakao_id, k.kaccount_email 
+		FROM users u, kakao k
+		WHERE u.user_id = #{value} AND u.user_id = k.user_id(+)
+	 </select>
+	 
+</mapper>

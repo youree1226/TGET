@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration
+ 		 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+  						
+<!--	mybatis-config.xml :: MyBatis Framework  MetaData -->
+<configuration>
+
+	<!-- 기타 설정정보 :: [MyBatis_Home]/mybatis-3.2.1.pdf 참조 -->
+	<settings>
+		<setting name="callSettersOnNulls" value="false"/>
+	</settings>	
+	
+	<!-- FQCN(Full Qualified Class Name) Alias(별칭관리) -->
+	<typeAliases>
+<!-- 		<typeAlias alias="user" type="com.tget.service.user.domain.User" /> -->
+		<typeAlias alias="search" type="com.tget.service.common.domain.Search" />
+		<typeAlias alias="event" type="com.tget.service.user.domain.Event" />
+		<typeAlias alias="category" type="com.tget.service.event.domain.Category" />
+		<typeAlias alias="recommEvent" type="com.tget.service.event.domain.RecommEvent" />
+		<typeAlias alias="pointAndHistory" type="com.tget.service.rnp.domain.PointAndHistory" />
+		<typeAlias alias="review" type="com.tget.service.rnp.domain.Review" />
+		<typeAlias alias="ticket" type="com.tget.service.ticket.domain.Ticket" />
+		<typeAlias alias="transaction" type="com.tget.service.rnp.domain.Transaction" />
+	</typeAliases>
+	
+	 <!-- SQL Definition :: file include -->
+	<mappers>
+		<mapper resource="sql/UserMapper.xml"/>
+		<mapper resource="sql/RNPMapper.xml"/>
+		<mapper resource="sql/EventMapper.xml"/>
+		<mapper resource="sql/TicketMapper.xml"/>
+		<mapper resource="sql/TransactionMapper.xml"/>
+		<mapper resource="sql/AlarmMapper.xml"/>
+		<mapper resource="sql/CommunityMapper.xml"/>
+		<mapper resource="sql/CouponMapper.xml"/>
+
+	</mappers>
+
+</configuration>

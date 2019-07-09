@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CommunityMapper">
+ 	
+ 	
+	<resultMap id="communitySelectMap" type="community">
+		<result property="contentNo" 		column="content_no" 		jdbcType="NUMERIC"/>
+		<result property="userId"			column="user_id" 			jdbcType="VARCHAR" />
+		<result property="userNickName" 	column="user_nickname" 		jdbcType="VARCHAR" />
+		<result property="contentName" 		column="content_name" 		jdbcType="VARCHAR" />
+		<result property="contentBody" 		column="content_body" 		jdbcType="CLOB" />
+		<result property="videoName" 		column="video_name" 		jdbcType="VARCHAR" />
+		<result property="fileName" 		column="file_name" 			jdbcType="VARCHAR" />
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
+		<result property="viewCount" 		column="view_count" 		jdbcType="NUMERIC"/>
+		<result property="boardCode" 		column="board_code" 		jdbcType="CHAR"/>
+		<result property="contentCode" 		column="content_code" 		jdbcType="CHAR"/>
+		<result property="openCheck" 		column="open_check" 		jdbcType="CHAR"/>
+		<result property="goodCount" 		column="good_count" 		jdbcType="NUMERIC"/>
+		<result property="badCount" 		column="bad_count" 			jdbcType="NUMERIC"/>
+		<result property="refundTranNo" 	column="refund_tran_no" 	jdbcType="NUMERIC"/>
+		<result property="refundCheck" 		column="refund_check" 		jdbcType="CHAR"/>
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addUser"		parameterType="user" >
+	 	INSERT
+		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
+		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
+							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+	 </insert>
+	 
+	 
+	 
+</mapper>
