@@ -43,14 +43,14 @@
 							#{eventName} , #{eventLocation:VARCHAR} , #{eventDate} , #{eventTime} )
 	 </insert>
 	 
-	  <select 	id="selectEvent"	parameterType="map"	resultMap="eventSelectMap">
+	  <select 	id="selectEvent"	parameterType="map" 	resultMap="eventSelectMap">
 		 SELECT event_id, view_count, category_two_no, event_image, event_name, event_location, event_date, event_time
 		 FROM event
 		 <if test="searchKeyword == 'eventId'">WHERE event_id = #{eventId}</if>
 		 <if test="searchKeyword == 'eventName'">WHERE event_name = #{eventName}</if>
 	 </select>
 	 
-	 <select 	id="selectEventCount"	parameterType="map"	resultMap="int">
+	 <select 	id="selectEventCount"	parameterType="map"	 resultType="int">
 		SELECT COUNT(*)
 	  	FROM( SELECT event_id, view_count, category_two_no, event_image, event_name, event_location, event_date, event_time
 		 				FROM event
@@ -85,7 +85,7 @@
 		 AND user_id = #{userId} 
 	 </select>
 	 
-	 <select 	id="selectListInterestedEventCount"	parameterType="string"	resultMap="int">
+	 <select 	id="selectListInterestedEventCount"	parameterType="string"	resultType="int">
 		SELECT COUNT(*)
 	  	FROM( SELECT u.interested_category_no, u.user_id, u.category_two_no, u.event_id, e.event_name, e.event_location, e.event_date, e.event_time
 		 				FROM user_interested u, event e
@@ -111,13 +111,13 @@
 		VALUES	 (seq_youtube_youtube_no.nextval , #{youtubeId} , #{eventName})
 	 </insert>	 
 	 
-	 <select 	id="selectListYoutubeId"	parameterType="string"	resultMap="purchaseSelectMap">
+	 <select 	id="selectListYoutubeId"	parameterType="string"	resultType="list">
 		 SELECT youtube_id 
 		 FROM youtube
 		 WHERE event_name = #{eventName} 
 	 </select>
 	 
-	 <select 	id="selectListYoutubeIdCount"	parameterType="string"	resultMap="int">
+	 <select 	id="selectListYoutubeIdCount"	parameterType="string"	resultType="int">
 		 SELECT COUNT(*)
 	  	FROM( SELECT youtube_id 
 		 				FROM youtube
@@ -137,7 +137,7 @@
 <!-- 		 FROM recommended_event  -->
 <!-- 	 </select> -->
 	 
-	 <select 	id="selectRecommendedEvent"	parameterType="int"	resultMap="recommEvent">
+	 <select 	id="selectRecommendedEvent"	parameterType="int"	resultType="recommEvent">
 		 SELECT recomm_event_no, event_name, video_name, recomm_event_name, recomm_event_detail
 		 FROM recommended_event
 		 <if test="recommEventNo != null" >WHERE recomm_event_no = #{recommEventNo} </if>
@@ -193,7 +193,7 @@
 		 <if test="recommEventNo != null" >WHERE category_two_no = #{categoryTwoNo}</if>
 	 </select>
 	 
-	 <select 	id="selectCategoryCount"	parameterType="int"	resultMap="int">
+	 <select 	id="selectCategoryCount"	 parameterType="int"	resultType="int">
 		SELECT COUNT(*)
 	  	FROM( SELECT category_one_code,category_two_name,category_two_eng 
 		 				FROM category_two
@@ -206,14 +206,14 @@
 	  	WHERE category_two_no = #{categoryTwoNo}
   	</delete>
   	
-  	<select 	id="selectInterestedByUser"	parameterType="search"	resultMap="eventSelectMap">
+  	<select 	id="selectInterestedByUser"	parameterType="search"	 resultMap="eventSelectMap">
 		 SELECT user_id 
 		 FROM user_interested 
 		 <if test="searchCondition == 0" >WHERE interested_category_no = #{searchKeyword}</if>
 		 <if test="searchCondition == 1" >WHERE event_id = #{searchKeyword}</if>
 	 </select>
 	 
-	 <select 	id="selectInterestedByUserCount"	parameterType="search"	resultMap="eventSelectMap">
+	 <select 	id="selectInterestedByUserCount"	parameterType="search"	 resultMap="eventSelectMap">
 		 SELECT COUNT(*)
 	  	FROM( SELECT user_id 
 		 				FROM user_interested 
