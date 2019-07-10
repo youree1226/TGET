@@ -7,24 +7,45 @@
 <mapper namespace="CouponMapper">
  	
  	
-	<resultMap id="CouponSelectMap" type="coupon">
+	<resultMap id="couponSelectMap" type="coupon">
 		<result property="couponNo" 			column="coupon_no" 			jdbcType="NUMERIC"/>
-		<result property="couponCode"	column="coupon_code" 		jdbcType="VARCHAR" />
-		<result property="userId" 	column="password" 		jdbcType="VARCHAR" />
-		<result property="couponUseDate" 				column="role" 					jdbcType="DATE" />
-		<result property="couponRegDate" 				column="ssn" 					jdbcType="DATE" />
-		<result property="couponStatement" 			column="cell_phone" 		jdbcType="VARCHAR" />
+		<result property="couponCode"	column="coupon_code" 		jdbcType="CHAR" />
+		<result property="userId" 	column="user_id" 		jdbcType="VARCHAR" />
+		<result property="couponUseDate" 				column="coupon_use_date" 					jdbcType="DATE" />
+		<result property="couponRegDate" 				column="coupon_reg_date" 					jdbcType="DATE" />
+		<result property="couponStatement" 			column="coupon_statement" 		jdbcType="CHAR" />
 
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="insertCoupon"		parameterType="coupon" >
 	 	INSERT
-		INTO users( couponNo , couponCode , userId , couponUseDate , couponRegDate, couponStatement) 
-		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+		INTO users( seq_coupon_coupon_no.nextval, coupon_code , user_id , coupon_use_date , coupon_reg_date, coupon_statement) 
+		VALUES	 (	#{couponNo} , #{couponCode} , #{userId} , #{couponUseDate} , 
+							SYSDATE , #{couponStatement} )
 	 </insert>
 	 
+	   <select 	id="selectCoupon"	parameterType="string"	resultMap="couponSelectMap">
+		SELECT
+		coupon_no , coupon_code , user_id , coupon_use_date , coupon_reg_date, couponStatement
+	 		
+		FROM coupon 
+		WHERE coupon_no = #{value}
+	 </select>
 	 
+	 <update	id="updateCoupon"	parameterType="coupon" >
+	   	UPDATE users
+	   	<set>
+	   		coupon_no 	= #{couponNo} ,
+	   		coupon_code	= #{couponCode} ,
+	   		
+	   		user_id = #{userId} ,
+	   		coupon_use_date = #{couponUseDate} ,
+	   		coupon_reg_date = SYSDATE ,
+	   		coupon_statement = #{couponStatement}
+	   		
+	   	</set>
+	   	WHERE coupon_no = #{counponNo}
+	 </update>
 	 
 </mapper>

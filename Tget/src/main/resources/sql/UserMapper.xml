@@ -14,7 +14,7 @@
 		<result property="phone" 				column="phone" 					jdbcType="NUMERIC" />
 		<result property="nickName" 				column="nickname" 					jdbcType="VARCHAR" />
 		<result property="address" 			column="address" 		jdbcType="VARCHAR" />
-		<result property="postalCode" 				column="postal_code" 					jdbcType="NUMERIC" />
+		<result property="postalCode" 				column="postal_code" 					jdbcType="+" />
 		<result property="role" 			column="role" 				jdbcType="CHAR"  />
 		<result property="local" 		column="local_YN" 			jdbcType="CHAR" />
 		<result property="point" 			column="point" 			jdbcType="NUMERIC"/>
@@ -42,8 +42,8 @@
 		blacklistEndDate, sellerCode, salesAmount, salesCount, accountBank, accountNo) 
 		VALUES	 (	#{userId} , #{userName} , #{password} , #{phone} , #{nickName} , #{address}, 
 					#{postalCode} , #{role} , #{local} , #{point} , #{userStatement} , #{lastConnDate},
-					#{kakaoId}, #{naverId}, #{facebookId} , #{blacklistCode}, #{blacklistStartDate} , #{blacklistEndDate} ,
-					#{sellerCode}, #{salesAmount}, #{salesCount}, #{accountBank}, #{accountNo} )
+					#{kakaoId:VARCHAR}, #{naverId:VARCHAR}, #{facebookId:VARCHAR} , #{blacklistCode:VARCHAR}, #{blacklistStartDate:VARCHAR} , #{blacklistEndDate:VARCHAR} ,
+					#{sellerCode:VARCHAR}, #{salesAmount:VARCHAR}, #{salesCount:VARCHAR}, #{accountBank:VARCHAR}, #{accountNo:VARCHAR} )
 	 </insert>
 	 
 	  <select 	id="selectUser"	parameterType="string"	resultMap="userSelectMap">
