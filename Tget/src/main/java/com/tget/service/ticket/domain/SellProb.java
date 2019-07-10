@@ -3,14 +3,24 @@ package com.tget.service.ticket.domain;
 public class SellProb {
 	
 	private int highPrice;
+	private int avgPrice;
 	private int lowPrice;
 	private int totalCount;
 	private int sellprob;
-	
+		
 	public SellProb() {
 		// TODO Auto-generated constructor stub
 	}
 
+	public SellProb(int highPrice, int lowPrice, int totalCount) {
+		// TODO Auto-generated constructor stub
+		this.highPrice = highPrice;
+		this.lowPrice = lowPrice;
+		this.totalCount = totalCount;		
+		
+	}
+
+	
 	public int getHighPrice() {
 		return highPrice;
 	}
@@ -42,11 +52,19 @@ public class SellProb {
 	public void setSellprob(int sellprob) {
 		this.sellprob = sellprob;
 	}
+	
+	public int getAvgPrice() {
+		return avgPrice;
+	}
+
+	public void setAvgPrice(int avgPrice) {
+		this.avgPrice = avgPrice;
+	}
 
 	@Override
 	public String toString() {
-		return "SellProb [highPrice=" + highPrice + ", lowPrice=" + lowPrice + ", totalCount=" + totalCount
-				+ ", sellprob=" + sellprob + "]";
+		return "SellProb [highPrice=" + highPrice + ", avgPrice=" + avgPrice + ", lowPrice=" + lowPrice
+				+ ", totalCount=" + totalCount + ", sellprob=" + sellprob + "]";
 	}
 	
 	
