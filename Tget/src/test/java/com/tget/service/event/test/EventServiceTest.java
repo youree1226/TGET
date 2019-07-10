@@ -49,7 +49,7 @@ public class EventServiceTest {
 		Event event = new Event();
 		event.setEventId("testEventId");
 		event.setCategoryTwoNo(10000);
-		event.setEventDate(new Date(2012, 4, 8));
+		event.setEventDate(new Date(2012-1900, 4-1, 8));
 		event.setEventLocation("서울");
 		event.setEventName("EXO");
 		event.setEventTime(1248);
@@ -58,7 +58,7 @@ public class EventServiceTest {
 		Event event2 = new Event();
 		event2.setEventId("testEventId2");
 		event2.setCategoryTwoNo(10000);
-		event2.setEventDate(new Date(2012, 4, 8));
+		event2.setEventDate(new Date(2012-1900, 4-1, 8));
 		event2.setEventLocation("서울");
 		event2.setEventName("EXO");
 		event2.setEventTime(1248);
