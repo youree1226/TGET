@@ -35,22 +35,22 @@ public class AlarmServiceImpl implements AlarmService{
 			alarm.setAlarmBody("티켓결제가 완료되었습니다.");
 			break;
 		case 1:
-			alarm.setAlarmBody("티켓이 등록되었습니다.");
+			alarm.setAlarmBody("관심이벤트의 신규티켓이 등록되었습니다.");
 			break;	
 		case 2:
-			alarm.setAlarmBody("티켓이 배송완료 되었습니다.");
+			alarm.setAlarmBody("판매티켓이 배송완료 되었습니다.");
 			break;
 		case 3:	
-			alarm.setAlarmBody("배송이 시작되었습니다.");
+			alarm.setAlarmBody("구매티켓의 배송이 시작되었습니다.");
 			break;
 		case 4:
 			alarm.setAlarmBody("쿠폰이 발급되었습니다.");
 			break;
 		case 5:
-			alarm.setAlarmBody("글이 신고되었습니다.");
+			alarm.setAlarmBody("신고된 글이 있습니다. 확인해주세요.");
 			break;
 		case 6:
-			alarm.setAlarmBody("작성글에 댓들이 등록되었습니다.");
+			alarm.setAlarmBody("작성글에 댓글이 등록되었습니다.");
 			break;
 		case 7:
 			alarm.setAlarmBody("환불이 처리되었습니다.");
