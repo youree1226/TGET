@@ -15,14 +15,14 @@
 	<!-- FQCN(Full Qualified Class Name) Alias(별칭관리) -->
 	<typeAliases>
 <!-- 		<typeAlias alias="user" type="com.tget.service.user.domain.User" /> -->
-		<typeAlias alias="search" type="com.tget.service.common.domain.Search" />
-		<typeAlias alias="event" type="com.tget.service.user.domain.Event" />
+		<typeAlias alias="search" type="com.tget.common.domain.Search" />
+		<typeAlias alias="event" type="com.tget.service.event.domain.Event" />
 		<typeAlias alias="category" type="com.tget.service.event.domain.Category" />
 		<typeAlias alias="recommEvent" type="com.tget.service.event.domain.RecommEvent" />
 		<typeAlias alias="pointAndHistory" type="com.tget.service.rnp.domain.PointAndHistory" />
 		<typeAlias alias="review" type="com.tget.service.rnp.domain.Review" />
 		<typeAlias alias="ticket" type="com.tget.service.ticket.domain.Ticket" />
-		<typeAlias alias="transaction" type="com.tget.service.rnp.domain.Transaction" />
+		<typeAlias alias="transaction" type="com.tget.service.transaction.domain.Transaction" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->

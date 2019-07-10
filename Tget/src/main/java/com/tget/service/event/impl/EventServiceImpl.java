@@ -25,18 +25,18 @@ public class EventServiceImpl implements EventService{
 	
 
 	public void addEvent(Event event) throws Exception{
-		
+		eventDao.InsertEvent(event);
 	}
 	
 	
-	public Event getEvent(int eventId) throws Exception{ 
-		return eventDao.selectEvent("바보");
+	public Event getEvent(String eventId) throws Exception{ 
+		return eventDao.selectEvent(eventId);
 		//return event도메인; Event
 	}
 	
 	
-	public  List<Event> getEvent(String eventName) throws Exception{ 
-		return eventDao.selectListEvent("바보");
+	public  List<Event> getEventByName(String eventName) throws Exception{ 
+		return eventDao.selectListEvent(eventName);
 		//return event도메인 리스트;List<Event> 
 	}
 	
@@ -57,83 +57,88 @@ public class EventServiceImpl implements EventService{
 	}
 	
 	
-	public Map<String,Object> getEventList() throws Exception{ 
-		return null;
-	}
-	
-	
 	public List<Event> getInterestedEventList(String userId) throws Exception{
-		return null;
+		return eventDao.selectListInterestedEvent(userId);
 	}
 	
 	
-	public void addInterestedEvent(int eventId, String userId) throws Exception{
-		
+	public void addInterestedEvent(String eventId, String userId) throws Exception{
+		eventDao.InsertInterestedEvent(eventId,userId);
 	}
 	
 	
-	public void deleteInterestedEvent(int eventId, String userId) throws Exception{
-		
+	public void deleteInterestedEvent(String eventId, String userId) throws Exception{
+		eventDao.deleteInterestedEvent(eventId,userId);
 	}
 	
 	
 	public void addYoutubeVideo(String youtubeId, String eventName) throws Exception{ 
-		
+		eventDao.InsertYoutubeVideo(youtubeId, eventName);
 	}
 	
 	
 	public List<Event> getPopularEventList() throws Exception{ 
-		return null;
+		return eventDao.selectListPopularEvent();
 	}
 	
 	
 	public List<RecommEvent> getRecommendedEventList() throws Exception{ 
-		return null;
+		return eventDao.selectListRecommendedEvent();
 	}
 	
 	
 	public RecommEvent getRecommendedEvent(int recommEventNo) throws Exception{
-		return null;
+		return eventDao.selectRecommendedEvent(recommEventNo);
 	}
 	
 	
 	public void addRecommendedEvent(RecommEvent recommEvent) throws Exception{
-		
+		eventDao.InsertRecommendedEvent(recommEvent);
 	}
 	
 	
 	public void updateRecommendedEvent(RecommEvent recommEvent) throws Exception{
-		
+		eventDao.updateRecommendedEvent(recommEvent);
 	}
 	
 	
 	public void deleteRecommendedEvent(int recommEventNo) throws Exception{ 
-		
+		eventDao.deleteRecommendedEvent(recommEventNo);
 	}
 	
 	
 	public List<Category> getCategoryList() throws Exception{ 
-		return null;
+		return eventDao.selectListCategory();
 	}
 	
 	
 	public void addCategoryTwo(Category category) throws Exception{
-		
+		eventDao.InsertCategoryTwo(category);
 	}
 	
 	
 	public void updateCategoryTwo(Category category) throws Exception{
-		
+		eventDao.updateCategoryTwo(category);
 	}
 	
 	
-	public Category selectCategory(int categoryTwoNo) throws Exception{
-		return null;
+	public Category getCategory(int categoryTwoNo) throws Exception{
+		return eventDao.selectCategory(categoryTwoNo);
 	}
 	
 	
 	public void deleteCategoryTwo(int categoryTwoNo) throws Exception{
-		
+		eventDao.deleteCategoryTwo(categoryTwoNo);
+	}
+	
+	
+	public Map<String,Object> getEventList(Search search) throws Exception{ 
+		return eventDao.getEventList(search);
+	}
+	
+	
+	public Map<String,Object> getYoutubeList(Search search) throws Exception{
+		return eventDao.getYoutubeList(search);
 	}
 	
 	

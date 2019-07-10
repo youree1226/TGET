@@ -34,7 +34,7 @@ public class EventDaoImpl implements EventDao {
 
 	///M
 	public void InsertEvent(Event event) throws Exception{
-		sqlSession.insert("EventMapper.InsertEvent", event);
+		sqlSession.insert("EventMapper.insertEvent", event);
 	}
 	
 	
@@ -169,12 +169,14 @@ public class EventDaoImpl implements EventDao {
 	}
 	
 	
-	public Map<String,Object> getEventList() throws Exception{
+	public Map<String,Object> getEventList(Search search) throws Exception{
+		//rest api
 		return null;
 	}
 	
 	
-	public Map<String,Object> getYoutubeList() throws Exception{
+	public Map<String,Object> getYoutubeList(Search search) throws Exception{
+		//rest api
 		return null;
 	}
 	
