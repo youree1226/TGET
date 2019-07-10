@@ -17,6 +17,7 @@ public class AlarmDaoImpl implements AlarmDao{
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
+	
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
@@ -29,37 +30,37 @@ public class AlarmDaoImpl implements AlarmDao{
 	@Override
 	public void insertAlarm(Alarm alarm) throws Exception {
 		// TODO Auto-generated method stub
-		
+		sqlSession.insert("AlarmMapper.insertAlarm", alarm);
 	}
 
 	@Override
 	public int selectNoReadAlarmCount(String userId) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.selectOne("AlarmMapper.selectNoReadAlarmCount", userId);
 	}
 
 	@Override
 	public List<Alarm> selectListAlarm(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList("AlarmMapper.selectListAlarm", search);
 	}
 
 	@Override
 	public int selectTotalCount(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.selectOne("AlarmMapper.selectTotalCount", search);
 	}
 
 	@Override
 	public void deleteAlarm(int alarmNo) throws Exception {
 		// TODO Auto-generated method stub
-		
+		sqlSession.delete("AlarmMapper.deleteAlarm", alarmNo);
 	}
 
 	@Override
 	public void updateAlarmRead(int alarmNo) throws Exception {
 		// TODO Auto-generated method stub
-		
+		sqlSession.update("AlarmMapper.updateAlarmRead", alarmNo);
 	}
 
 }

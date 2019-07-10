@@ -36,7 +36,7 @@ public class CommunityDaoImpl implements CommunityDao{
 	
 	@Override
 	public void InsertReport(Report report) throws Exception{
-		sqlSession.insert("CommunityMapper.InsertReport", report);
+		sqlSession.insert("CommunityMapper.insertReport", report);
 	}
 	
 	@Override

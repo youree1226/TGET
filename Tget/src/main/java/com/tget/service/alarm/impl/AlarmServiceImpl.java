@@ -1,5 +1,7 @@
 package com.tget.service.alarm.impl;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ public class AlarmServiceImpl implements AlarmService{
 		System.out.println(this.getClass());
 	}	
 	
+	//MetaData»≠ «œ±‚
 	@Override
 	public void addAlarm(Alarm alarm) throws Exception {
 		// TODO Auto-generated method stub
@@ -75,19 +78,27 @@ public class AlarmServiceImpl implements AlarmService{
 	@Override
 	public Map<String, Object> getAlarmList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		
+		List<Alarm> list = alarmDao.selectListAlarm(search);
+		int totalCount = alarmDao.selectTotalCount(search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("totalCount", totalCount);
+		
+		return map;
 	}
 
 	@Override
 	public void deleteAlarm(int alarmNo) throws Exception {
 		// TODO Auto-generated method stub
-		
+		alarmDao.deleteAlarm(alarmNo);
 	}
 
 	@Override
 	public void updateAlarmRead(int alarmNo) throws Exception {
 		// TODO Auto-generated method stub
-		
+		alarmDao.updateAlarmRead(alarmNo);
 	}
 
 }
