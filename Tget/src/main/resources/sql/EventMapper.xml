@@ -75,7 +75,7 @@
 <!-- 	 		event_date = #{string:DATE},  -->
 <!-- 	 		event_time = #{string:VARCHAR} -->
 		</set>
-		WHERE event_id = #{eventId}
+		WHERE event_name = #{eventName}
 	 </update>
 	 
 	 <select 	id="selectListInterestedEvent"	parameterType="string"	resultMap="eventSelectMap">
