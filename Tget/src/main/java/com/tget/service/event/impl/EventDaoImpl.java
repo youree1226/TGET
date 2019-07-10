@@ -93,6 +93,11 @@ public class EventDaoImpl implements EventDao {
 	}
 	
 	
+	public void deleteYoutubeVideo(int youtubeNo) throws Exception{
+		sqlSession.delete("EventMapper.deleteYoutubeVideo",youtubeNo);
+	}
+	
+	
 	public List<String> selectListYoutubeId(String eventName) throws Exception{
 		return sqlSession.selectList("EventMapper.selectListYoutubeId",eventName);
 	}
