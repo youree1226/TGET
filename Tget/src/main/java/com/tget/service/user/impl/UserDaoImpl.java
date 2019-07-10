@@ -1,5 +1,6 @@
 package com.tget.service.user.impl;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -39,62 +40,37 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public User selectUser(String userId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("UserMapper.selectUser", userId);
 	}
 
 	@Override
-	public Map<String, Object> selectUserList(Search search) throws Exception {
+	public List<User> selectUserList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Map<String, Object> selectUserbyadmin(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return  sqlSession.selectList("UserMapper.selectUserList", search);
 	}
 
 	@Override
 	public void updateUser(User user) throws Exception {
-		// TODO Auto-generated method stub
+		sqlSession.update("UserMapper.updateUser", user);
 		
 	}
 
-	@Override
-	public boolean checkDuplication(String userId) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	@Override
-	public User selectpoint(int point) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updatepoint(User user) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public User selectSellerEval(User user) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("UserMapper.selectSellerEval", user);
+	
 	}
 
 	@Override
 	public User selectSalesGrade(String sellerCode) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("UserMapper.selectSalesGrade", sellerCode);
 	}
 
 	@Override
 	public int selectTotalCount(Search search) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.selectOne("UserMapper.selectTotalCount", search);
 	}
 
 	
