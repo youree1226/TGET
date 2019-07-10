@@ -23,7 +23,7 @@ public interface TicketService {
 	
 	public Map<String,Object> getTicketList(Search search)	throws Exception;
 	
-	public SellProb getTicketSellProb(String eventId, int price) throws Exception;
+	public SellProb getTicketSellProb(Search search, int price) throws Exception;
 		
 	
 }

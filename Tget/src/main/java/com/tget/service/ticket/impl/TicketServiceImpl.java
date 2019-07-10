@@ -1,5 +1,6 @@
 package com.tget.service.ticket.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,16 +56,30 @@ public class TicketServiceImpl implements TicketService {
 	@Override
 	public Map<String, Object> getTicketList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		List<Ticket> list = ticketDao.selectListTicket(search);
-		SellProb sellprob = null;
+		List<Ticket> list = ticketDao.selectListTicket(search);				
+		SellProb sellProb = ticketDao.selectSellProb(search);
 		
-		return null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("sellProb", sellProb);
+		
+		return map;
 	}
 
 	@Override
-	public SellProb getTicketSellProb(String eventId, int price) throws Exception {
+	public SellProb getTicketSellProb(Search search, int price) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		SellProb sellProb = ticketDao.selectSellProb(search);
+		
+		if( price <= sellProb.getLowPrice() ) {
+			sellProb.setSellprob(0);
+		}else if( sellProb.getLowPrice()< price && price <= sellProb.getAvgPrice()) {
+			sellProb.setSellprob(1);
+		}else {
+			sellProb.setSellprob(2);
+		}	
+			
+		return sellProb;
 	}
 
 }

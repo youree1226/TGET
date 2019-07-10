@@ -94,3 +94,9 @@ ticketCode
 ticketType
 0=종이티켓
 1=전자티켓
+
+sellProb
+0=높음
+1=보통
+2=낮음
+

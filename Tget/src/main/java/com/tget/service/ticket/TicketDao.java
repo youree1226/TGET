@@ -3,6 +3,7 @@ package com.tget.service.ticket;
 import java.util.List;
 
 import com.tget.common.domain.Search;
+import com.tget.service.ticket.domain.SellProb;
 import com.tget.service.ticket.domain.Ticket;
 
 public interface TicketDao {
@@ -17,11 +18,13 @@ public interface TicketDao {
 	
 	public Ticket selectTicket(int ticketNo) throws Exception;
 	
-	public int selectHighPrice(String eventId) throws Exception;
+	/*public int selectHighPrice(Search search) throws Exception;
 	
-	public int selectLowPrice(String eventId) throws Exception;
+	public int selectLowPrice(Search search) throws Exception;
 	
-	public int selectTotalCount(Search search) throws Exception;
+	public int selectTotalCount(Search search) throws Exception;*/
+	
+	public SellProb selectSellProb(Search search) throws Exception;
 	
 
 }
