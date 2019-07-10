@@ -14,7 +14,7 @@ public class EventDaoTest {
 		// TODO Auto-generated method stub
 
 		Event event = new Event();
-		event.setEventId("testEventId");
+		event.setEventId("testId2");
 		event.setCategoryTwoNo(10000);
 		event.setEventDate(new Date(2012-1900,04-1,8));
 		event.setEventLocation("¼­¿ï");
@@ -23,7 +23,7 @@ public class EventDaoTest {
 		event.setViewCount(1);
 		System.out.println(event);
 		
-		eventDao.InsertEvent(event);
+		eventDao.insertEvent(event);
 		
 		//System.out.println(eventDao.selectEvent(event.getEventId()));
 		

@@ -39,15 +39,20 @@
 	<insert 	id="insertEvent"		parameterType="event" >
 	 	INSERT
 		INTO event( event_id, view_count, category_two_no, event_image, event_name, event_location, event_date, event_time) 
-		VALUES	 (	#{eventId} , 1 , #{categoryTwoNo} , #{categoryTwoNo} , #{eventImage:VARCHAR} , 
+		VALUES	 (	#{eventId} , 1 , #{categoryTwoNo} , #{eventImage:VARCHAR} , 
 							#{eventName} , #{eventLocation:VARCHAR} , #{eventDate} , #{eventTime} )
 	 </insert>
 	 
-	  <select 	id="selectEvent"	 parameterType="map" 	resultMap="eventSelectMap">
+	  <select 	id="selectEventByName"	 parameterType="string" 	resultMap="eventSelectMap">
 		 SELECT event_id, view_count, category_two_no, event_image, event_name, event_location, event_date, event_time
 		 FROM event
-		 <if test="searchKeyword == 'eventId'">WHERE event_id = #{eventId}</if>
-		 <if test="searchKeyword == 'eventName'">WHERE event_name = #{eventName}</if>
+		 WHERE event_name = #{eventName}
+	 </select>
+	 
+	 <select 	id="selectEventById"	 parameterType="string" 	resultMap="eventSelectMap">
+		 SELECT event_id, view_count, category_two_no, event_image, event_name, event_location, event_date, event_time
+		 FROM event
+		 WHERE event_id = #{eventId}		 
 	 </select>
 	 
 	 <select 	id="selectEventCount"	parameterType="map"	 resultType="int">
@@ -66,7 +71,7 @@
 	 <update	id="updateEvent"	parameterType="map" >
 	 	UPDATE event 
 	 	<set>
-	 		<if test="search.searchCondition == 0" >view_count = #{search.searchKeyword:NUMERIC}</if>
+	 		<if test="search.searchCondition == 0" >view_count = #{search.searchKeyno:NUMERIC}</if>
 			<if test="search.searchCondition == 1" >event_image = #{search.searchKeyword:VARCHAR}</if>
 <!-- 	 		event_id = #{string:VARCHAR},  -->
 <!-- 	 		category_two_no = #{string:NUMERIC}, -->
@@ -93,7 +98,7 @@
 						AND user_id = #{userId} )  countTable	
 	 </select>
 	 
-	 <insert 	id="InsertInterestedEvent"		parameterType="event" >
+	 <insert 	id="insertInterestedEvent"		parameterType="event" >
 	 	INSERT
 		INTO user_interested(interested_category_no, user_id, category_two_no, event_id) 
 		VALUES	 (	seq_user_Interested_no.nextval , #{userId} , #{categoryTwoNo} , #{eventId}  )
@@ -105,7 +110,7 @@
 	  	WHERE event_id = #{eventId} AND user_id = #{userId}
   	</delete>
 
-	 <insert 	id="InsertYoutubeVideo"		parameterType="map" >
+	 <insert 	id="insertYoutubeVideo"		parameterType="map" >
 	 	INSERT
 		INTO youtube( youtube_no , youtube_id , event_name) 
 		VALUES	 (seq_youtube_youtube_no.nextval , #{youtubeId} , #{eventName})
@@ -143,13 +148,13 @@
 <!-- 		 FROM recommended_event  -->
 <!-- 	 </select> -->
 	 
-	 <select 	id="selectRecommendedEvent"	parameterType="int"	resultType="recommEvent">
+	 <select 	id="selectRecommendedEvent"	parameterType="search"	 resultMap="recommEventSelectMap">
 		 SELECT recomm_event_no, event_name, video_name, recomm_event_name, recomm_event_detail
 		 FROM recommended_event
-		 <if test="recommEventNo != null" >WHERE recomm_event_no = #{recommEventNo} </if>
+		 <if test="searchCondition == 1" >WHERE recomm_event_no = #{searchKeyno} </if>
 	 </select>
 	 
-	 <insert 	id="InsertRecommendedEvent"		parameterType="recommEvent" >
+	 <insert 	id="insertRecommendedEvent"	parameterType="recommEvent" >
 	 	INSERT
 		INTO recommended_event( recomm_event_no, event_name, video_name, recomm_event_name, recomm_event_detail) 
 		VALUES	 (	#{recommEventNo} , #{eventName} , #{videoName}, #{recommEventName}, #{recommEventDetail} )
@@ -177,7 +182,7 @@
 <!-- 		 FROM category_two -->
 <!-- 	 </select> -->
 	 
-	 <insert 	id="InsertCategoryTwo"		parameterType="category" >
+	 <insert 	id="insertCategoryTwo"		parameterType="category" >
 	 	INSERT
 		INTO category_two( category_two_no,category_one_code,category_two_name,category_two_eng) 
 		VALUES	 (seq_category_two_no.nextval , #{categoryOneCode} , #{categoryTwoName}, #{categoryTwoEng} )
@@ -193,37 +198,37 @@
 		WHERE category_two_no = #{categoryTwoNo}
 	 </update>
 	 
-	 <select 	id="selectCategory"	parameterType="int"	resultMap="categorySelectMap">
-		 SELECT category_one_code,category_two_name,category_two_eng 
+	 <select 	id="selectCategory"	parameterType="string"	resultMap="categorySelectMap">
+		 SELECT category_one_code, category_two_name, category_two_eng, category_two_no
 		 FROM category_two
-		 <if test="recommEventNo != null" >WHERE category_two_no = #{categoryTwoNo}</if>
+		 <if test="value != null" >WHERE category_two_eng = #{categoryTwoEng}</if>
 	 </select>
 	 
-	 <select 	id="selectCategoryCount"	 parameterType="int"	resultType="int">
+	 <select 	id="selectCategoryCount"	 parameterType="string"	resultType="int">
 		SELECT COUNT(*)
 	  	FROM( SELECT category_one_code,category_two_name,category_two_eng 
 		 				FROM category_two
-		 				<if test="recommEventNo != null" >WHERE category_two_no = #{categoryTwoNo}</if>)  countTable	
+		 				<if test="categoryTwoEng != null" >WHERE category_two_eng = #{categoryTwoEng}</if>)  countTable	
 	 </select>
 	 
-	 <delete id="deleteCategoryTwo" parameterType="int">
+	 <delete id="deleteCategoryTwo" parameterType="string">
 	  	DELETE 
 	  	FROM category_two 
-	  	WHERE category_two_no = #{categoryTwoNo}
+	  	WHERE category_two_eng = #{categoryTwoEng}
   	</delete>
   	
-  	<select 	id="selectInterestedByUser"	parameterType="search"	 resultMap="eventSelectMap">
-		 SELECT user_id 
-		 FROM user_interested 
-		 <if test="searchCondition == 0" >WHERE interested_category_no = #{searchKeyword}</if>
+  	<select 	id="selectInterestedByUser"	parameterType="search"	 resultType="string">
+		 SELECT  user_id 
+		 FROM  user_interested 
+		 <if test="searchCondition == 0" >WHERE category_two_no = #{searchKeyword}</if>
 		 <if test="searchCondition == 1" >WHERE event_id = #{searchKeyword}</if>
 	 </select>
 	 
-	 <select 	id="selectInterestedByUserCount"	parameterType="search"	 resultMap="eventSelectMap">
+	 <select 	id="selectInterestedByUserCount"	parameterType="search"	 resultType="int">
 		 SELECT COUNT(*)
 	  	FROM( SELECT user_id 
 		 				FROM user_interested 
-		 				<if test="searchCondition == 0" >WHERE interested_category_no = #{searchKeyword}</if>
+		 				<if test="searchCondition == 0" >WHERE category_two_no = #{searchKeyword}</if>
 		 				<if test="searchCondition == 1" >WHERE event_id = #{searchKeyword}</if>)  countTable	
 	 </select>
 	 

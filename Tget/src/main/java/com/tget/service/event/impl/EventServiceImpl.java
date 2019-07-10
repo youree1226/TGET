@@ -12,6 +12,7 @@ import com.tget.common.domain.Search;
 import com.tget.service.event.domain.Category;
 import com.tget.service.event.domain.Event;
 import com.tget.service.event.domain.RecommEvent;
+import com.tget.service.user.domain.User;
 import com.tget.service.event.EventDao;
 import com.tget.service.event.EventService;
 
@@ -25,7 +26,7 @@ public class EventServiceImpl implements EventService{
 	
 
 	public void addEvent(Event event) throws Exception{
-		eventDao.InsertEvent(event);
+		eventDao.insertEvent(event);
 	}
 	
 	
@@ -44,7 +45,7 @@ public class EventServiceImpl implements EventService{
 	public void updateEventViewCount(int viewCount,String eventName) throws Exception{
 		Search search = new Search();
 		search.setSearchCondition("0");
-		search.setSearchKeyword(String.valueOf(viewCount));
+		search.setSearchKeyno(viewCount);
 		eventDao.updateEvent(search,eventName);
 	}
 	
@@ -63,7 +64,7 @@ public class EventServiceImpl implements EventService{
 	
 	
 	public void addInterestedEvent(String eventId, String userId) throws Exception{
-		eventDao.InsertInterestedEvent(eventId,userId);
+		eventDao.insertInterestedEvent(eventId,userId);
 	}
 	
 	
@@ -73,7 +74,7 @@ public class EventServiceImpl implements EventService{
 	
 	
 	public void addYoutubeVideo(String youtubeId, String eventName) throws Exception{ 
-		eventDao.InsertYoutubeVideo(youtubeId, eventName);
+		eventDao.insertYoutubeVideo(youtubeId, eventName);
 	}
 	
 	
@@ -93,7 +94,7 @@ public class EventServiceImpl implements EventService{
 	
 	
 	public void addRecommendedEvent(RecommEvent recommEvent) throws Exception{
-		eventDao.InsertRecommendedEvent(recommEvent);
+		eventDao.insertRecommendedEvent(recommEvent);
 	}
 	
 	
@@ -113,7 +114,7 @@ public class EventServiceImpl implements EventService{
 	
 	
 	public void addCategoryTwo(Category category) throws Exception{
-		eventDao.InsertCategoryTwo(category);
+		eventDao.insertCategoryTwo(category);
 	}
 	
 	
@@ -122,13 +123,18 @@ public class EventServiceImpl implements EventService{
 	}
 	
 	
-	public Category getCategory(int categoryTwoNo) throws Exception{
-		return eventDao.selectCategory(categoryTwoNo);
+	public Category getCategory(String categoryTwoEng) throws Exception{
+		return eventDao.selectCategory(categoryTwoEng);
 	}
 	
 	
-	public void deleteCategoryTwo(int categoryTwoNo) throws Exception{
-		eventDao.deleteCategoryTwo(categoryTwoNo);
+	public void deleteCategoryTwo(String categoryTwoEng) throws Exception{
+		eventDao.deleteCategoryTwo(categoryTwoEng);
+	}
+	
+	
+	public List<User> getInterestedByUser(Search search) throws Exception{
+		return eventDao.selectInterestedByUser(search);
 	}
 	
 	

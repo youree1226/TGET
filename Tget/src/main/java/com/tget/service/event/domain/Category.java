@@ -8,6 +8,7 @@ public class Category {
 	private int categoryTwoNo;
 	private char categoryOneCode;
 	private String categoryTwoName;
+	private String categoryTwoEng;
 	
 	///C
 	public Category() {
@@ -38,6 +39,16 @@ public class Category {
 	public void setCategoryTwoName(String categoryTwoName) {
 		this.categoryTwoName = categoryTwoName;
 	}
+
+
+	public String getCategoryTwoEng() {
+		return categoryTwoEng;
+	}
+
+	public void setCategoryTwoEng(String categoryTwoEng) {
+		this.categoryTwoEng = categoryTwoEng;
+	}
+
 
 	public String toString() {
 		return "[Category] categoryTwoNo : "+categoryTwoNo+", "
