@@ -4,30 +4,39 @@ import java.util.Map;
 
 import com.tget.common.domain.Search;
 import com.tget.service.community.domain.Content;
+import com.tget.service.community.domain.Reply;
 import com.tget.service.community.domain.Report;
 
 public interface CommunityService {
 	
-	
+		// 게시글 등록
 		public void addContent(Content content) throws Exception;
-
+		// 신고 등록
 		public void addReport(Report report) throws Exception;
-		
+		// 게시글 조회
 		public Content getContent(int contentNo) throws Exception;
-
+		// 댓글 등록 
+		public void addReply(Reply reply) throws Exception;
+		// 게시글 리스트 조회
 		public Map<String,Object> getContentList(Search search) throws Exception;
-		
+		// 댓글 리스트 조회
 		public Map<String,Object> getReplyList(Search search) throws Exception;
-
+		// 신고 리스트 조회
 		public Map<String,Object> getReportList(Search search) throws Exception; //getTotalCount, getReportList 
-		
+		// 게시글 수정
 		public void updateContent(Content content) throws Exception;
-		
+		// 댓글 수정
+		public void updateReply(Reply reply) throws Exception;
+		// 공감수
 		public void updateGoodCount(Map<String,Object> goodCount)throws Exception;
-		
+		// 비 공감수
 		public void updateBadCount(Map<String,Object> badCount)throws Exception;
-		
+		// 환불 게시판 환불 처리
 		public void updateRefund(Content content) throws Exception;
+		// 길 찾기
+		public Map<String,Object> getSearchLoad(String load) throws Exception;
+		// 날씨
+		public Map<String,Object> getSearchWeather(String weather) throws Exception;
 		
-		//날씨 어떻게 할지....
+		
 }

@@ -31,49 +31,9 @@ public class UserDaoImpl implements UserDao{
 		System.out.println(this.getClass());
 	}
 
-	///Method
-	public void addUser(User user) throws Exception {
-		sqlSession.insert("UserMapper.addUser", user);
-	}
-
-	public User getUser(String userId) throws Exception {
-		return sqlSession.selectOne("UserMapper.getUser", userId);
-	}
-	
-	public void updateUser(User user) throws Exception {
-		sqlSession.update("UserMapper.updateUser", user);
-	}
-
-
-	// �Խ��� Page ó���� ���� ��ü Row(totalCount)  return
-	public int getTotalCount(Search search) throws Exception {
-		return sqlSession.selectOne("UserMapper.getTotalCount", search);
-	}
-
-
-	
-
-	@Override
-	public boolean checkDuplication(String userId) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public void updatepoint(User user) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-
-	
-
-	
 	@Override
 	public void insertUser(User user) throws Exception {
-		// TODO Auto-generated method stub
+		sqlSession.insert("UserMapper.insertUser", user);
 		
 	}
 
@@ -96,9 +56,27 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
+	public void updateUser(User user) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean checkDuplication(String userId) throws Exception {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
 	public User selectpoint(int point) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void updatepoint(User user) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -118,4 +96,6 @@ public class UserDaoImpl implements UserDao{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 }

@@ -111,6 +111,12 @@
 		VALUES	 (seq_youtube_youtube_no.nextval , #{youtubeId} , #{eventName})
 	 </insert>	 
 	 
+	 <delete id="deleteYoutubeVideo" parameterType="int">
+	  	DELETE 
+	  	FROM youtube 
+	  	WHERE youtube_no = #{youtubeNo} 
+  	</delete>
+	 
 	 <select 	id="selectListYoutubeId"	parameterType="string"	resultType="list">
 		 SELECT youtube_id 
 		 FROM youtube

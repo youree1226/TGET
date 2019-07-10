@@ -22,6 +22,7 @@ public interface EventDao {
 	public void InsertInterestedEvent(String eventId, String userId) throws Exception;
 	public void deleteInterestedEvent(String eventId, String userId) throws Exception;
 	public void InsertYoutubeVideo(String youtubeId, String eventName) throws Exception;
+	public void deleteYoutubeVideo(int youtubeNo) throws Exception;
 	public List<String> selectListYoutubeId(String eventName) throws Exception;
 	public List<Event> selectListPopularEvent() throws Exception;
 	public List<RecommEvent> selectListRecommendedEvent() throws Exception;

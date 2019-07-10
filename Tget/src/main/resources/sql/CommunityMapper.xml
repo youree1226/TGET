@@ -24,6 +24,13 @@
 		<result property="badCount" 		column="bad_count" 			jdbcType="NUMERIC"/>
 		<result property="refundTranNo" 	column="refund_tran_no" 	jdbcType="NUMERIC"/>
 		<result property="refundCheck" 		column="refund_check" 		jdbcType="CHAR"/>
+		<result property="RepotNo" 			column="report_no" 			jdbcType="NUMERIC"/>
+		<result property="ReportReasonCode" column="report_reason_code" jdbcType="CHAR"/>
+		<result property="ReportCheck" 		column="report_check" 		jdbcType="CHAR"/>
+		<result property="ReportCode" 		column="report_code" 		jdbcType="CHAR"/>
+		<result property="ReplyNo" 			column="reply_no" 			jdbcType="NUMERIC"/>
+		<result property="ReplyBody" 		column="reply_body" 		jdbcType="VARCHAR"/>
+		
 	</resultMap>
 	
 	<!-- SQL : INSERT -->

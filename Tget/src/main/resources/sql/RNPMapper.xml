@@ -24,49 +24,50 @@
 		<result property="event_time" 				column="update_point" 					jdbcType="NUMERIC" />
 	</resultMap>
 	
-	<!-- SQL : INSERT -->
-	<insert 	id="InsertReview"		parameterType="review" >
-	 	INSERT
-		INTO transaction( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
-		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
-	 </insert>
+
+<!-- 	<insert 	id="InsertReview"		parameterType="review" > -->
+<!-- 	 	INSERT -->
+<!-- 		INTO transaction( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date)  -->
+<!-- 		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} ,  -->
+<!-- 							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE ) -->
+<!-- 	 </insert> -->
 	 
-	 <select 	id="selectPointHistory"	parameterType="string"	resultType="pointHistory">
+	 <select 	id="selectReviewList"	 parameterType="search"	 resultType="review">
 		SELECT
-		u.user_id , u.user_name , u.password , u.role ,  u.cell_phone ,  u.addr , u.email , u.reg_date, k.kakao_id, k.kaccount_email 
-		FROM users u, kakao k
-		WHERE u.user_id = #{value} AND u.user_id = k.user_id(+)
-	 </select>
-	 
-	 <select 	id="selectReviewList"	parameterType="search"	 resultType="review">
-		SELECT
-		u.user_id , u.user_name , u.password , u.role ,  u.cell_phone ,  u.addr , u.email , u.reg_date, k.kakao_id, k.kaccount_email 
-		FROM users u, kakao k
-		WHERE u.user_id = #{value} AND u.user_id = k.user_id(+)
+		review_score, review_body, review_reg_date, buyer_id, seller_id, tran_no
+		FROM transaction
+		<if test="searchCondition == 0">WHERE buyer_id = #{buyerId}</if>
+		<if test="searchCondition == 1">WHERE seller_id = #{sellerId}</if>
 	 </select>
 	 
 	 <select 	id="selectReview"	parameterType="int"	resultType="review">
 		SELECT
-		u.user_id , u.user_name , u.password , u.role ,  u.cell_phone ,  u.addr , u.email , u.reg_date, k.kakao_id, k.kaccount_email 
-		FROM users u, kakao k
-		WHERE u.user_id = #{value} AND u.user_id = k.user_id(+)
+		review_score, review_body, review_reg_date, buyer_id, seller_id
+		FROM transaction
+		WHERE tran_no = #{tranNo}
 	 </select>
 	 
-	 <update	id="updateReview"	parameterType="review" >
-	 	UPDATE category_two 
+	 <update	id="updateReview"  parameterType="review" >
+	 	UPDATE transaction 
 	 	<set>
-	 		category_one_code	= #{categoryOneCode},
-	 		category_two_name = #{categoryTwoName},
-	 		category_two_eng = #{categoryTwoEng}
+	 		review_score	= #{score},
+	 		review_body = #{reviewBody},
+	 		review_reg_date = SYSDATE
 		</set>
-		WHERE category_two_no = #{categoryTwoNo}
+		WHERE tran_no = #{tranNo}
 	 </update>
+	 
+	 <select 	id="selectPointHistory"	parameterType="string"	resultType="pointHistory">
+		SELECT
+		point_history_no , user_id , point_update_code , reg_date , tran_no, total_point, update_point
+		FROM point_history
+		WHERE user_id = #{userId}
+	 </select>
 	 
 	 <insert 	id="insertPointHistory"		parameterType="pointHistory" >
 	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
-		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+		INTO point_history( point_history_no , user_id , point_update_code , reg_date , tran_no, total_point, update_point) 
+		VALUES	 (	seq_point_history_no.nextval , #{userId} , #{pointUpdateCode} , SYSDATE, 
+							#{tranNo} , #{totalPoint} , #{updatePoint}  )
 	 </insert>
 </mapper>
