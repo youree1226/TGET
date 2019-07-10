@@ -17,7 +17,7 @@ public class User {
 	private String local;
 	private int point;
 	private String userStatement;
-	private String lastConnDate;
+	private Date lastConnDate;
 	private String kakaoId;
 	private String naverId;
 	private String facebookId;
@@ -28,7 +28,7 @@ public class User {
 	private int salesAmount;
 	private int salesCount;
 	private String accountBank;
-	private int accountNo;
+	private String accountNo;
 	//C
 	
 	public User() {
@@ -147,12 +147,12 @@ public class User {
 	}
 
 
-	public String getLastConnDate() {
+	public Date getLastConnDate() {
 		return lastConnDate;
 	}
 
 
-	public void setLastConnDate(String lastConnDate) {
+	public void setLastConnDate(Date lastConnDate) {
 		this.lastConnDate = lastConnDate;
 	}
 
@@ -257,12 +257,12 @@ public class User {
 	}
 
 
-	public int getAccountNo() {
+	public String getAccountNo() {
 		return accountNo;
 	}
 
 
-	public void setAccountNo(int accountNo) {
+	public void setAccountNo(String accountNo) {
 		this.accountNo = accountNo;
 	}
 

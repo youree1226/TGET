@@ -23,10 +23,12 @@
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >
-	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
-		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+	 	insert 
+	 	into 
+	 	transaction(tran_no, ticket_no, event_id, event_name, seller_id, seller_nickname, buyer_id,
+	 				 buyer_nickname, order_amount, total_price, payment_option, tran_code, delivery_add ) 
+                values( seq_transaction_tran_no.nextval , 10001 , 'testId' , 'EXO' , 'seller' , '판매자얌' ,
+                		 'buyer' , '구매자얌' , 2 , 500000 , '1' , '0' , '서울 강남')
 	 </insert>
 	 
 </mapper>
