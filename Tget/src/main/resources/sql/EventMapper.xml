@@ -36,14 +36,14 @@
 	</resultMap>
 	
 	
-	<insert 	id="InsertEvent"		parameterType="event" >
+	<insert 	id="insertEvent"		parameterType="event" >
 	 	INSERT
 		INTO event( event_id, view_count, category_two_no, event_image, event_name, event_location, event_date, event_time) 
 		VALUES	 (	#{eventId} , 1 , #{categoryTwoNo} , #{categoryTwoNo} , #{eventImage:VARCHAR} , 
 							#{eventName} , #{eventLocation:VARCHAR} , #{eventDate} , #{eventTime} )
 	 </insert>
 	 
-	  <select 	id="selectEvent"	parameterType="map" 	resultMap="eventSelectMap">
+	  <select 	id="selectEvent"	 parameterType="map" 	resultMap="eventSelectMap">
 		 SELECT event_id, view_count, category_two_no, event_image, event_name, event_location, event_date, event_time
 		 FROM event
 		 <if test="searchKeyword == 'eventId'">WHERE event_id = #{eventId}</if>

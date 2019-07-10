@@ -141,7 +141,7 @@ public class CommunityServiceImpl implements CommunityService{
 	public Map<String, Object> getSearchLoad(String load) throws Exception {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", load );
+		map.put("load", load );
 		
 		return map;
 	}
@@ -151,7 +151,7 @@ public class CommunityServiceImpl implements CommunityService{
 	public Map<String, Object> getSearchWeather(String weather) throws Exception {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", weather );
+		map.put("weather", weather );
 		
 		return map;
 	}	
