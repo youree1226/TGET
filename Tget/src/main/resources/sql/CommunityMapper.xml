@@ -28,16 +28,16 @@
 	</resultMap>
 	
 	<resultMap id="reportSelectMap" type="report" >
-		<result property="repotNo" 			column="report_no" 			jdbcType="NUMERIC"/>
+		<result property="reportNo" 		column="report_no" 			jdbcType="NUMERIC"/>
 		<result property="whiteId" 			column="white_id" 			jdbcType="VARCHAR"/>
 		<result property="whiteNickName" 	column="white_nickname" 	jdbcType="VARCHAR"/>
 		<result property="blackId" 			column="black_id" 			jdbcType="VARCHAR"/>
-		<result property="reportReasonCode" column="report_reason_code" jdbcType="CHAR"/>
-		<result property="regDate" 			column="reg_date" 			jdbcType="DATE"/>
 		<result property="contentNo" 		column="content_no" 		jdbcType="NUMERIC"/>
 		<result property="replyNo" 			column="reply_no" 			jdbcType="NUMERIC"/>
-		<result property="check" 			column="check" 				jdbcType="CHAR"/>
+		<result property="reportReasonCode" column="report_reason_code" jdbcType="CHAR"/>
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE"/>
 		<result property="reportCode" 		column="report_code" 		jdbcType="CHAR"/>
+		<result property="check" 			column="check" 				jdbcType="CHAR"/>
 			
 	</resultMap>
 	
@@ -63,13 +63,38 @@
 	 <insert 	id="insertReport"		parameterType="report">
 	 	INSERT
 	 	INTO report
-	 	VALUES	(	seq_report_report_no.nextval, #{whiteId}, #{whiteNickName}, #{blackId}, #{reportReasonCode}, 
-	 				SYSDATE, #{contentNo}, #{replyNo}, #{check}, #{reportCode}	)
-	 				<!-- <if test="contentNo==0">null</if>
-					<if test="contentNo!=0">#{contentNo}</if> ,
-					<if test="replyNo==0">null</if>
-					<if test="replyNo!=0">#{replyNo}</if> , --> 		
-	 
+	 	VALUES	(	seq_report_report_no.nextval, #{whiteId}, #{whiteNickName}, #{blackId}, #{reportReasonCode},
+	 				SYSDATE, #{contentNo}, #{replyNo}, #{check}, #{reportCode})
 	 </insert>
 	 
+	 <insert	id="insertReply"		parameterType="reply">
+	 	INSERT
+	 	INTO reply
+	 	VALUES	( 	seq_reply_reply_no.nextval, #{userId}, #{userNickName}, #{contentNo}, #{replyBody}, SYSDATE)
+	 </insert>
+	 	<!-- <if test="contentNo==0">null</if>
+					<if test="contentNo!=0">#{contentNo}</if> ,
+					<if test="replyNo==0">null</if>
+					<if test="replyNo!=0">#{replyNo}</if> , --> 
+	
+	<!-- SQL : SELECT ONE -->
+	 <select 	id="selectContent"	parameterType="content"	resultMap="contentSelectMap">
+		SELECT
+		content_no , user_id, user_nickname, content_name, empty_clob(), file_name, video_name, SYSDATE, view_count,
+		board_code, content_code, open, good_count, bad_count, refund_tran_no, refund_check  		
+		FROM content 
+		WHERE content_no = #{value}
+	 </select>
+	 
+	 <!-- SQL :  UPDATE-->
+	 <update	id="updateContent"	parameterType="content"  >
+	   	UPDATE content
+	   	<set>
+			content_name	= #{contentName},
+			content_Body = empty_clob(),
+			file_name	= #{fileName},
+			video_name = #{videoName}
+	   	</set>
+	   	WHERE content_no = #{contentNo}
+	 </update>
 </mapper>
