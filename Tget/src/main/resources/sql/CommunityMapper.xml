@@ -7,7 +7,7 @@
 <mapper namespace="CommunityMapper">
  	
  	
-	<resultMap id="communitySelectMap" type="community">
+	<resultMap id="communitySelectMap" type="content">
 		<result property="contentNo" 		column="content_no" 		jdbcType="NUMERIC"/>
 		<result property="userId"			column="user_id" 			jdbcType="VARCHAR" />
 		<result property="userNickName" 	column="user_nickname" 		jdbcType="VARCHAR" />
