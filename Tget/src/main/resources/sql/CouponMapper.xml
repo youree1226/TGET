@@ -20,21 +20,21 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="insertCoupon"		parameterType="coupon" >
 	 	INSERT
-		INTO users( seq_coupon_coupon_no.nextval, coupon_code , user_id , coupon_use_date , coupon_reg_date, coupon_statement) 
-		VALUES	 (	#{couponNo} , #{couponCode} , #{userId} , #{couponUseDate} , 
-							SYSDATE , #{couponStatement} )
+		INTO coupon( coupon_no , coupon_code , user_id , coupon_use_date , coupon_reg_date, coupon_statement) 
+		VALUES	 (	seq_coupon_coupon_no.nextval,  #{couponCode} , #{userId} ,  
+							SYSDATE , SYSDATE, #{couponStatement} )
 	 </insert>
 	 
 	   <select 	id="selectCoupon"	parameterType="string"	resultMap="couponSelectMap">
 		SELECT
-		coupon_no , coupon_code , user_id , coupon_use_date , coupon_reg_date, couponStatement
+		coupon_no , coupon_code , user_id , coupon_use_date , coupon_reg_date, coupon_statement
 	 		
 		FROM coupon 
-		WHERE coupon_no = #{value}
+		WHERE coupon_no = #{couponNo}
 	 </select>
 	 
 	 <update	id="updateCoupon"	parameterType="coupon" >
-	   	UPDATE users
+	   	UPDATE coupon
 	   	<set>
 	   		coupon_no 	= #{couponNo} ,
 	   		coupon_code	= #{couponCode} ,
@@ -45,7 +45,7 @@
 	   		coupon_statement = #{couponStatement}
 	   		
 	   	</set>
-	   	WHERE coupon_no = #{counponNo}
+	   	WHERE coupon_no = #{couponNo}
 	 </update>
 	 
 </mapper>

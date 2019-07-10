@@ -13,17 +13,8 @@ import com.tget.service.user.domain.User;
 import com.tget.service.user.UserService;
 
 
-/*
- *	FileName :  UserServiceTest.java
- * �� JUnit4 (Test Framework) �� Spring Framework ���� Test( Unit Test)
- * �� Spring �� JUnit 4�� ���� ���� Ŭ������ ���� ������ ��� ���� �׽�Ʈ �ڵ带 �ۼ� �� �� �ִ�.
- * �� @RunWith : Meta-data �� ���� wiring(����,DI) �� ��ü ����ü ����
- * �� @ContextConfiguration : Meta-data location ����
- * �� @Test : �׽�Ʈ ���� �ҽ� ����
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 
-//==> Meta-Data �� �پ��ϰ� Wiring ����...
 //@ContextConfiguration(locations = { "classpath:config/context-*.xml" })
 @ContextConfiguration	(locations = {	"classpath:config/context-common.xml",
 																	"classpath:config/context-aspect.xml",
@@ -32,15 +23,58 @@ import com.tget.service.user.UserService;
 //@ContextConfiguration(locations = { "classpath:config/context-common.xml" })
 public class UserServiceTest {
 
-	//==>@RunWith,@ContextConfiguration �̿� Wiring, Test �� instance DI
+
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 
-	@Test
+	//@Test
 	public void testAddUser() throws Exception {
 		
 		User user = new User();
+		user.setUserId("testUserId2");
+		user.setUserName("testUserName2");
+		user.setPassword("testPasswd");
+		user.setPhone(123);
+		user.setNickName("닉2");
+		user.setAddress("주소");
+		user.setPostalCode(1);
+		user.setRole("1");
+		user.setLocal("1");
+		user.setPoint(1);
+		user.setUserStatement("1");
+	/*	user.setKakaoId("1");
+		user.setNaverId("1");
+		user.setFacebookId("1");*/
+		
+		userService.addUser(user);
+		
+		user = userService.getUser("testUserId2");
+
+	
+		//System.out.println(user);
+		
+
+		Assert.assertEquals("testUserId2", user.getUserId());
+		Assert.assertEquals("testUserName2", user.getUserName());
+		Assert.assertEquals("testPasswd", user.getPassword());
+		Assert.assertEquals(123, user.getPhone());
+		Assert.assertEquals("닉2", user.getNickName());
+		Assert.assertEquals("주소", user.getAddress());
+		Assert.assertEquals(1, user.getPostalCode());
+		Assert.assertEquals("1", user.getRole());
+		Assert.assertEquals("1", user.getLocal());
+		Assert.assertEquals(1, user.getPoint());
+		Assert.assertEquals("1", user.getUserStatement());
+
+	
+	}
+	
+	//@Testasd
+	/*public void testGetUser() throws Exception {
+		
+		User user = new User();
+		
 		user.setUserId("testUserId");
 		user.setUserName("testUserName");
 		user.setPassword("testPasswd");
@@ -52,117 +86,76 @@ public class UserServiceTest {
 		user.setLocal("1");
 		user.setPoint(1);
 		user.setUserStatement("1");
-		user.setLastConnDate("1");
-		userService.addUser(user);
 		
+		userService.addUser(user);
 		user = userService.getUser("testUserId");
 
-		//==> console Ȯ��
-		//System.out.println(user);
+
+		System.out.println(user);
 		
-		//==> API Ȯ��
+
 		Assert.assertEquals("testUserId", user.getUserId());
 		Assert.assertEquals("testUserName", user.getUserName());
 		Assert.assertEquals("testPasswd", user.getPassword());
 		Assert.assertEquals(111-2222-3333, user.getPhone());
 		Assert.assertEquals("닉", user.getNickName());
-		Assert.assertEquals("주소", user.getAddress());
+		Assert.assertEquals("주", user.getAddress());
 		Assert.assertEquals(1, user.getPostalCode());
 		Assert.assertEquals("1", user.getRole());
 		Assert.assertEquals("1", user.getLocal());
 		Assert.assertEquals(1, user.getPoint());
 		Assert.assertEquals("1", user.getUserStatement());
-		Assert.assertEquals("1", user.getLastConnDate());
-		
-	}
-/*	
-	//@Test
-	public void testGetUser() throws Exception {
-		
-		User user = new User();
-		//==> �ʿ��ϴٸ�...
-//			user.setUserId("testUserId");
-//			user.setUserName("testUserName");
-//			user.setPassword("testPasswd");
-//			user.setSsn("1111112222222");
-//			user.setPhone("111-2222-3333");
-//			user.setAddr("��⵵");
-//			user.setEmail("test@test.com");
-		
-		user = userService.getUser("testUserId");
+	}*/
 
-		//==> console Ȯ��
-		//System.out.println(user);
-		
-		//==> API Ȯ��
-		Assert.assertEquals("testUserId", user.getUserId());
-		Assert.assertEquals("testUserName", user.getUserName());
-		Assert.assertEquals("testPasswd", user.getPassword());
-		Assert.assertEquals("111-2222-3333", user.getPhone());
-		Assert.assertEquals("��⵵", user.getAddr());
-		Assert.assertEquals("test@test.com", user.getEmail());
-
-		Assert.assertNotNull(userService.getUser("user02"));
-		Assert.assertNotNull(userService.getUser("user05"));
-	}
-	
-	//@Test
+	@Test
 	 public void testUpdateUser() throws Exception{
 		 
-		User user = userService.getUser("testUserId");
+		User user = userService.getUser("testUserId2");
 		Assert.assertNotNull(user);
 		
-		Assert.assertEquals("testUserName", user.getUserName());
-		Assert.assertEquals("111-2222-3333", user.getPhone());
-		Assert.assertEquals("��⵵", user.getAddr());
-		Assert.assertEquals("test@test.com", user.getEmail());
+		Assert.assertEquals("testUserId2", user.getUserId());
+		Assert.assertEquals("testUserName2", user.getUserName());
 
+		
+		
 		user.setUserName("change");
-		user.setPhone("777-7777-7777");
-		user.setAddr("change");
-		user.setEmail("change@change.com");
+		user.setNickName("chachachange");
 		
 		userService.updateUser(user);
 		
-		user = userService.getUser("testUserId");
+		user = userService.getUser("testUserId2");
 		Assert.assertNotNull(user);
 		
-		//==> console Ȯ��
-		//System.out.println(user);
+		System.out.println(user);
 			
-		//==> API Ȯ��
 		Assert.assertEquals("change", user.getUserName());
-		Assert.assertEquals("777-7777-7777", user.getPhone());
-		Assert.assertEquals("change", user.getAddr());
-		Assert.assertEquals("change@change.com", user.getEmail());
+		Assert.assertEquals("chachachange", user.getNickName());
+	
 	 }
 	 
+}
 	//@Test
-	public void testCheckDuplication() throws Exception{
+//	public void testCheckDuplication() throws Exception{
 
-		//==> �ʿ��ϴٸ�...
 //			User user = new User();
 //			user.setUserId("testUserId");
 //			user.setUserName("testUserName");
 //			user.setPassword("testPasswd");
 //			user.setSsn("1111112222222");
 //			user.setPhone("111-2222-3333");
-//			user.setAddr("��⵵");
+//			user.setAddr("  ");
 //			user.setEmail("test@test.com");
 //			
 //			userService.addUser(user);
 		
-		//==> console Ȯ��
 		//System.out.println(userService.checkDuplication("testUserId"));
 		//System.out.println(userService.checkDuplication("testUserId"+System.currentTimeMillis()) );
 	 	
-		//==> API Ȯ��
-		Assert.assertFalse( userService.checkDuplication("testUserId") );
+	/*	Assert.assertFalse( userService.checkDuplication("testUserId") );
 	 	Assert.assertTrue( userService.checkDuplication("testUserId"+System.currentTimeMillis()) );
 		 	
 	}
 	
-	 //==>  �ּ��� Ǯ�� �����ϸ�....
 	 //@Test
 	 public void testGetUserListAll() throws Exception{
 		 
@@ -174,7 +167,6 @@ public class UserServiceTest {
 	 	List<Object> list = (List<Object>)map.get("list");
 	 	Assert.assertEquals(3, list.size());
 	 	
-		//==> console Ȯ��
 	 	//System.out.println(list);
 	 	
 	 	Integer totalCount = (Integer)map.get("totalCount");
@@ -191,7 +183,6 @@ public class UserServiceTest {
 	 	list = (List<Object>)map.get("list");
 	 	Assert.assertEquals(3, list.size());
 	 	
-	 	//==> console Ȯ��
 	 	//System.out.println(list);
 	 	
 	 	totalCount = (Integer)map.get("totalCount");
@@ -211,7 +202,6 @@ public class UserServiceTest {
 	 	List<Object> list = (List<Object>)map.get("list");
 	 	Assert.assertEquals(1, list.size());
 	 	
-		//==> console Ȯ��
 	 	//System.out.println(list);
 	 	
 	 	Integer totalCount = (Integer)map.get("totalCount");
@@ -226,7 +216,6 @@ public class UserServiceTest {
 	 	list = (List<Object>)map.get("list");
 	 	Assert.assertEquals(0, list.size());
 	 	
-		//==> console Ȯ��
 	 	//System.out.println(list);
 	 	
 	 	totalCount = (Integer)map.get("totalCount");
@@ -246,7 +235,6 @@ public class UserServiceTest {
 	 	List<Object> list = (List<Object>)map.get("list");
 	 	Assert.assertEquals(3, list.size());
 	 	
-		//==> console Ȯ��
 	 	//System.out.println(list);
 	 	
 	 	Integer totalCount = (Integer)map.get("totalCount");
@@ -261,10 +249,8 @@ public class UserServiceTest {
 	 	list = (List<Object>)map.get("list");
 	 	Assert.assertEquals(0, list.size());
 	 	
-		//==> console Ȯ��
 	 	//System.out.println(list);
 	 	
 	 	totalCount = (Integer)map.get("totalCount");
 	 	System.out.println(totalCount);
 	 }	 */
-}
