@@ -28,12 +28,10 @@ import com.tget.service.community.domain.Content;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { 
-									"classpath:config/context-aspect.xml",
 									"classpath:config/context-common.xml",
+									"classpath:config/context-aspect.xml",
 									"classpath:config/context-mybatis.xml",
-									"classpath:config/context-transaction.xml",
-									"classpath:sql/CommunityMapper.xml",
-									"classpath:sql/mybatis-config.xml"})
+									"classpath:config/context-transaction.xml" })
 public class CommunityServiceTest {
 
 	//==>@RunWith,@ContextConfiguration ภฬฟ๋ Wiring, Test วา instance DI
