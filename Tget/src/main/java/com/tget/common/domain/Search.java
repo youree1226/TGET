@@ -8,9 +8,8 @@ public class Search {
 	private int currentPage;
 	private String searchCondition;
 	private String searchKeyword;
-	private String menu;
-	private String sortPrice;
-	private String tranWhere;
+	private int searchKeyno;
+	private String menu;	
 	private int pageSize;
 	//==> 리스트화면 currentPage에 해당하는 회원정보를 ROWNUM 사용 SELECT 위해 추가된 Field 
 	//==> UserMapper.xml 의 
@@ -30,21 +29,12 @@ public class Search {
 	public void setMenu(String menu) {
 		this.menu = menu;
 	}
-
-	public String getSortPrice() {
-		return sortPrice;
+	public int getSearchKeyno() {
+		return searchKeyno;
 	}
 
-	public void setSortPrice(String sortPrice) {
-		this.sortPrice = sortPrice;
-	}
-
-	public String getTranWhere() {
-		return tranWhere;
-	}
-
-	public void setTranWhere(String tranWhere) {
-		this.tranWhere = tranWhere;
+	public void setSearchKeyno(int searchKeyno) {
+		this.searchKeyno = searchKeyno;
 	}
 
 	///Method
@@ -88,8 +78,8 @@ public class Search {
 	@Override
 	public String toString() {
 		return "Search [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchKeyword="
-				+ searchKeyword + ", menu=" + menu + ", sortPrice=" + sortPrice + ", tranWhere=" + tranWhere
-				+ ", pageSize=" + pageSize + ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum + "]";
+				+ searchKeyword + ", searchKeyno=" + searchKeyno + ", menu=" + menu + ", pageSize=" + pageSize
+				+ ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum + "]";
 	}
 
 	
