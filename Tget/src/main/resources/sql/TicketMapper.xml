@@ -29,4 +29,11 @@
 							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
 	 </insert>
 	 
+	 
+	<!-- select 
+	max(ticket_price) highPrice, 
+	min(ticket_price) lowPrice,
+	round(avg(ticket_price),0) avgPrice ,
+	count(*) totalCount 
+	from ticket -->
 </mapper>

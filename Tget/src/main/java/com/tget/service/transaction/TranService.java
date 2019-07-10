@@ -20,9 +20,9 @@ public interface TranService {
 	
 	public Map<String,Object> getTranList(Search search) throws Exception;
 	//배송조회
-	public Map<String,Object> getTranWhere(Transaction transaction) throws Exception;
+	public Transaction getTranWhere(Transaction transaction) throws Exception;
 	//운송장이미지출력	
-	public Map<String,Object> getDeliveryImageInfo(File file) throws Exception;
+	public Transaction getDeliveryImageInfo(File file) throws Exception;
 	
 	public String deposit(String userId) throws Exception;
 	
