@@ -24,35 +24,34 @@ public class RNPServiceImpl implements RNPService{
 
 	///M
 	public void addReview(Review review) throws Exception{
-		rNPDao.InsertReview(review);
+		rNPDao.updateReview(review);
 	}
 	
-	public Map<String,Object> getPointHistory() throws Exception{
-		return rNPDao.selectPointHistory();
+	public Map<String,Object> getPointHistory(String userId) throws Exception{
+		//rNPDao.selectPointHistory(userId);
+		return null;
 	}
 	
-	public Map<String,Object> getReviewList() throws Exception{
-		return rNPDao.selectReviewList();
+	public Map<String,Object> getReviewList(String buyerId) throws Exception{
+		//rNPDao.selectReviewList(buyerId);
+		return null;
 	}
 	
-	public Map<String,Object> getSellerEstimationList() throws Exception{
-		return rNPDao.selectSellerEstimationList();
+	public Map<String,Object> getSellerEstimationList(String sellerId) throws Exception{
+		//rNPDao.selectSellerEstimationList(sellerId);
+		return null;
 	}
 	
 	public void updateReview(Review review) throws Exception{
 		rNPDao.updateReview(review);
 	}
 	
-	public void updatePoint(PointHistory pointHistory) throws Exception{
-		rNPDao.updatePoint(pointHistory);
+	public void addPoint(PointHistory pointHistory) throws Exception{
+		rNPDao.insertPointHistory(pointHistory);
 	}
 	
-	public void getPoint() throws Exception{
-		rNPDao.selectPoint();
-	}
-	
-	public Review getReview() throws Exception{
-		return rNPDao.selectReview();
+	public Review getReview(int tranNo) throws Exception{
+		return rNPDao.selectReview(tranNo);
 	}
 	
 }
