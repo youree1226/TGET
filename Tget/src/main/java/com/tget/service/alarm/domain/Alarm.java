@@ -5,6 +5,7 @@ import java.sql.Date;
 public class Alarm {
 
 	private int alarmNo;
+	private int alarmCode;
 	private String alarmBody;
 	private Date regDate;
 	private String userId;
@@ -54,10 +55,26 @@ public class Alarm {
 		this.readCode = readCode;
 	}
 
+	public int getAlarmCode() {
+		return alarmCode;
+	}
+
+	public void setAlarmCode(int alarmCode) {
+		this.alarmCode = alarmCode;
+	}
+
+	public String getReadCode() {
+		return readCode;
+	}
+
+	public void setReadCode(String readCode) {
+		this.readCode = readCode;
+	}
+
 	@Override
 	public String toString() {
-		return "Alarm [alarmNo=" + alarmNo + ", alarmBody=" + alarmBody + ", regDate=" + regDate + ", userId=" + userId
-				+ ", readCode=" + readCode + "]";
+		return "Alarm [alarmNo=" + alarmNo + ", alarmCode=" + alarmCode + ", alarmBody=" + alarmBody + ", regDate="
+				+ regDate + ", userId=" + userId + ", readCode=" + readCode + "]";
 	}
 	
 	

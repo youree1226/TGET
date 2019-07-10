@@ -7,9 +7,9 @@ import com.tget.service.alarm.domain.Alarm;
 
 public interface AlarmDao {
 	
-	public void addAlarm(Alarm alarm) throws Exception;
+	public void insertAlarm(Alarm alarm) throws Exception;
 	
-	public int getNoReadAlarmCount(String userId) throws Exception;
+	public int selectNoReadAlarmCount(String userId) throws Exception;
 
 	public List<Alarm> selectListAlarm(Search search) throws Exception;
 	
