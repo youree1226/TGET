@@ -47,6 +47,12 @@ public class CommunityServiceImpl implements CommunityService{
 		// TODO Auto-generated method stub
 		communityDao.InsertReport(report);
 	}
+	
+	@Override
+	public void addReply(Reply reply) throws Exception {
+		// TODO Auto-generated method stub
+		communityDao.InsertReply(reply);
+	}
 
 
 	@Override
@@ -103,6 +109,12 @@ public class CommunityServiceImpl implements CommunityService{
 		// TODO Auto-generated method stub
 		communityDao.updateContent(content);
 	}
+	
+	@Override
+	public void updateReply(Reply reply) throws Exception {
+		// TODO Auto-generated method stub
+		communityDao.updateReply(reply);
+	}
 
 
 	@Override
@@ -123,4 +135,24 @@ public class CommunityServiceImpl implements CommunityService{
 		// TODO Auto-generated method stub
 		communityDao.updateRefund(content);
 	}
+
+
+	@Override
+	public Map<String, Object> getSearchLoad(String load) throws Exception {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", load );
+		
+		return map;
+	}
+
+
+	@Override
+	public Map<String, Object> getSearchWeather(String weather) throws Exception {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", weather );
+		
+		return map;
+	}	
 }

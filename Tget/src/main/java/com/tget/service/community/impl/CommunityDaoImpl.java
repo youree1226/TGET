@@ -40,8 +40,18 @@ public class CommunityDaoImpl implements CommunityDao{
 	}
 	
 	@Override
+	public void InsertReply(Reply reply) throws Exception{
+		sqlSession.insert("CommunityMapper.InsertReply", reply);
+	}
+	
+	@Override
 	public void deleteContent(int contentNo) throws Exception{
 		sqlSession.delete("CommunityMapper.deleteContent", contentNo);
+	}
+	
+	@Override
+	public void deleteReply(int replyNo) throws Exception{
+		sqlSession.delete("CommunityMapper.deleteReply", replyNo);
 	}
 	
 	@Override
@@ -57,6 +67,11 @@ public class CommunityDaoImpl implements CommunityDao{
 	@Override
 	public void updateContent(Content content) throws Exception {
 		sqlSession.update("CommunityMapper.updateContent", content);
+	}
+	
+	@Override
+	public void updateReply(Reply reply) throws Exception {
+		sqlSession.update("CommunityMapper.updateReply", reply);
 	}
 	
 	@Override

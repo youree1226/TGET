@@ -10,32 +10,36 @@ import com.tget.service.community.domain.Report;
 
 
 public interface CommunityDao {
-	
+	// 게시글 등록
 	public void InsertContent(Content content) throws Exception;
-	
+	// 신고 등록
 	public void InsertReport(Report report) throws Exception;
-	
+	// 게시글 수정
 	public void updateContent(Content content) throws Exception;
-	
+	// 게시글 삭제
 	public void deleteContent(int contentNo) throws Exception;
-	
+	// 게시글 상세조회
     public Content selectContent(int contentNo) throws Exception;
-
+    // 게시글 리스트 조회
     public List<Content> selectListContent(Search search) throws Exception;
-    
-    public List<Reply> selectListReply(Search search) throws Exception;
-
-    // 날씨, 길 찾기 어떻게 할까...++++++++++++++++=
-
+    // 댓글 등록
+    public void InsertReply(Reply reply) throws Exception;
+    // 댓글 수정
+    public void updateReply(Reply reply) throws Exception;
+    // 댓글 삭제
+    public void deleteReply(int replyNo) throws Exception;
+    // 댓글 리스트 조회
+    public List<Reply> selectListReply(Search search) throws Exception; 
+	// 공감수 
     public void updateGoodCount(Map<String,Object> goodCount)throws Exception;
-    
+    // 비공감수
     public void updateBadCount(Map<String,Object> badCount)throws Exception;
 	// 게시판 Page 처리를 위한 전체Row(totalCount)  return
 	public int selectTotalCount(Search search) throws Exception ;
-	
+	// 환불 게시판 환불 처리 update
 	public void updateRefund(Content content) throws Exception;
-
+	// 신고글 리스트 조회(관리자)
 	public List<Report> selectListReport(Search search) throws Exception;
-	
-	
+
+		
 }
