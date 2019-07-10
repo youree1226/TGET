@@ -7,12 +7,12 @@
 <mapper namespace="CommunityMapper">
  	
  	
-	<resultMap id="communitySelectMap" type="content">
+	<resultMap id="contentSelectMap" type="content">
 		<result property="contentNo" 		column="content_no" 		jdbcType="NUMERIC"/>
 		<result property="userId"			column="user_id" 			jdbcType="VARCHAR" />
 		<result property="userNickName" 	column="user_nickname" 		jdbcType="VARCHAR" />
 		<result property="contentName" 		column="content_name" 		jdbcType="VARCHAR" />
-		<result property="contentBody" 		column="content_body" 		jdbcType="CLOB"  javaType="java.lang.String"/>
+		<result property="contentBody" 		column="content_body" 		jdbcType="CLOB" />
 		<result property="videoName" 		column="video_name" 		jdbcType="VARCHAR" />
 		<result property="fileName" 		column="file_name" 			jdbcType="VARCHAR" />
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
@@ -27,7 +27,7 @@
 		
 	</resultMap>
 	
-	<resultMap id="communitySelectMap" type="report" >
+	<resultMap id="reportSelectMap" type="report" >
 		<result property="repotNo" 			column="report_no" 			jdbcType="NUMERIC"/>
 		<result property="whiteId" 			column="white_id" 			jdbcType="VARCHAR"/>
 		<result property="whiteNickName" 	column="white_nickname" 	jdbcType="VARCHAR"/>
@@ -41,7 +41,7 @@
 			
 	</resultMap>
 	
-	<resultMap  id="communitySelectMap" type="reply">
+	<resultMap  id="replySelectMap" type="reply">
 		<result property="replyNo" 			column="reply_no" 			jdbcType="NUMERIC"/>
 		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR"/>
 		<result property="userNickName" 	column="user_nickname" 		jdbcType="VARCHAR"/>
@@ -51,7 +51,7 @@
 	</resultMap>
 	
 	<!-- SQL : INSERT Content -->
-	<insert 	id="addContent"		parameterType="content" >
+	<insert 	id="InsertContent"		parameterType="content" >
 	 	INSERT
 		INTO content 
 		VALUES	 (	seq_content_content_no.nextval , #{userId} , #{userNickName} , '#{contentName}' , #{contentBody} , 
