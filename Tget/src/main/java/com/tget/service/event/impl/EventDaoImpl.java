@@ -33,25 +33,25 @@ public class EventDaoImpl implements EventDao {
 
 
 	///M
-	public void InsertEvent(Event event) throws Exception{
+	public void insertEvent(Event event) throws Exception{
 		sqlSession.insert("EventMapper.insertEvent", event);
 	}
 	
 	
 	public Event selectEvent(String eventId) throws Exception{
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("eventId", eventId);
-		map.put("searchKeyword", "eventId");
-		return sqlSession.selectOne("EventMapper.selectEvent", map);
+//		Map<String,Object> map = new HashMap<String,Object>();
+//		map.put("eventId", eventId);
+//		map.put("searchKeyword", "eventId");
+		return sqlSession.selectOne("EventMapper.selectEventById", eventId);
 	}
 	
 	
 	public List<Event> selectListEvent(String eventName) throws Exception{
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("eventName", eventName);
-		map.put("searchKeyword", "eventName");
-		//return sqlSession.selectList("EventMapper.selectListEvent", map);
-		return sqlSession.selectList("EventMapper.selectEvent", map);
+//		Map<String,Object> map = new HashMap<String,Object>();
+//		map.put("eventName", eventName);
+//		map.put("searchKeyword", "eventName");
+//		//return sqlSession.selectList("EventMapper.selectListEvent", map);
+		return sqlSession.selectList("EventMapper.selectEventByName", eventName);
 	}
 	
 	
@@ -59,8 +59,8 @@ public class EventDaoImpl implements EventDao {
 		//searchCondition는 0이면 viewCount, 1이면 imageName;
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("search", search);
-		map.put("eventId", eventName);
-		sqlSession.update("EventMapper.updateEvent", search);
+		map.put("eventName", eventName);
+		sqlSession.update("EventMapper.updateEvent", map);
 	}
 	
 	
@@ -69,11 +69,11 @@ public class EventDaoImpl implements EventDao {
 	}
 	
 	
-	public void InsertInterestedEvent(String eventId, String userId) throws Exception{
-		Event event = new Event();
+	public void insertInterestedEvent(String eventId, String userId) throws Exception{
+		Event event = this.selectEvent(eventId);
 		event.setUserId(userId);
-		event.setEventId(eventId);
-		sqlSession.insert("EventMapper.InsertEvent", event);
+		
+		sqlSession.insert("EventMapper.insertInterestedEvent", event);
 	}
 	
 	
@@ -85,11 +85,11 @@ public class EventDaoImpl implements EventDao {
 	}
 	
 	
-	public void InsertYoutubeVideo(String youtubeId, String eventName) throws Exception{ 
+	public void insertYoutubeVideo(String youtubeId, String eventName) throws Exception{ 
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("youtubeId",youtubeId);
 		map.put("eventName", eventName);
-		sqlSession.insert("EventMapper.InsertYoutubeVideo", map);
+		sqlSession.insert("EventMapper.insertYoutubeVideo", map);
 	}
 	
 	
@@ -109,20 +109,22 @@ public class EventDaoImpl implements EventDao {
 	
 	
 	public List<RecommEvent> selectListRecommendedEvent() throws Exception{ 
-		//Map<String,Object> map = new HashMap<String,Object>();
-		return sqlSession.selectList("EventMapper.selectRecommendedEvent");
+		Search search = new Search();
+		search.setSearchCondition("0");
+		return sqlSession.selectList("EventMapper.selectRecommendedEvent",search);
 	}
 	
 	
 	public RecommEvent selectRecommendedEvent(int recommEventNo) throws Exception{
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("recommEventNo",recommEventNo);
-		return sqlSession.selectOne("EventMapper.selectRecommendedEvent", map);
+		Search search = new Search();
+		search.setSearchCondition("1");
+		search.setSearchKeyno(recommEventNo);
+		return sqlSession.selectOne("EventMapper.selectRecommendedEvent", search);
 	}
 	
 	
-	public void InsertRecommendedEvent(RecommEvent recommEvent) throws Exception{ 
-		sqlSession.insert("EventMapper.InsertRecommendedEvent", recommEvent);
+	public void insertRecommendedEvent(RecommEvent recommEvent) throws Exception{ 
+		sqlSession.insert("EventMapper.insertRecommendedEvent", recommEvent);
 	}
 	
 	
@@ -136,8 +138,8 @@ public class EventDaoImpl implements EventDao {
 	}
 	
 	
-	public void InsertCategoryTwo(Category category) throws Exception{ 
-		sqlSession.insert("EventMapper.InsertCategoryTwo",category);
+	public void insertCategoryTwo(Category category) throws Exception{ 
+		sqlSession.insert("EventMapper.insertCategoryTwo",category);
 	}
 	
 	
@@ -147,19 +149,19 @@ public class EventDaoImpl implements EventDao {
 	
 	
 	public List<Category> selectListCategory() throws Exception{
-		return sqlSession.selectList("EventMapper.selectCategory");
+		return sqlSession.selectList("EventMapper.selectCategory",null);
 	}
 	
 	
-	public Category selectCategory(int categoryTwoNo) throws Exception{
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("categoryTwoNo",categoryTwoNo);
-		return sqlSession.selectOne("EventMapper.selectCategory", map);
+	public Category selectCategory(String categoryTwoEng) throws Exception{
+//		Map<String,Object> map = new HashMap<String,Object>();
+//		map.put("categoryTwoEng",categoryTwoEng);
+		return sqlSession.selectOne("EventMapper.selectCategory", categoryTwoEng);
 	}
 	
 	
-	public void deleteCategoryTwo(int categoryTwoNo) throws Exception{
-		sqlSession.delete("EventMapper.deleteCategoryTwo",categoryTwoNo);
+	public void deleteCategoryTwo(String categoryTwoEng) throws Exception{
+		sqlSession.delete("EventMapper.deleteCategoryTwo",categoryTwoEng);
 	}
 	
 	

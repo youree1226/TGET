@@ -48,7 +48,7 @@
 			<tx:method	name="add*"	 		propagation="REQUIRED"/>
 			<tx:method	name="update*"	propagation="REQUIRED"/>
 			<!--모든 Method에 적용 transaction 규칙 -->		
-			<!-- <tx:method	name="*"	 />-->	
+<!-- 			<tx:method	name="*"	 />	 -->
 		</tx:attributes>
 	</tx:advice>
 

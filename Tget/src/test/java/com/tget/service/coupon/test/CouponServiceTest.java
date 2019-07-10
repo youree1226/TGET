@@ -1,9 +1,5 @@
 package com.tget.service.coupon.test;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,19 +10,20 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.tget.service.coupon.domain.Coupon;
+import com.tget.service.user.domain.User;
 import com.tget.service.coupon.CouponService;
 
 /*
  *	FileName :  UserServiceTest.java
- * �� JUnit4 (Test Framework) �� Spring Framework ���� Test( Unit Test)
- * �� Spring �� JUnit 4�� ���� ���� Ŭ������ ���� ������ ��� ���� �׽�Ʈ �ڵ带 �ۼ� �� �� �ִ�.
- * �� @RunWith : Meta-data �� ���� wiring(����,DI) �� ��ü ����ü ����
- * �� @ContextConfiguration : Meta-data location ����
- * �� @Test : �׽�Ʈ ���� �ҽ� ����
+ * 占쏙옙 JUnit4 (Test Framework) 占쏙옙 Spring Framework 占쏙옙占쏙옙 Test( Unit Test)
+ * 占쏙옙 Spring 占쏙옙 JUnit 4占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 클占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占� 占쏙옙占쏙옙 占쌓쏙옙트 占쌘드를 占쌜쇽옙 占쏙옙 占쏙옙 占쌍댐옙.
+ * 占쏙옙 @RunWith : Meta-data 占쏙옙 占쏙옙占쏙옙 wiring(占쏙옙占쏙옙,DI) 占쏙옙 占쏙옙체 占쏙옙占쏙옙체 占쏙옙占쏙옙
+ * 占쏙옙 @ContextConfiguration : Meta-data location 占쏙옙占쏙옙
+ * 占쏙옙 @Test : 占쌓쏙옙트 占쏙옙占쏙옙 占쌀쏙옙 占쏙옙占쏙옙
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 
-//==> Meta-Data �� �پ��ϰ� Wiring ����...
+//==> Meta-Data 占쏙옙 占쌕억옙占싹곤옙 Wiring 占쏙옙占쏙옙...
 //@ContextConfiguration(locations = { "classpath:config/context-*.xml" })
 @ContextConfiguration	(locations = {	"classpath:config/context-common.xml",
 																	"classpath:config/context-aspect.xml",
@@ -35,33 +32,86 @@ import com.tget.service.coupon.CouponService;
 //@ContextConfiguration(locations = { "classpath:config/context-common.xml" })
 public class CouponServiceTest {
 
-	//==>@RunWith,@ContextConfiguration �̿� Wiring, Test �� instance DI
+	//==>@RunWith,@ContextConfiguration 占싱울옙 Wiring, Test 占쏙옙 instance DI
 	@Autowired
 	@Qualifier("couponServiceImpl")
 	private CouponService couponService;
 
-	@Test
+	/*@Test
 	public void testAddCoupon() throws Exception {
 
 		Coupon coupon = new Coupon();
 		
-		coupon.setCouponNo(1);
-		coupon.setCouponCode("강조권");
-		coupon.setUserId("안녕");
-		coupon.setCouponStatement("씀");
+		
+		coupon.setCouponCode("1");
+		coupon.setUserId("testUserId");
+		coupon.setCouponStatement("1");
 		
 		couponService.addCoupon(coupon);
 		
 		coupon = couponService.getCoupon(1);
 
-		//==> console Ȯ��
+		//==> console 확占쏙옙
 		//System.out.println(user);
 		
-		//==> API Ȯ��
-		Assert.assertEquals("1", coupon.getCouponNo());
-		Assert.assertEquals("강조권", coupon.getCouponCode());
-		Assert.assertEquals("안녕", coupon.getUserId());
-		Assert.assertEquals("씀", coupon.getCouponStatement());
-		Assert.assertEquals("1", coupon.getCouponNo());
+		//==> API 확占쏙옙
+		
+		Assert.assertEquals("1", coupon.getCouponCode());
+		Assert.assertEquals("testUserId", coupon.getUserId());
+		Assert.assertEquals("1", coupon.getCouponStatement());
+	}*/
+	
+	//@Test
+	public void testGetCoupon() throws Exception {
+		
+Coupon coupon = new Coupon();
+
+		coupon.setCouponCode("1");
+		coupon.setUserId("testUserId");
+		coupon.setCouponStatement("1");
+		
+		couponService.addCoupon(coupon);
+	
+		coupon = couponService.getCoupon(10008);
+
+		//==> console 확占쏙옙
+		//System.out.println(user);
+		
+		//==> API 확占쏙옙
+		Assert.assertEquals("1", coupon.getCouponCode());
+		Assert.assertEquals("testUserId", coupon.getUserId());
+		Assert.assertEquals("1", coupon.getCouponStatement());
 	}
+	@Test
+	 public void testUpdateCoupon() throws Exception{
+		 
+		Coupon coupon = couponService.getCoupon(10001);
+		Assert.assertNotNull(coupon);
+		
+		Assert.assertEquals(10001,coupon.getCouponNo());
+		Assert.assertEquals("1", coupon.getCouponCode());
+		Assert.assertEquals("testUserId", coupon.getUserId());
+		Assert.assertEquals("1", coupon.getCouponStatement());
+
+		
+		
+		coupon.setCouponCode("9");
+		coupon.setUserId("testUserId2");
+		coupon.setCouponStatement("9");
+		
+		couponService.updateCoupon(coupon);
+		
+		coupon = couponService.getCoupon(10001);
+		Assert.assertNotNull(coupon);
+		
+		System.out.println(coupon);
+			
+		Assert.assertEquals("9", coupon.getCouponCode());
+		Assert.assertEquals("testUserId2", coupon.getUserId());
+		Assert.assertEquals("9", coupon.getCouponStatement());
+	
+	 }
+	 
+	
+	
 	}

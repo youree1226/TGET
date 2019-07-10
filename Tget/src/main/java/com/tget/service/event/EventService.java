@@ -8,6 +8,7 @@ import com.tget.common.domain.Search;
 import com.tget.service.event.domain.Category;
 import com.tget.service.event.domain.Event;
 import com.tget.service.event.domain.RecommEvent;
+import com.tget.service.user.domain.User;
 
 
 public interface EventService {
@@ -30,8 +31,9 @@ public interface EventService {
 	public List<Category> getCategoryList() throws Exception;
 	public void addCategoryTwo(Category category) throws Exception;
 	public void updateCategoryTwo(Category category) throws Exception;
-	public Category getCategory(int categoryTwoNo) throws Exception;
-	public void deleteCategoryTwo(int categoryTwoNo) throws Exception;
+	public Category getCategory(String categoryTwoEng) throws Exception;
+	public void deleteCategoryTwo(String categoryTwoEng) throws Exception;
+	public List<User> getInterestedByUser(Search search) throws Exception;
 	public Map<String,Object> getEventList(Search search) throws Exception;
 	public Map<String,Object> getYoutubeList(Search search) throws Exception;
 }
