@@ -31,7 +31,7 @@ public class CommunityDaoImpl implements CommunityDao{
 
 	@Override
 	public void InsertContent(Content content) throws Exception {
-		sqlSession.insert("CommunityMapper.InsertContent", content);
+		sqlSession.insert("CommunityMapper.insertContent", content);
 	}
 	
 	@Override
@@ -41,7 +41,7 @@ public class CommunityDaoImpl implements CommunityDao{
 	
 	@Override
 	public void InsertReply(Reply reply) throws Exception{
-		sqlSession.insert("CommunityMapper.InsertReply", reply);
+		sqlSession.insert("CommunityMapper.insertReply", reply);
 	}
 	
 	@Override

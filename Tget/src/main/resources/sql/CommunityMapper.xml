@@ -7,12 +7,12 @@
 <mapper namespace="CommunityMapper">
  	
  	
-	<resultMap id="communitySelectMap" type="content">
+	<resultMap id="contentSelectMap" type="content">
 		<result property="contentNo" 		column="content_no" 		jdbcType="NUMERIC"/>
 		<result property="userId"			column="user_id" 			jdbcType="VARCHAR" />
 		<result property="userNickName" 	column="user_nickname" 		jdbcType="VARCHAR" />
 		<result property="contentName" 		column="content_name" 		jdbcType="VARCHAR" />
-		<result property="contentBody" 		column="content_body" 		jdbcType="CLOB"  javaType="java.lang.String"/>
+		<result property="contentBody" 		column="content_body" 		jdbcType="CLOB" />
 		<result property="videoName" 		column="video_name" 		jdbcType="VARCHAR" />
 		<result property="fileName" 		column="file_name" 			jdbcType="VARCHAR" />
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
@@ -24,17 +24,34 @@
 		<result property="badCount" 		column="bad_count" 			jdbcType="NUMERIC"/>
 		<result property="refundTranNo" 	column="refund_tran_no" 	jdbcType="NUMERIC"/>
 		<result property="refundCheck" 		column="refund_check" 		jdbcType="CHAR"/>
-		<result property="RepotNo" 			column="report_no" 			jdbcType="NUMERIC"/>
-		<result property="ReportReasonCode" column="report_reason_code" jdbcType="CHAR"/>
-		<result property="ReportCheck" 		column="report_check" 		jdbcType="CHAR"/>
-		<result property="ReportCode" 		column="report_code" 		jdbcType="CHAR"/>
-		<result property="ReplyNo" 			column="reply_no" 			jdbcType="NUMERIC"/>
-		<result property="ReplyBody" 		column="reply_body" 		jdbcType="VARCHAR"/>
 		
 	</resultMap>
 	
+	<resultMap id="reportSelectMap" type="report" >
+		<result property="repotNo" 			column="report_no" 			jdbcType="NUMERIC"/>
+		<result property="whiteId" 			column="white_id" 			jdbcType="VARCHAR"/>
+		<result property="whiteNickName" 	column="white_nickname" 	jdbcType="VARCHAR"/>
+		<result property="blackId" 			column="black_id" 			jdbcType="VARCHAR"/>
+		<result property="reportReasonCode" column="report_reason_code" jdbcType="CHAR"/>
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE"/>
+		<result property="contentNo" 		column="content_no" 		jdbcType="NUMERIC"/>
+		<result property="replyNo" 			column="reply_no" 			jdbcType="NUMERIC"/>
+		<result property="Check" 			column="check" 				jdbcType="CHAR"/>
+		<result property="reportCode" 		column="report_code" 		jdbcType="CHAR"/>
+			
+	</resultMap>
+	
+	<resultMap  id="replySelectMap" type="reply">
+		<result property="replyNo" 			column="reply_no" 			jdbcType="NUMERIC"/>
+		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR"/>
+		<result property="userNickName" 	column="user_nickname" 		jdbcType="VARCHAR"/>
+		<result property="contentNo" 		column="content_no" 		jdbcType="NUMERIC"/>
+		<result property="replyBody" 		column="reply_body" 		jdbcType="VARCHAR"/>
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE"/>	
+	</resultMap>
+	
 	<!-- SQL : INSERT Content -->
-	<insert 	id="addContent"		parameterType="com.tget.service.community.domain.Content" >
+	<insert 	id="insertContent"		parameterType="content" >
 	 	INSERT
 		INTO content 
 		VALUES	 (	seq_content_content_no.nextval , #{userId} , #{userNickName} , '#{contentName}' , #{contentBody} , 

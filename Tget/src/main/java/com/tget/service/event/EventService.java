@@ -15,8 +15,8 @@ public interface EventService {
 	public void addEvent(Event event) throws Exception;
 	public Event getEvent(String eventId) throws Exception;//return event도메인; 
 	public  List<Event> getEventByName(String eventName) throws Exception;//return event도메인 리스트; 
-	public void updateEventViewCount(int viewCount,String eventId) throws Exception;
-	public void updateEventImage(String imageName,String eventId) throws Exception;
+	public void updateEventViewCount(int viewCount,String eventName) throws Exception;
+	public void updateEventImage(String imageName,String eventName) throws Exception;
 	public List<Event> getInterestedEventList(String userId) throws Exception;
 	public void addInterestedEvent(String eventId, String userId) throws Exception;
 	public void deleteInterestedEvent(String eventId, String userId) throws Exception;

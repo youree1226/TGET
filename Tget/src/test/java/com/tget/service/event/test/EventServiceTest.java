@@ -54,65 +54,53 @@ public class EventServiceTest {
 		event.setEventName("EXO");
 		event.setEventTime(1248);
 		//event.setViewCount(viewCount);
+		
+		Event event2 = new Event();
+		event2.setEventId("testEventId2");
+		event2.setCategoryTwoNo(10000);
+		event2.setEventDate(new Date(2012, 4, 8));
+		event2.setEventLocation("서울");
+		event2.setEventName("EXO");
+		event2.setEventTime(1248);
 
 		eventService.addEvent(event);
 		//==> API 확인
-		event = eventService.getEvent(event.getEventId());
-		System.out.println(event);
 		
-		Assert.assertEquals("testEventId", event.getEventId());
-		Assert.assertNotNull(eventService.getEvent("event02"));
 	}
 	
-	//@Test
+		//@Test
 		public void getEvent() throws Exception {
 			
-			Event event = new Event();
-//				event.setEventId("testEventId");
-
-			event = eventService.getEvent("testEventId");
-
-			//System.out.println(event);
-			
-			//==> API 확인
-			Assert.assertEquals("testEventId", event.getEventId());
-
-
-			Assert.assertNotNull(eventService.getEvent("event02"));
+			Event event = eventService.getEvent("testEventId");
+			System.out.println(event);
+			Assert.assertNotNull(eventService.getEvent("testEventId"));
+			Assert.assertEquals("testEventId", event.getEventId());			
 		}
 		
 		//@Test
 		public void getEventByName() throws Exception {
 			
-			Event event = new Event();
-//				event.setEventId("testEventId");
+			List<Event> eventList = eventService.getEventByName("EXO Seoul");
 
-			event = eventService.getEvent("testEventId");
-
-			//System.out.println(event);
+			System.out.println(eventList);
 			
-			//==> API 확인
-			Assert.assertEquals("testEventId", event.getEventId());
-
-
-			Assert.assertNotNull(eventService.getEvent("event02"));
 		}
 		
 		//@Test
 		public void updateEventViewCount() throws Exception {
 			
-			Event event = new Event();
-//				event.setEventId("testEventId");
+			List<Event> eventList = eventService.getEventByName("EXO");
+			System.out.println("eventList : "+eventList);
+			int view = 0;
+			for (Event event : eventList) {
+				view = event.getViewCount();
+				System.out.println(view);
+			}
+			eventService.updateEventViewCount(view+1, "testEventId");
 
-			event = eventService.getEvent("testEventId");
-
-			//System.out.println(event);
-			
-			//==> API 확인
-			Assert.assertEquals("testEventId", event.getEventId());
-
-
-			Assert.assertNotNull(eventService.getEvent("event02"));
+			//System.out.println(event);			
+			eventList = eventService.getEventByName("EXO");
+			System.out.println("eventList : "+eventList);
 		}
 		
 		//@Test
