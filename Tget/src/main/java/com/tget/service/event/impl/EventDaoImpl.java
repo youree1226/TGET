@@ -55,11 +55,11 @@ public class EventDaoImpl implements EventDao {
 	}
 	
 	
-	public void updateEvent(Search search,String eventId) throws Exception{ 
+	public void updateEvent(Search search,String eventName) throws Exception{ 
 		//searchCondition는 0이면 viewCount, 1이면 imageName;
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("search", search);
-		map.put("eventId", eventId);
+		map.put("eventId", eventName);
 		sqlSession.update("EventMapper.updateEvent", search);
 	}
 	

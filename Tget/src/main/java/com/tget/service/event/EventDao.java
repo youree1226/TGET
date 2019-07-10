@@ -17,7 +17,7 @@ public interface EventDao {
 	public void InsertEvent(Event event) throws Exception;
 	public Event selectEvent(String eventId) throws Exception;
 	public List<Event> selectListEvent(String eventName) throws Exception;
-	public void updateEvent(Search search,String eventId) throws Exception;
+	public void updateEvent(Search search,String eventName) throws Exception;
 	public List<Event> selectListInterestedEvent(String userId) throws Exception;
 	public void InsertInterestedEvent(String eventId, String userId) throws Exception;
 	public void deleteInterestedEvent(String eventId, String userId) throws Exception;
