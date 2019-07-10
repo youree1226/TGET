@@ -26,6 +26,7 @@
 		<typeAlias alias="content" type="com.tget.service.community.domain.Content" />
 		<typeAlias alias="reply" type="com.tget.service.community.domain.Reply" />
 		<typeAlias alias="report" type="com.tget.service.community.domain.Report" />
+		<typeAlias alias="coupon" type="com.tget.service.coupon.domain.Coupon" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
