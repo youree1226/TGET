@@ -36,7 +36,7 @@
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE"/>
 		<result property="contentNo" 		column="content_no" 		jdbcType="NUMERIC"/>
 		<result property="replyNo" 			column="reply_no" 			jdbcType="NUMERIC"/>
-		<result property="Check" 			column="check" 				jdbcType="CHAR"/>
+		<result property="check" 			column="check" 				jdbcType="CHAR"/>
 		<result property="reportCode" 		column="report_code" 		jdbcType="CHAR"/>
 			
 	</resultMap>
@@ -54,11 +54,22 @@
 	<insert 	id="insertContent"		parameterType="content" >
 	 	INSERT
 		INTO content 
-		VALUES	 (	seq_content_content_no.nextval , #{userId} , #{userNickName} , '#{contentName}' , #{contentBody} , 
-							#{fileName} , #{videoName} , SYSDATE, #{viewCount}, #{boardCode}, #{contentCode}, #{open}, #{goodCount},
-							#{badCount}, #{refundTranNo}, #{refundCheck} )
+		VALUES	 (	seq_content_content_no.nextval , #{userId} , #{userNickName} , #{contentName} , empty_clob() , 
+					#{fileName:VARCHAR} , #{videoName:VARCHAR} , SYSDATE, 0, #{boardCode}, #{contentCode}, #{open}, 
+					0, 0, #{refundTranNo}, #{refundCheck:CHAR} )
+							
 	 </insert>
 	 
+	 <insert 	id="insertReport"		parameterType="report">
+	 	INSERT
+	 	INTO report
+	 	VALUES	(	seq_report_report_no.nextval, #{whiteId}, #{whiteNickName}, #{blackId}, #{reportReasonCode}, 
+	 				SYSDATE, #{contentNo}, #{replyNo}, #{check}, #{reportCode}	)
+	 				<!-- <if test="contentNo==0">null</if>
+					<if test="contentNo!=0">#{contentNo}</if> ,
+					<if test="replyNo==0">null</if>
+					<if test="replyNo!=0">#{replyNo}</if> , --> 		
 	 
+	 </insert>
 	 
 </mapper>

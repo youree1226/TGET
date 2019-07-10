@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.tget.service.community.CommunityService;
 import com.tget.service.community.domain.Content;
+import com.tget.service.community.domain.Report;
 
 /*
  *	FileName :  UserServiceTest.java
@@ -39,56 +40,74 @@ public class CommunityServiceTest {
 	@Qualifier("communityServiceImpl")
 	private CommunityService communityService;
 
+/////////////////testaddContent
+//	//@Test
+//	public void testAddContent() throws Exception {
+//		
+//		Content content = new Content();
+//		System.out.println("content"+content);
+//	
+//////////////////////CLOB/////////////////////////	
+////		String str="";
+////		StringBuffer stOut= new StringBuffer();
+////		
+////		
+////		BufferedReader br = new BufferedReader(clob.getCharacterStream());
+////		while((str= br.readLine()!= null)) {
+////			stOut.append(str+"\n");
+////		}
+////		br.close();
+////		return stOut.toString();
+//	
+//		
+//		content.setUserId("admin");
+//		content.setUserNickName("나관리자얌");
+//		content.setContentName("게시글");
+//		content.setBoardCode("1");
+//		content.setContentCode("2");
+//		content.setOpen("1");
+//		
+//		
+//		communityService.addContent(content);
+//		
+////		content = communityService.getContent(i);
+////
+////		//==> API 확인
+////		Assert.assertEquals(i, content.getContentNo());
+////		Assert.assertEquals("디벨로퍼차", content.getUserId());
+////		Assert.assertEquals("진영", content.getUserNickName());
+////		Assert.assertEquals("게시글", content.getContentName());
+////		Assert.assertEquals("123123", content.getContentBody());
+////		Assert.assertEquals("1", content.getBoardCode());
+////		Assert.assertEquals("2", content.getContentCode());
+////		Assert.assertEquals("1", content.getOpenCheck());
+//}
 
 	@Test
-	public void testAddContent() throws Exception {
+	public void testAddReport() throws Exception{
 		
-		Content content = new Content();
-		System.out.println("content"+content);
-		Date date = new Date(19, 07, 10);
+		Report report = new Report();
 		
+//		report.setUserId("admin");
+//		content.setUserNickName("나관리자얌");
+//		content.setContentName("게시글");
+//		content.setBoardCode("1");
+//		content.setContentCode("2");
+//		content.setOpen("1");
 		
-		int i = 40000;
+		report.setWhiteId("admin");
+		report.setWhiteNickName("나관리자얌");
+		report.setBlackId("seller");
+		report.setReportReasonCode("1");
+		report.setContentNo(10003);
+		report.setReplyNo(0);
+		report.setCheck("1");
+		report.setReportCode("1");
 		
-//		String str="";
-//		StringBuffer stOut= new StringBuffer();
-//		
-//		
-//		BufferedReader br = new BufferedReader(clob.getCharacterStream());
-//		while((str= br.readLine()!= null)) {
-//			stOut.append(str+"\n");
-//		}
-//		br.close();
-//		return stOut.toString();
-	
-		
-		content.setContentNo(i);
-		content.setUserId("디벨로퍼차");
-		content.setUserNickName("진영");
-		content.setContentName("게시글");
-		content.setContentBody("123123");
-		content.setRegDate(date);
-		content.setBoardCode("1");
-		content.setContentCode("2");
-		content.setOpenCheck("1");
-		
-		
-		communityService.addContent(content);
-		
-		content = communityService.getContent(i);
-
-		//==> API 확인
-		Assert.assertEquals(i, content.getContentNo());
-		Assert.assertEquals("디벨로퍼차", content.getUserId());
-		Assert.assertEquals("진영", content.getUserNickName());
-		Assert.assertEquals("게시글", content.getContentName());
-		Assert.assertEquals("123123", content.getContentBody());
-		Assert.assertEquals("1", content.getBoardCode());
-		Assert.assertEquals("2", content.getContentCode());
-		Assert.assertEquals("1", content.getOpenCheck());
-		
+		communityService.addReport(report);
 	}
-
+	
+	
 //	
 //	//@Test
 //	public void testGetProduct() throws Exception {
