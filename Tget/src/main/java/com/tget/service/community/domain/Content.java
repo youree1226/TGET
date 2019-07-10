@@ -51,8 +51,8 @@ public class Content {
 		public String getContentBody() {
 			return contentBody;
 		}
-		public void setContentBody(String string) {
-			this.contentBody = string;
+		public void setContentBody(String contentBody) {
+			this.contentBody = contentBody;
 		}
 		public String getVideoName() {
 			return videoName;
@@ -114,22 +114,21 @@ public class Content {
 		public void setRefundCheck(String refundCheck) {
 			this.refundCheck = refundCheck;
 		}
-		public String getOpenCheck() {
+		public String getOpen() {
 			return open;
 		}
-		public void setOpenCheck(String open) {
+		public void setOpen(String open) {
 			this.open = open;
 		}
-		
 		@Override
 		public String toString() {
 			return "Content [contentNo=" + contentNo + ", userId=" + userId + ", userNickName=" + userNickName
 					+ ", contentName=" + contentName + ", contentBody=" + contentBody + ", videoName=" + videoName
 					+ ", fileName=" + fileName + ", regDate=" + regDate + ", viewCount=" + viewCount + ", boardCode="
 					+ boardCode + ", contentCode=" + contentCode + ", goodCount=" + goodCount + ", badCount=" + badCount
-					+ ", refundTranNo=" + refundTranNo + ", refundCheck=" + refundCheck + ", open=" + open
-					+ "]";
+					+ ", refundTranNo=" + refundTranNo + ", refundCheck=" + refundCheck + ", open=" + open + "]";
 		}
+		
 		
 		
 }
