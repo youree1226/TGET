@@ -38,14 +38,18 @@ public class RNPDaoImpl implements RNPDao {
 		
 		return sqlSession.selectList("RNPMapper.selectPointHistory",userId);
 	}
+
+	public void insertPointHistory(PointHistory pointHistory)  throws Exception{
+		sqlSession.insert("RNPMapper.insertPointHistory", pointHistory);
+	}
 	
 	public List<Review> selectReviewList(String buyerId)  throws Exception{
 		//searchCondition==0 buyerId ·Î °Ë»ö
 		Search search = new Search();
 		search.setSearchCondition("0");
 		search.setSearchKeyword(buyerId);
-		sqlSession.selectList("RNPMapper.selectReviewList",search);
-		return null;
+		
+		return sqlSession.selectList("RNPMapper.selectReviewList",search);
 	}
 	
 	public List<Review> selectSellerEstimationList(String sellerId)  throws Exception{
@@ -53,8 +57,8 @@ public class RNPDaoImpl implements RNPDao {
 		Search search = new Search();
 		search.setSearchCondition("1");
 		search.setSearchKeyword(sellerId);
-		sqlSession.selectList("RNPMapper.selectReviewList",search);
-		return null;
+		
+		return sqlSession.selectList("RNPMapper.selectReviewList",search);
 	}
 	
 	public Review selectReview(int tranNo)  throws Exception{
@@ -65,9 +69,6 @@ public class RNPDaoImpl implements RNPDao {
 		sqlSession.update("RNPMapper.updateReview",review);
 	}
 	
-	public void insertPointHistory(PointHistory pointHistory)  throws Exception{
-		sqlSession.insert("RNPMapper.insertPointHistory", pointHistory);
-	}
 
 	
 	

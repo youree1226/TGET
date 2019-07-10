@@ -53,6 +53,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.tget.common.domain.Search;
 import com.tget.service.event.domain.YoutubeVideoList;
 import com.tget.service.rnp.RNPService;
+import com.tget.service.rnp.domain.PointHistory;
+import com.tget.service.rnp.domain.Review;
 import com.tget.service.event.EventService;
 import com.tget.service.event.domain.StubhubEvent;
 
@@ -67,9 +69,100 @@ public class ReviewAndPointRestController {
 	@Qualifier("rNPServiceImpl")
 	private RNPService rNPService;
 	
+	///C
 	public ReviewAndPointRestController(){
 		System.out.println(this.getClass());
 	}
-	
 
+	///M
+	@RequestMapping(value="json/addReview", method=RequestMethod.POST)
+	public Map<String,Object> addReview(@RequestBody Review review) throws Exception {
+		
+		System.out.println("===============addReview===============");
+		
+		rNPService.addReview(review);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		return map;
+	}
+	
+	@RequestMapping(value="json/updateReview/{tranNo}", method=RequestMethod.GET)
+	public Map<String,Object> updateReview(@PathVariable int tranNo) throws Exception {
+		
+		System.out.println("===============updateReview(===============");
+		
+		Review review = rNPService.getReview(tranNo);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("review", review);
+		
+		return map;
+	}
+	
+	@RequestMapping(value="json/updateReview", method=RequestMethod.POST )
+	public Map<String,Object> updateReview(@RequestBody Review review) throws Exception {
+		
+		System.out.println("===============updateReview(===============");
+		
+		rNPService.updateReview(review);
+		review = rNPService.getReview(review.getTranNo());
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("review", review);
+		
+		return map;
+	}
+	
+	@RequestMapping(value="json/getReview" )
+	public Map<String,Object> getReview(@RequestBody int tranNo) throws Exception {
+		
+		System.out.println("===============getReview(===============");
+		
+		Review review = rNPService.getReview(tranNo);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("review", review);
+		
+		return map;
+	}
+	
+	@RequestMapping(value="json/getReviewList" )
+	public Map<String,Object> getReviewList(@RequestBody String buyerId) throws Exception {
+		
+		System.out.println("===============getReviewList(===============");
+		
+		List<Review> list = rNPService.getReviewList(buyerId);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("reviewList", list);
+		
+		return map;
+	}
+	
+	@RequestMapping(value="json/getSellerEstimationList")
+	public Map<String,Object> getSellerEstimationList(@RequestBody String sellerId) throws Exception {
+		
+		System.out.println("===============getSellerEstimationList(===============");
+		
+		List<Review> list = rNPService.getSellerEstimationList(sellerId);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		return map;
+	}
+	
+	@RequestMapping(value="json/getPointHistory")
+	public Map<String,Object> getPointHistory(@RequestBody String userId) throws Exception {
+		
+		System.out.println("===============getPointHistory(===============");
+		
+		List<PointHistory> list = rNPService.getPointHistory(userId);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("pointHistory", list);
+		
+		return map;
+	}
+	
 }
