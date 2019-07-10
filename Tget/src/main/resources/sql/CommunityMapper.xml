@@ -51,7 +51,7 @@
 	</resultMap>
 	
 	<!-- SQL : INSERT Content -->
-	<insert 	id="InsertContent"		parameterType="content" >
+	<insert 	id="insertContent"		parameterType="content" >
 	 	INSERT
 		INTO content 
 		VALUES	 (	seq_content_content_no.nextval , #{userId} , #{userNickName} , '#{contentName}' , #{contentBody} , 
