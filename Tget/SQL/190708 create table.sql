@@ -117,7 +117,7 @@ CREATE TABLE report(
 	report_reason_code 	CHAR(1) 		NOT NULL,
 	reg_date 			DATE 		DEFAULT SYSDATE,
 	content_no 		NUMBER(5) 	NOT NULL 	REFERENCES content(content_no),
-	reply_no 			NUMBER(5) 	NOT NULL 	REFERENCES reply(reply_no),
+	reply_no 			NUMBER(5)  	REFERENCES reply(reply_no),
 	check_yn 			CHAR(1) 		NOT NULL,
 	report_code 		CHAR(1) 		NOT NULL,
 	PRIMARY KEY(report_no));
@@ -153,7 +153,6 @@ CREATE TABLE ticket (
 	event_id			VARCHAR2(10)		NOT NULL 	REFERENCES event(event_id),
 	ticket_amount 		NUMBER(3)		NOT NULL ,
 	seller_id			VARCHAR2(30)		NOT NULL 	REFERENCES users(user_id),
-	seller_nickname		VARCHAR2(20)		NOT NULL ,
 	ticket_price		NUMBER(10)		NOT NULL ,
 	ticket_type		CHAR(1)			NOT NULL ,
 	ticket_code		CHAR(1)			NOT NULL ,
@@ -161,7 +160,6 @@ CREATE TABLE ticket (
 	ticket_option		VARCHAR2(500) ,
 	reg_date			DATE 			DEFAULT		SYSDATE ,
 	ticket_image		VARCHAR2(100)		NOT NULL ,
-	event_image		VARCHAR2(100) ,
 	check_yn			CHAR(1)			NOT NULL ,
 	coupon_no		NUMBER(5) 		REFERENCES coupon(coupon_no) ,
 	coupon_code		CHAR(1)	,	
@@ -228,4 +226,5 @@ INSERT INTO event	VALUES ('104175819',120408,10000,NULL,'EXO Seoul','Seoul Olymp
 INSERT INTO event	VALUES ('104175345',120408,10000,NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/26', 'YYYY/MM/DD'),'2000'); 
 INSERT INTO event	VALUES ('104175822',120408,10000,NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/27', 'YYYY/MM/DD'),'1800'); 
 INSERT INTO event	VALUES ('104175824',120408,10000,NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/28', 'YYYY/MM/DD'),'1600'); 
+
 
