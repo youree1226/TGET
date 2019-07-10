@@ -8,8 +8,8 @@
  	
  	
 	<resultMap id="CouponSelectMap" type="coupon">
-		<result property="couponNo" 			column="user_id" 			jdbcType="NUMERIC"/>
-		<result property="couponCode"	column="user_name" 		jdbcType="VARCHAR" />
+		<result property="couponNo" 			column="coupon_no" 			jdbcType="NUMERIC"/>
+		<result property="couponCode"	column="coupon_code" 		jdbcType="VARCHAR" />
 		<result property="userId" 	column="password" 		jdbcType="VARCHAR" />
 		<result property="couponUseDate" 				column="role" 					jdbcType="DATE" />
 		<result property="couponRegDate" 				column="ssn" 					jdbcType="DATE" />
@@ -18,9 +18,9 @@
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
-	<insert 	id="addUser"		parameterType="user" >
+	<insert 	id="insertCoupon"		parameterType="coupon" >
 	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
+		INTO users( couponNo , couponCode , userId , couponUseDate , couponRegDate, couponStatement) 
 		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
 							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
 	 </insert>
