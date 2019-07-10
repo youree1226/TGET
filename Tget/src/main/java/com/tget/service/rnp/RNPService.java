@@ -12,11 +12,11 @@ public interface RNPService {
 	
 	public void addReview(Review review) throws Exception;
 	
-	public Map<String,Object> getPointHistory(String userId) throws Exception;
+	public List<PointHistory> getPointHistory(String userId) throws Exception;
 	
-	public Map<String,Object> getReviewList(String buyerId) throws Exception;
+	public List<Review> getReviewList(String buyerId) throws Exception;
 	
-	public Map<String,Object> getSellerEstimationList(String sellerId) throws Exception;
+	public List<Review> getSellerEstimationList(String sellerId) throws Exception;
 	
 	public void updateReview(Review review) throws Exception;
 	

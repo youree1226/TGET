@@ -34,12 +34,12 @@ public class RNPDaoImpl implements RNPDao {
 //	}
 	//애초에 transaction 테이블 안의 리뷰 관련 칼럼에 값을 넣는 거라서 insert문을 쓸 수 없다. 무조건 update 쿼리날려야함
 
-	public Map<String,Object> selectPointHistory(String userId)  throws Exception{
-		sqlSession.selectList("RNPMapper.selectPointHistory",userId);
-		return null;
+	public List<PointHistory> selectPointHistory(String userId)  throws Exception{
+		
+		return sqlSession.selectList("RNPMapper.selectPointHistory",userId);
 	}
 	
-	public Map<String,Object> selectReviewList(String buyerId)  throws Exception{
+	public List<Review> selectReviewList(String buyerId)  throws Exception{
 		//searchCondition==0 buyerId 로 검색
 		Search search = new Search();
 		search.setSearchCondition("0");
@@ -48,7 +48,7 @@ public class RNPDaoImpl implements RNPDao {
 		return null;
 	}
 	
-	public Map<String,Object> selectSellerEstimationList(String sellerId)  throws Exception{
+	public List<Review> selectSellerEstimationList(String sellerId)  throws Exception{
 		//searchCondition==1  sellerId 로 검색
 		Search search = new Search();
 		search.setSearchCondition("1");

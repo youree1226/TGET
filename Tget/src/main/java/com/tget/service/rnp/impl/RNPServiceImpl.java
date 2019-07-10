@@ -27,17 +27,17 @@ public class RNPServiceImpl implements RNPService{
 		rNPDao.updateReview(review);
 	}
 	
-	public Map<String,Object> getPointHistory(String userId) throws Exception{
+	public List<PointHistory> getPointHistory(String userId) throws Exception{
 		//rNPDao.selectPointHistory(userId);
 		return null;
 	}
 	
-	public Map<String,Object> getReviewList(String buyerId) throws Exception{
+	public List<Review> getReviewList(String buyerId) throws Exception{
 		//rNPDao.selectReviewList(buyerId);
 		return null;
 	}
 	
-	public Map<String,Object> getSellerEstimationList(String sellerId) throws Exception{
+	public List<Review> getSellerEstimationList(String sellerId) throws Exception{
 		//rNPDao.selectSellerEstimationList(sellerId);
 		return null;
 	}

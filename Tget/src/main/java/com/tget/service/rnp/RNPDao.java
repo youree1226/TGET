@@ -14,11 +14,11 @@ public interface RNPDao {
 	
 //	public void InsertReview(Review review) throws Exception;
 
-	public Map<String,Object> selectPointHistory(String userId)  throws Exception;
+	public List<PointHistory> selectPointHistory(String userId)  throws Exception;
 	
-	public Map<String,Object> selectReviewList(String buyerId)  throws Exception;
+	public List<Review> selectReviewList(String buyerId)  throws Exception;
 	
-	public Map<String,Object> selectSellerEstimationList(String sellerId)  throws Exception;
+	public List<Review> selectSellerEstimationList(String sellerId)  throws Exception;
 	
 	public Review selectReview(int tranNo)  throws Exception;
 	
