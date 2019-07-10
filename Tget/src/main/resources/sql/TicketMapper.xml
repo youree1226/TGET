@@ -24,6 +24,13 @@
  		<association property="seller" column="SELLER_ID" javaType="user" select="UserMapper.selectUser"/>
   	</resultMap>
 	
+	<resultMap id="sellProbSelectMap" type="sellProb">
+		<result property="highPrice"  column="TICKET_NO" jdbcType="NUMERIC"/>
+		<result property="avgPrice"  column="TICKET_NO" jdbcType="NUMERIC"/>
+		<result property="lowPrice"  column="TICKET_NO" jdbcType="NUMERIC"/>
+		<result property="totalCount"  column="TICKET_NO" jdbcType="NUMERIC"/>
+	</resultMap>
+		
 	<insert id="insertTicket" parameterType="ticket">
 		INSERT
 		INTO ticket( TICKET_NO , EVENT_ID , TICKET_AMOUNT , SELLER_ID , TICKET_PRICE , TICKET_TYPE , TICKET_CODE , TICKET_SEAT
@@ -63,6 +70,18 @@
 											) inner_table
 			)		
 	 </select>
+	 
+	 <select  id="selectTicket"  parameterType="int"	resultMap="ticketSelectMap">
+	 	SELECT 
+	 	TICKET_NO , EVENT_ID , TICKET_AMOUNT , SELLER_ID , TICKET_PRICE , TICKET_TYPE , 
+	 	TICKET_CODE , TICKET_SEAT , TICKET_OPTION , REG_DATE , TICKET_IMAGE , CHECK_YN , 
+	 	COUPON_NO , COUPON_CODE
+	 	FROM TICKET
+	 	WHERE TICKET_NO = #{value}	
+	 </select>
+	 
+	 
+	 
 	 <!-- 
 	 WHERE ROWNUM &lt;= #{endRowNum} )
 	 WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 

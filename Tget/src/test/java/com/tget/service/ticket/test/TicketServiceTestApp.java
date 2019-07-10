@@ -48,7 +48,7 @@ public class TicketServiceTestApp {
 		
 	}
 	
-	@Test
+	//@Test
 	public void updateTicketCode() throws Exception {
 		
 		Ticket ticket = new Ticket();
@@ -58,7 +58,7 @@ public class TicketServiceTestApp {
 		ticketService.updateTicketCode(ticket);
 	}
 	
-	//@Test
+	@Test
 	public void selectListTicket() throws Exception {
 		
 		ticketService.getTicketList(new Search());
