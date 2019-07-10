@@ -7,19 +7,19 @@
 <mapper namespace="CommunityMapper">
  	
  	
-	<resultMap id="communitySelectMap" type="community">
+	<resultMap id="communitySelectMap" type="content">
 		<result property="contentNo" 		column="content_no" 		jdbcType="NUMERIC"/>
 		<result property="userId"			column="user_id" 			jdbcType="VARCHAR" />
 		<result property="userNickName" 	column="user_nickname" 		jdbcType="VARCHAR" />
 		<result property="contentName" 		column="content_name" 		jdbcType="VARCHAR" />
-		<result property="contentBody" 		column="content_body" 		jdbcType="CLOB" />
+		<result property="contentBody" 		column="content_body" 		jdbcType="CLOB"  javaType="java.lang.String"/>
 		<result property="videoName" 		column="video_name" 		jdbcType="VARCHAR" />
 		<result property="fileName" 		column="file_name" 			jdbcType="VARCHAR" />
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
 		<result property="viewCount" 		column="view_count" 		jdbcType="NUMERIC"/>
 		<result property="boardCode" 		column="board_code" 		jdbcType="CHAR"/>
 		<result property="contentCode" 		column="content_code" 		jdbcType="CHAR"/>
-		<result property="openCheck" 		column="open_check" 		jdbcType="CHAR"/>
+		<result property="open" 			column="open" 				jdbcType="CHAR"/>
 		<result property="goodCount" 		column="good_count" 		jdbcType="NUMERIC"/>
 		<result property="badCount" 		column="bad_count" 			jdbcType="NUMERIC"/>
 		<result property="refundTranNo" 	column="refund_tran_no" 	jdbcType="NUMERIC"/>
@@ -33,12 +33,13 @@
 		
 	</resultMap>
 	
-	<!-- SQL : INSERT -->
-	<insert 	id="addUser"		parameterType="user" >
+	<!-- SQL : INSERT Content -->
+	<insert 	id="addContent"		parameterType="com.tget.service.community.domain.Content" >
 	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
-		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+		INTO content 
+		VALUES	 (	seq_content_content_no.nextval , #{userId} , #{userNickName} , '#{contentName}' , #{contentBody} , 
+							#{fileName} , #{videoName} , SYSDATE, #{viewCount}, #{boardCode}, #{contentCode}, #{open}, #{goodCount},
+							#{badCount}, #{refundTranNo}, #{refundCheck} )
 	 </insert>
 	 
 	 

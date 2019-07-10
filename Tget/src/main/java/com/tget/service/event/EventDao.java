@@ -36,8 +36,8 @@ public interface EventDao {
 	public Category selectCategory(int categoryTwoNo) throws Exception;
 	public void deleteCategoryTwo(int categoryTwoNo) throws Exception;
 	public List<User> selectInterestedByUser(Search search) throws Exception;
-	public Map<String,Object> getEventList() throws Exception;
-	public Map<String,Object> getYoutubeList() throws Exception;
+	public Map<String,Object> getEventList(Search search) throws Exception;
+	public Map<String,Object> getYoutubeList(Search search) throws Exception;
 	
 	
 }

@@ -11,7 +11,7 @@ public class Content {
 		private String userId;
 		private String userNickName;
 		private String contentName;
-		private Clob contentBody;
+		private String contentBody;
 		private String videoName;
 		private String fileName;
 		private Date regDate;
@@ -22,7 +22,7 @@ public class Content {
 		private int badCount;
 		private int refundTranNo;
 		private String refundCheck;
-		private String openCheck;
+		private String open;
 		
 		public int getContentNo() {
 			return contentNo;
@@ -48,11 +48,11 @@ public class Content {
 		public void setContentName(String contentName) {
 			this.contentName = contentName;
 		}
-		public Clob getContentBody() {
+		public String getContentBody() {
 			return contentBody;
 		}
-		public void setContentBody(Clob contentBody) {
-			this.contentBody = contentBody;
+		public void setContentBody(String string) {
+			this.contentBody = string;
 		}
 		public String getVideoName() {
 			return videoName;
@@ -115,10 +115,10 @@ public class Content {
 			this.refundCheck = refundCheck;
 		}
 		public String getOpenCheck() {
-			return openCheck;
+			return open;
 		}
-		public void setOpenCheck(String openCheck) {
-			this.openCheck = openCheck;
+		public void setOpenCheck(String open) {
+			this.open = open;
 		}
 		
 		@Override
@@ -127,7 +127,7 @@ public class Content {
 					+ ", contentName=" + contentName + ", contentBody=" + contentBody + ", videoName=" + videoName
 					+ ", fileName=" + fileName + ", regDate=" + regDate + ", viewCount=" + viewCount + ", boardCode="
 					+ boardCode + ", contentCode=" + contentCode + ", goodCount=" + goodCount + ", badCount=" + badCount
-					+ ", refundTranNo=" + refundTranNo + ", refundCheck=" + refundCheck + ", openCheck=" + openCheck
+					+ ", refundTranNo=" + refundTranNo + ", refundCheck=" + refundCheck + ", open=" + open
 					+ "]";
 		}
 		
