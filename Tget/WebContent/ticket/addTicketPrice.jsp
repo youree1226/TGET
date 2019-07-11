@@ -30,6 +30,7 @@
        body > div.container{
         	border: 3px solid #D6CDB7;
             margin-top: 10px;
+            background-color : whitesmoke;
         }
 	   body {
             padding-top : 50px;
@@ -89,11 +90,13 @@
 						success : function(data) {							
 							var sellProb = data.sellProb.sellprob;
 							if(sellProb == 0){
-								$("#sellProb").html("판매확률이 높습니다.")
+								$("#sellProb").html("추천가격 : 적당한 가격입니다. 해당 가격의 티켓은 판매 확률이 더 높습니다.").css("color" , "blue");
 							}else if(sellProb == 1){
-								$("#sellProb").html("평균가격 입니다.")
+								$("#sellProb").html("평균가격 : 해당 가격의 티켓은 판매 확률이 낮습니다.").css("color" , "green");
+							}else if(sellProb == 2){
+								$("#sellProb").html("높은가격 : 해당 가격의 티켓은 판매 확률이 매우 낮습니다.").css("color" , "orange");
 							}else{
-								$("#sellProb").html("판매확률이 매우 낮습니다.")
+								$("#sellProb").html("최고가격 : 주의하세요! 해당 가격의 티켓은 판매 확률이 희박합니다.").css("color" , "red");
 							}
 						}							 
 			});

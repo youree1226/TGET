@@ -77,34 +77,11 @@
 	
 	<div class="container">
 	<br/>
-		<h1 class="text-center">판매가격 결정  ${sellticketInfo.event.eventName}</h1>
+		<h1 class="text-center">실물 이미지 등록 : ${sellticketInfo.event.eventName}</h1>
 				
 		<form class="form-horizontal">				  
 		<br/>
-		  <div class="form-group">
-		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">희망 가격</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="price" name="price" placeholder="판매가격입력">
-		    </div>
-		  </div>
-		  <div class="form-group">
-		  <label for="lowPrice" class="col-sm-offset-1 col-sm-3 control-label">등록 최저가</label>
-		  <div class="col-sm-4">
-		  ${sellProb.lowPrice}
-		  </div>
-		  </div>
-		  <div class="form-group">
-		  <label for="highPrice" class="col-sm-offset-1 col-sm-3 control-label">등록 최고가</label>
-		  <div class="col-sm-4">
-		   ${sellProb.highPrice}
-		  </div>
-		  </div>
-		  <div class="form-group">
-		  <label for="sellProb" class="col-sm-offset-1 col-sm-3 control-label">판매 확률</label>
-		  <div class="col-sm-4">
-		  	<span id="sellProb"></span>
-		  </div>
-		  </div>		  		
+		${sellticketInfo}  		  		
 		<br/>
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">

@@ -30,7 +30,7 @@
 		$( function(){
 			
 			$("a:contains('티켓판매')").on("click",function(){
-				self.location = "/ticket/addTicketInfo?eventId=testId";
+				self.location = "/ticket/addTicketInfo?eventId=104175822";
 			});
 			
 		});

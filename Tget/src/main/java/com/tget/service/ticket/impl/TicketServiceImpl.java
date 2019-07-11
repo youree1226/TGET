@@ -77,9 +77,11 @@ public class TicketServiceImpl implements TicketService {
 			sellProb.setSellprob(0);
 		}else if( sellProb.getLowPrice()< price && price <= sellProb.getAvgPrice()) {
 			sellProb.setSellprob(1);
-		}else {
+		}else if( sellProb.getAvgPrice()< price && price <= sellProb.getHighPrice()){
 			sellProb.setSellprob(2);
-		}	
+		}else {
+			sellProb.setSellprob(3);
+		}
 			
 		return sellProb;
 	}

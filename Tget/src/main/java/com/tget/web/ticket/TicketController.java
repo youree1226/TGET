@@ -59,5 +59,18 @@ public class TicketController {
 		return "forward:/ticket/addTicketPrice.jsp";
 	}	
 	
+	@RequestMapping(value = "addTicketPrice", method = RequestMethod.POST)	
+	public String addTicketPrice(@RequestParam("price") int price, Model model , 
+								HttpSession session) throws Exception {
+		
+		System.out.println("addTicketPrice : POST ?price= "+price);
+		
+		Ticket ticket = (Ticket) session.getAttribute("sellticketInfo");		
+		ticket.setPrice(price);
+		
+		session.setAttribute("sellticketInfo", ticket);
+		
+		return "forward:/ticket/addTicketImage.jsp";
+	}
 	
 }

@@ -36,25 +36,25 @@ public class TicketServiceTestApp {
 	@Qualifier("alarmServiceImpl")
 	private AlarmService alarmService;
 	
-	//@Test	
+	@Test	
 	public void addTicket() throws Exception {
 		
 		Ticket ticket = new Ticket();
 		Event event = new Event();
 		User user = new User();
 		
-		event.setEventId("testId");
-		user.setUserId("admin");
+		event.setEventId("104175822");
+		user.setUserId("seller");
 		
 		ticket.setEvent(event);
 		ticket.setSeller(user);
 		
 		ticket.setAmount(10);
-		ticket.setPrice(400000);
+		ticket.setPrice(200000);
 		ticket.setType("0");
-		ticket.setSeat("e열34");
-		ticket.setOptions("애정행각금지");
-		ticket.setTicketImage("ddd.jpg");
+		ticket.setSeat("c열34");
+		ticket.setOptions("애완동물출입금지");
+		ticket.setTicketImage("ccc.jpg");
 		
 		ticketService.addTicket(ticket);
 		
@@ -143,7 +143,7 @@ public class TicketServiceTestApp {
 		
 	}
 	
-	@Test
+	//@Test
 	public void addAlarm() throws Exception{
 		
 		Alarm alarm = new Alarm();

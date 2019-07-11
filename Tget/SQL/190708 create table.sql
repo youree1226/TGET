@@ -78,7 +78,7 @@ CREATE TABLE users(
 CREATE TABLE content(
 	content_no 	NUMBER 		NOT NULL,
 	user_id 		VARCHAR2(30) 	NOT NULL 	REFERENCES users(user_id),
-	user_nickname 	VARCHAR2(20) 	NOT NULL 	REFERENCES users(nickname),
+	user_nickname 	VARCHAR2(20) 	NOT NULL,
 	content_name 	VARCHAR2(30) 	NOT NULL,
 	content_body 	CLOB 		NOT NULL,
 	file_name 	VARCHAR2(100),
@@ -103,7 +103,7 @@ CREATE TABLE image_file(
 CREATE TABLE reply(
 	reply_no 		NUMBER(5) 	NOT NULL,
 	user_id 		VARCHAR2(30) 	NOT NULL 	REFERENCES users(user_id),
-	user_nickname 	VARCHAR2(20) 	NOT NULL 	REFERENCES users(nickname),
+	user_nickname 	VARCHAR2(20) 	NOT NULL ,
 	content_no 	NUMBER(5) 	NOT NULL 	REFERENCES content(content_no),
 	reply_body 	VARCHAR2(500) 	NOT NULL,
 	reg_date 		DATE 		DEFAULT SYSDATE,
@@ -112,12 +112,12 @@ CREATE TABLE reply(
 CREATE TABLE report(
 	report_no 		NUMBER(5) 	NOT NULL,
 	white_id 			VARCHAR2(30) 	NOT NULL 	REFERENCES users(user_id),
-	white_nickname 		VARCHAR2(20) 	NOT NULL 	REFERENCES users(nickname),
+	white_nickname 		VARCHAR2(20) 	NOT NULL 	,
 	black_id 			VARCHAR2(30) 	NOT NULL 	REFERENCES users(user_id),
 	report_reason_code 	CHAR(1) 		NOT NULL,
 	reg_date 			DATE 		DEFAULT SYSDATE,
 	content_no 		NUMBER(5) 	NOT NULL 	REFERENCES content(content_no),
-	reply_no 			NUMBER(5)  	REFERENCES reply(reply_no),
+	reply_no 			NUMBER(5)  	,
 	check_yn 			CHAR(1) 		NOT NULL,
 	report_code 		CHAR(1) 		NOT NULL,
 	PRIMARY KEY(report_no));
@@ -227,4 +227,11 @@ INSERT INTO event	VALUES ('104175345',120408,10000,NULL,'EXO Seoul','Seoul Olymp
 INSERT INTO event	VALUES ('104175822',120408,10000,NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/27', 'YYYY/MM/DD'),'1800'); 
 INSERT INTO event	VALUES ('104175824',120408,10000,NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/28', 'YYYY/MM/DD'),'1600'); 
 
+INSERT INTO ticket VALUES (seq_ticket_ticket_no.nextval,'104175823',100 ,'seller',200000,'1','1','스탠딩37번','알콜프리존', sysdate , 'aaa.png','1', null , null ); 
+INSERT INTO ticket VALUES (seq_ticket_ticket_no.nextval,'104175822',100 ,'seller',200000,'1','1','스탠딩38번','알콜프리존', sysdate , 'aaa.png','1', null , null ); 
+INSERT INTO ticket VALUES (seq_ticket_ticket_no.nextval,'104175345',100 ,'seller',200000,'1','1','스탠딩39번','알콜프리존', sysdate , 'aaa.png','1', null , null ); 
+INSERT INTO ticket VALUES (seq_ticket_ticket_no.nextval,'104175822',100 ,'seller',200000,'1','1','스탠딩31번','알콜프리존', sysdate , 'aaa.png','1', null , null ); 
+INSERT INTO ticket VALUES (seq_ticket_ticket_no.nextval,'104175824',100 ,'seller',200000,'1','1','스탠딩32번','알콜프리존', sysdate , 'aaa.png','1', null , null ); 
 
+
+commit;
