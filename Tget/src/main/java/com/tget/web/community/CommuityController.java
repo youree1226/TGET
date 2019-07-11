@@ -26,6 +26,7 @@ import com.tget.service.community.domain.Reply;
 import com.tget.service.community.domain.Report;
 import com.tget.service.transaction.TranService;
 import com.tget.service.user.UserService;
+import com.tget.service.user.domain.User;
 
 @Controller
 @RequestMapping("/community/*")
@@ -58,9 +59,9 @@ public class CommuityController {
 		@RequestMapping(value="addContent", method=RequestMethod.GET)
 		public String addContent() throws Exception {
 
-			System.out.println("content/addContent: POST");
+			System.out.println("content/addContent: GET");
 			
-			return "forward: .jsp";
+			return "forward:/community.addContent.jsp";
 		}
 		
 		@RequestMapping(value="addContent", method=RequestMethod.POST)
@@ -86,7 +87,7 @@ public class CommuityController {
 			content.setFileName(uploadFile);
 			communityService.addContent(content);
 			
-			return "forward:/community/addContent.jsp";
+			return "forward:/community/getContentList.jsp";
 		}
 		
 		@RequestMapping(value="addReport", method=RequestMethod.GET)
@@ -98,9 +99,11 @@ public class CommuityController {
 		}
 		
 		@RequestMapping(value="addReport", method=RequestMethod.POST)
-		public String addReport( @ModelAttribute("report") Report report) throws Exception {
+		public String addReport( @ModelAttribute("report") Report report, @RequestParam("userId") int userId) throws Exception {
 
 			System.out.println("community/addContent: POST");
+			User user = userService.getUser("userId");
+			
 			
 			communityService.addReport(report);
 			report.getBlackId();

@@ -56,7 +56,7 @@ public class CommunityServiceTest {
 		content.setUserId("admin");
 		content.setUserNickName("나관리자얌");
 		content.setContentName("게시글");
-		//content.setContentBody("sdafsdafasadfasdfdsa");
+		content.setContentBody("sdafsdafasadfasdfdsa");
 		content.setBoardCode("1");
 		content.setContentCode("2");
 		content.setOpen("1");
