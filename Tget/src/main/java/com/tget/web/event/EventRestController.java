@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -86,7 +87,7 @@ public class EventRestController {
 	}
 	
 	@RequestMapping(value="rest/addYoutubeVideo/{requestPageToken}", method=RequestMethod.GET)
-	public Map<String,Object> addYoutubeVideo(@PathVariable String requestPageToken, @RequestBody Search search) throws Exception {
+	public Map<String,Object> addYoutubeVideo(@PathVariable String requestPageToken, @ModelAttribute Search search) throws Exception {
 		System.out.println("===============addYoutubeVideo===============");
 		//youtube테이블에 add하기위해 창을 요청하는 떄 -> youtube를 search하고 그 결과를 보여줄 화면
 		return eventService.getYoutubeList(search, requestPageToken, youtubeKey);
@@ -198,7 +199,7 @@ public class EventRestController {
 	}
 	
 	@RequestMapping(value="rest/updateCategoryTwo", method=RequestMethod.GET)
-	public Map<String,Object> updateCategoryTwo(@RequestBody String categoryTwoEng) throws Exception {
+	public Map<String,Object> updateCategoryTwo(@RequestParam String categoryTwoEng) throws Exception {
 		System.out.println("===============updateCategoryTwo===============");
 
 		Map<String,Object> map = new HashMap<String,Object>();
