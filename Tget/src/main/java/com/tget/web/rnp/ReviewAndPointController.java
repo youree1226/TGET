@@ -40,7 +40,6 @@ public class ReviewAndPointController {
 		
 		@RequestMapping(value="getReviewList")
 		public String getReviewList(HttpServletRequest request, Model model) throws Exception {
-			
 			System.out.println("===============getReviewList===============");
 			
 			rNPService.getReviewList(request.getParameter("buyerId"));
