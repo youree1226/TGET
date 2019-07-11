@@ -58,21 +58,42 @@
 	 <update	id="updateUser"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
-	   		user_id 	= #{userId} ,
-	   		user_name  =  #{userName} ,
-	   		nickname = #{nickName} ,
-	   		
-	   		
+	   	
+	   		<if test="phone != null">phone = #{phone} ,</if>
+	   		<if test="address != null">address = #{address} ,</if> 
+	   		<if test="postal_code != null">postal_code #{postalCode} ,</if>
+	   		<if test="local != null">local = #{local}, </if>
+	   		<if test="nickName != null">nickname = #{nickName} ,</if>
+	   		<if test="sellerCode != null">seller_code = #{sellerCode} ,</if>
+	   		<if test="salesAmount != null">sales_amount = #{salesAmount} ,</if>
+	   		<if test="salesCount != null">sales_count = #{salesCount} ,</if>
+	   		<if test="accountBank != null">account_bank = #{accoutBank} ,</if>
+	   		<if test="acoountNo != null">acoount_no = #{accountNo}</if>
 	   		
 	   	</set>
+	   	
 	   	WHERE user_id = #{userId}
+	   	
 	 </update>
-		 
-	<!-- SQL : SELECT LIST -->
+	 
+	 
+	 <update 	id="insertBlacklist"		parameterType="user" >
+	 	UPDATE users
+	 	<set>
+	 	        blacklist_code = #{blacklistCode} ,
+	 	        blacklist_start_date = #{blacklistStartDate} ,
+	 	        blacklist_end_date = #{blacklistEndDate}    
+					
+	 	</set>
+	 	WHERE user_id = #{userId}
+	 </update>
+	 
+	 
+	 
 	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT user_id , user_name , email
+	  					FROM		(	SELECT user_id , user_name , nickname
 											FROM users
 											<if test="searchCondition != null">
 												<where>
@@ -88,31 +109,18 @@
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	 </select>
-	 	<!--  위 두번째 subQuery 의  
-	 			WHERE ROWNUM &lt;= #{endRowNum} ) 는
-	 			WHERE ROWNUM <= #{endRowNum} ) 의미이며..
-	 			< 는 keyword 로 &lt; 를	사용.
-	 			
-	 			<![CDATA[  ~~~  ]]> 를 이용하여 아래와 같이 사용  할 수 있다.
-	 			CDATA ==> Character Data 의 의미 Java 에서 \n 같은 특수문자 처리  
-
-				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} )
-		-->
 	
-	<!-- SQL : SELECT ROW Count -->	 
-	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
-	  	SELECT COUNT(*)
-	  	FROM(	SELECT user_id , user_name , email
-						FROM users
-						<if test="searchCondition != null">
-							<where>
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			user_id = #{searchKeyword}
-								</if>
-								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 		user_name = #{searchKeyword}
-								</if>
-							</where>
-						</if> ) countTable						
-	 </select>
+	<select id="nickNameCheck" resultType="com.tget.service.user.domain.User">
+	SELECT 
+		nickName
+	FROM
+		users
+	where nickName = #{nickName}
+
+</select>
+	
+
+	
+	
+	
 </mapper>

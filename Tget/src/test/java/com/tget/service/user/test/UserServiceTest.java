@@ -1,6 +1,11 @@
 package com.tget.service.user.test;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,8 +41,8 @@ public class UserServiceTest {
 		user.setUserName("testUserName2");
 		user.setPassword("testPasswd");
 		user.setPhone(123);
-		user.setNickName("ë‹‰2");
-		user.setAddress("ì£¼ì†Œ");
+		user.setNickName("1");
+		user.setAddress("1");
 		user.setPostalCode(1);
 		user.setRole("1");
 		user.setLocal("1");
@@ -59,8 +64,8 @@ public class UserServiceTest {
 		Assert.assertEquals("testUserName2", user.getUserName());
 		Assert.assertEquals("testPasswd", user.getPassword());
 		Assert.assertEquals(123, user.getPhone());
-		Assert.assertEquals("ë‹‰2", user.getNickName());
-		Assert.assertEquals("ì£¼ì†Œ", user.getAddress());
+		Assert.assertEquals("1", user.getNickName());
+		Assert.assertEquals("1", user.getAddress());
 		Assert.assertEquals(1, user.getPostalCode());
 		Assert.assertEquals("1", user.getRole());
 		Assert.assertEquals("1", user.getLocal());
@@ -79,8 +84,8 @@ public class UserServiceTest {
 		user.setUserName("testUserName");
 		user.setPassword("testPasswd");
 		user.setPhone(111-2222-3333);
-		user.setNickName("ë‹‰");
-		user.setAddress("ì£¼ì†Œ");
+		user.setNickName("1");
+		user.setAddress("1");
 		user.setPostalCode(1);
 		user.setRole("1");
 		user.setLocal("1");
@@ -98,8 +103,8 @@ public class UserServiceTest {
 		Assert.assertEquals("testUserName", user.getUserName());
 		Assert.assertEquals("testPasswd", user.getPassword());
 		Assert.assertEquals(111-2222-3333, user.getPhone());
-		Assert.assertEquals("ë‹‰", user.getNickName());
-		Assert.assertEquals("ì£¼", user.getAddress());
+		Assert.assertEquals("1", user.getNickName());
+		Assert.assertEquals("1", user.getAddress());
 		Assert.assertEquals(1, user.getPostalCode());
 		Assert.assertEquals("1", user.getRole());
 		Assert.assertEquals("1", user.getLocal());
@@ -107,33 +112,33 @@ public class UserServiceTest {
 		Assert.assertEquals("1", user.getUserStatement());
 	}*/
 
-	@Test
+	//@Test
 	 public void testUpdateUser() throws Exception{
 		 
-		User user = userService.getUser("testUserId2");
+		User user = userService.getUser("admin");
 		Assert.assertNotNull(user);
 		
-		Assert.assertEquals("testUserId2", user.getUserId());
-		Assert.assertEquals("testUserName2", user.getUserName());
+		Assert.assertEquals("admin", user.getUserId());
+		Assert.assertEquals("°ü¸®ÀÚ", user.getUserName());
 
 		
 		
-		user.setUserName("change");
-		user.setNickName("chachachange");
+		user.setUserName("test");
+		user.setNickName("´Ð³×ÀÓ");
 		
 		userService.updateUser(user);
 		
-		user = userService.getUser("testUserId2");
+		user = userService.getUser("test");
 		Assert.assertNotNull(user);
 		
 		System.out.println(user);
 			
-		Assert.assertEquals("change", user.getUserName());
-		Assert.assertEquals("chachachange", user.getNickName());
+		Assert.assertEquals("test", user.getUserName());
+		Assert.assertEquals("´Ð³×ÀÓ", user.getNickName());
 	
 	 }
 	 
-}
+
 	//@Test
 //	public void testCheckDuplication() throws Exception{
 
@@ -254,3 +259,55 @@ public class UserServiceTest {
 	 	totalCount = (Integer)map.get("totalCount");
 	 	System.out.println(totalCount);
 	 }	 */
+
+@Test
+	public void testAddBlacklist() throws Exception {
+		
+		User user = userService.getUser("admin");
+		
+		Assert.assertNotNull(user);
+		
+		Assert.assertEquals("admin", user.getUserId());
+		
+		user.setBlacklistCode("1");
+
+
+		userService.addBlacklist(user);
+		
+		user = userService.getUser("admin");
+		Assert.assertNotNull(user);
+		
+		System.out.println(user);
+			
+		Assert.assertEquals("admin", user.getUserId());
+		Assert.assertEquals("1", user.getBlacklistCode());
+	
+		
+	}
+	
+//@Test
+
+public final void testGetDate() {
+
+     
+
+    Calendar cal = Calendar.getInstance();
+
+    cal.setTime(new Date());
+
+    cal.add(Calendar.DATE, 2);
+
+    cal.add(Calendar.MONTH, 2);
+
+     
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+    String strDate = df.format(cal.getTime());
+
+    System.err.println(strDate);
+
+}
+
+
+
+	}

@@ -156,6 +156,11 @@ public class EventServiceImpl implements EventService{
 	}
 	
 	
+	public void addInterestedCategory(int categoryTwoNo, String userId) throws Exception{
+		eventDao.insertInterestedCategory(categoryTwoNo, userId);
+	}
+	
+	
 	public Map<String,Object> getEventList(Search search, String requestPageToken, String apiKey) throws Exception{ 
 		return eventDao.getEventList(search,requestPageToken,apiKey);
 	}

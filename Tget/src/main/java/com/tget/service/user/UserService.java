@@ -7,31 +7,31 @@ import com.tget.service.user.domain.User;
 
 
 public interface UserService {
-	//íšŒì›ê°€ì…
+	//È¸¿ø°¡ÀÔ
 	public void addUser(User user) throws Exception;
-	//íšŒì›ì¡°íšŒ
+	//È¸¿øÁ¶È¸
 	public User getUser(String userId) throws Exception;
-	//íšŒì›ëª©ë¡ ì¡°íšŒ
+	//È¸¿ø¸ñ·ÏÁ¶È¸
 	public Map<String , Object> getUserList(Search search) throws Exception;
-	//íšŒì› ìˆ˜ì •
+	//È¸¿ø ¼öÁ¤
 	public void updateUser(User user) throws Exception;
-	//ì•„ì´ë”” ìœ íš¨ì„± ì²´í¬
+	//Áßº¹¼º Ã¼Å©
 	public boolean checkDuplication(String userId) throws Exception;
-	//ë¸”ë™ë¦¬ìŠ¤íŠ¸ ì¶”ê°€
-	public void addBlacklist(User userId)throws Exception;
-	//ë¸”ë™ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
-	public User getBlacklist(User userId)throws Exception;
-	//íŒë§¤ì ì¶”ê°€
+	//ºí·¢¸®½ºÆ® Ãß°¡
+	public void addBlacklist(User user)throws Exception;
+	//ºí·¢¸®½ºÆ® Á¶È¸
+	public User getBlacklist(String userId)throws Exception;
+	//ÆÇ¸ÅÀÚ µî·Ï
 	public void addSeller(User user)throws Exception;
-	//íŒë§¤ì ìˆ˜ì •
+	//ÆÇ¸ÅÀÚ ¼öÁ¤
 	public void updateSeller(User user)throws Exception;
-	//íŒë§¤ì í‰ê°€ ì¡°íšŒ
-	public User getSellerEval(User user)throws Exception;
-	//íŒë§¤ì ë“±ê¸‰ ì¡°íšŒ
-	public User getSalesGrade(String sellerCode)throws Exception;
-	
-	
-	
+	//ÆÇ¸ÅÀÚ Æò°¡ Á¶È¸
+	public User getSellerEval(String userId)throws Exception;
+	//ÆÇ¸Åµî±Ş Á¶È¸
+	public User getSalesGrade(String userId)throws Exception;
+/*	//ÆÇ¸ÅÀÚ¸®½ºÆ® Á¶È¸
+	public Map<String , Object> getSellerList(Search search) throws Exception;*/
+	public User nickNameCheck(String nickName)throws Exception;
 	
 	
 }
