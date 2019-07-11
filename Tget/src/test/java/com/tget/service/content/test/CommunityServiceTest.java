@@ -14,9 +14,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
+import com.tget.common.domain.Search;
 import com.tget.service.community.CommunityService;
 import com.tget.service.community.domain.Content;
+import com.tget.service.community.domain.Reply;
 import com.tget.service.community.domain.Report;
 
 /*
@@ -40,245 +41,127 @@ public class CommunityServiceTest {
 	@Qualifier("communityServiceImpl")
 	private CommunityService communityService;
 
-/////////////////testaddContent
-//	//@Test
-//	public void testAddContent() throws Exception {
-//		
-//		Content content = new Content();
-//		System.out.println("content"+content);
-//	
-//////////////////////CLOB/////////////////////////	
-////		String str="";
-////		StringBuffer stOut= new StringBuffer();
-////		
-////		
-////		BufferedReader br = new BufferedReader(clob.getCharacterStream());
-////		while((str= br.readLine()!= null)) {
-////			stOut.append(str+"\n");
-////		}
-////		br.close();
-////		return stOut.toString();
-//	
-//		
-//		content.setUserId("admin");
-//		content.setUserNickName("나관리자얌");
-//		content.setContentName("게시글");
-//		content.setBoardCode("1");
-//		content.setContentCode("2");
-//		content.setOpen("1");
-//		
-//		
-//		communityService.addContent(content);
-//		
-////		content = communityService.getContent(i);
-////
-////		//==> API 확인
-////		Assert.assertEquals(i, content.getContentNo());
-////		Assert.assertEquals("디벨로퍼차", content.getUserId());
-////		Assert.assertEquals("진영", content.getUserNickName());
-////		Assert.assertEquals("게시글", content.getContentName());
-////		Assert.assertEquals("123123", content.getContentBody());
-////		Assert.assertEquals("1", content.getBoardCode());
-////		Assert.assertEquals("2", content.getContentCode());
-////		Assert.assertEquals("1", content.getOpenCheck());
-//}
-
+/////////////////testaddContent////////////////////////////////
 	@Test
+	public void testAddContent() throws Exception {
+		
+		
+		Content content = new Content();
+//		Clob clob = new Clob();
+//		Object c = null;
+//		
+//		if(content.getContentBody() instanceof java.sql.Clob) {
+//			c = 
+//		}
+		content.setUserId("admin");
+		content.setUserNickName("나관리자얌");
+		content.setContentName("게시글");
+		//content.setContentBody("sdafsdafasadfasdfdsa");
+		content.setBoardCode("1");
+		content.setContentCode("2");
+		content.setOpen("1");
+
+		communityService.addContent(content);
+}
+//////////////////////////////////////////////////////////////////	
+///////////////////testAddReport//////////////////////////
+//	@Test
 	public void testAddReport() throws Exception{
 		
 		Report report = new Report();
 		
-//		report.setUserId("admin");
-//		content.setUserNickName("나관리자얌");
-//		content.setContentName("게시글");
-//		content.setBoardCode("1");
-//		content.setContentCode("2");
-//		content.setOpen("1");
-		
 		report.setWhiteId("admin");
 		report.setWhiteNickName("나관리자얌");
-		report.setBlackId("seller");
+		report.setBlackId("manager");
 		report.setReportReasonCode("1");
-		report.setContentNo(10003);
-		report.setReplyNo(0);
+		report.setContentNo(10002);
 		report.setCheck("1");
 		report.setReportCode("1");
-		
+		System.out.println("@@@@@@@@"+report);
 		communityService.addReport(report);
 	}
+///////////////////////////////////////////////////////////	
+////////////////////testAddReply/////////////////////////
+//	@Test
+	public void testAddReply() throws Exception {
 	
+		Reply reply = new Reply();
+		
+		reply.setUserId("admin");
+		reply.setUserNickName("나관리자얌");
+		reply.setContentNo(10002);
+		reply.setReplyBody("리플리플리플리플");
+		System.out.println("!!!!!!!!"+reply);
+		communityService.addReply(reply);	
+}
+////////////////////////////////////////////////////////
+///////////////testGetContent/////////////////////
+	//@Test
+	public void testGetContent() throws Exception {
+		
+		Content content = new Content();
+
+		content = communityService.getContent(10002);
+
+		System.out.println(content);
+		
+		Assert.assertEquals(10002, content.getContentNo());
+		Assert.assertNotNull(communityService.getContent(10003));
+	}	
+
+//////////////////////////////////////////////////////////
+	/////////////testUpdateContent//////////////////////// CLOB......
+	//@Test
+	 public void testUpdateContent() throws Exception{
+
+		Content content = communityService.getContent(10002);
+		Assert.assertNotNull(content);
 	
-//	
-//	//@Test
-//	public void testGetProduct() throws Exception {
-//		
-//		Product product = new Product();
-//		Date date = new Date(19, 03, 03);
-//		int i = 71001;
+		Assert.assertEquals(10002, content.getContentNo());
+		Assert.assertEquals("게시글", content.getContentName());
+		Assert.assertEquals("게시글", content.getContentBody());////null을 어떻게;;;;;;;;;;;
+		//Assert.assertEquals(
+
+		content.setContentName("게시글게시글게시글");
+		//content.setContentBody("게시글게시글게시글");////null을 어떻게;;;;;;;;;;;
+		
+		communityService.updateContent(content);
+		content = communityService.getContent(10002);
+			
+		Assert.assertEquals("게시글게시글게시글", content.getContentName());
+		Assert.assertEquals("게시글게시글게시글", content.getContentBody());////null을 어떻게;;;;;;;;;;;
+	 }
+//////////////////////////////////////////////////////////
+	 //////////////testDeleteContent////////////////////// content는 필요없고 reply는 필요할거같음 Test필요 
+	//@Test
+//			public void deleteContent() throws Exception {
 //
-//		//==> 필요하다면...
-////		user.setUserId("testUserId");
-////		user.setUserName("testUserName");
-////		user.setPassword("testPasswd");
-////		user.setSsn("1111112222222");
-////		user.setPhone("111-2222-3333");
-////		user.setAddr("경기도");
-////		user.setEmail("test@test.com");
-//		
-//		product = productService.getProduct(i);
-//
-//		//==> console 확인
-//		//System.out.println(user);
-//		
-//		//==> API 확인
-//		Assert.assertEquals(i, product.getProdNo());
-//		Assert.assertEquals("길동이노트북", product.getProdName());
-//		Assert.assertEquals("잘 켜지지 않음", product.getProdDetail());
-//		//Assert.assertEquals("19941212", product.getManuDate());
-//		Assert.assertEquals(1, product.getPrice());
-//		//Assert.assertEquals("개빡", product.getFileName());
-//		Assert.assertEquals(date, product.getRegDate());
-//		
-//		Assert.assertNotNull(productService.getProduct(i));
+//				communityService.deleteContent(10002);
 //	}
-//	
-//	//@Test
-//	 public void testUpdateProduct() throws Exception{
-//		
-//		Date date = new Date(19, 03, 03);
-//		int i = 71001;
-//		Product product = productService.getProduct(i);
-//		//Assert.assertNotNull(product);
-//		System.out.println("@@@"+date);
-//		System.out.println("@@@"+i);
-//		System.out.println("@@@"+product);
-//		
-//		
-//		Assert.assertEquals(i, product.getProdNo());
-//		Assert.assertEquals("길동이노트북", product.getProdName());
-//		Assert.assertEquals("잘 켜지지 않음", product.getProdDetail());
-//		Assert.assertEquals(1, product.getPrice());
-//
-//		product.setProdName("몽이노트북");
-//		product.setProdDetail("여전히 켜지지 않음");
-//		product.setPrice(2);
-//		
-//		productService.updateProduct(product);
-//		System.out.println("노트북 팔리지마라");
-//		product = productService.getProduct(i);
-//		Assert.assertNotNull(product);
-//		
-//		//==> console 확인
-//		//System.out.println(user);
-//			
-//		//==> API 확인
-//		Assert.assertEquals("몽이노트북", product.getProdName());
-//		Assert.assertEquals("여전히 켜지지 않음", product.getProdDetail());
-//		Assert.assertEquals(2, product.getPrice());
-//	 }
-//
-//	 @Test
-//	 public void testGetProductListAll() throws Exception{
-//		 
-//	 	Search search = new Search();
-//	 	search.setCurrentPage(1);
-//	 	search.setPageSize(3);
-//	 	Map<String,Object> map = productService.getProductList(search);
-//	 	
-//	 	List<Object> list = (List<Object>)map.get("list");
-//	 	Assert.assertEquals(3, list.size());
-//	 	
-//		//==> console 확인
-//	 	//System.out.println(list);
-//	 	
-//	 	Integer totalCount = (Integer)map.get("totalCount");
-//	 	System.out.println(totalCount);
-//	 	
-//	 	System.out.println("=======================================");
-//	 	
-//	 	search.setCurrentPage(1);
-//	 	search.setPageSize(3);
-//	 	search.setSearchCondition("0");
-//	 	search.setSearchKeyword("");
-//	 	map = productService.getProductList(search);
-//	 	
-//	 	list = (List<Object>)map.get("list");
-//	 	Assert.assertEquals(3, list.size());
-//	 	
-//	 	//==> console 확인
-//	 	//System.out.println(list);
-//	 	
-//	 	totalCount = (Integer)map.get("totalCount");
-//	 	System.out.println(totalCount);
-//	 }
-//	 
-//	 //@Test
-//	 public void testGetProductListByProdNo() throws Exception{
-//		 
-//	 	Search search = new Search();
-//	 	search.setCurrentPage(1);
-//	 	search.setPageSize(3);
-//	 	search.setSearchCondition("0");
-//	 	search.setSearchKeyword("admin");
-//	 	Map<String,Object> map = productService.getProductList(search);
-//	 	
-//	 	List<Object> list = (List<Object>)map.get("list");
-//	 	Assert.assertEquals(1, list.size());
-//	 	
-//		//==> console 확인
-//	 	//System.out.println(list);
-//	 	
-//	 	Integer totalCount = (Integer)map.get("totalCount");
-//	 	System.out.println(totalCount);
-//	 	
-//	 	System.out.println("=======================================");
-//	 	
-//	 	search.setSearchCondition("0");
-//	 	search.setSearchKeyword(""+System.currentTimeMillis());
-//	 	map = productService.getProductList(search);
-//	 	
-//	 	list = (List<Object>)map.get("list");
-//	 	Assert.assertEquals(0, list.size());
-//	 	
-//		//==> console 확인
-//	 	//System.out.println(list);
-//	 	
-//	 	totalCount = (Integer)map.get("totalCount");
-//	 	System.out.println(totalCount);
-//	 }
-//	 
-//	 //@Test
-//	 public void testGetProductListByProdName() throws Exception{
-//		 
-//	 	Search search = new Search();
-//	 	search.setCurrentPage(1);
-//	 	search.setPageSize(3);
-//	 	search.setSearchCondition("1");
-//	 	search.setSearchKeyword("SCOTT");
-//	 	Map<String,Object> map = productService.getProductList(search);
-//	 	
-//	 	List<Object> list = (List<Object>)map.get("list");
-//	 	Assert.assertEquals(3, list.size());
-//	 	
-//		//==> console 확인
-//	 	System.out.println(list);
-//	 	
-//	 	Integer totalCount = (Integer)map.get("totalCount");
-//	 	System.out.println(totalCount);
-//	 	
-//	 	System.out.println("=======================================");
-//	 	
-//	 	search.setSearchCondition("1");
-//	 	search.setSearchKeyword(""+System.currentTimeMillis());
-//	 	map = productService.getProductList(search);
-//	 	
-//	 	list = (List<Object>)map.get("list");
-//	 	Assert.assertEquals(0, list.size());
-//	 	
-//		//==> console 확인
-//	 	System.out.println(list);
-//	 	
-//	 	totalCount = (Integer)map.get("totalCount");
-//	 	System.out.println(totalCount);
-//	 }	 
+
+//////////////////////////////////////////////////////////
+	 //////////////testselectListContent//////////////////////
+	 //@Test
+	 public void selectListContent() throws Exception{
+		 
+	 	Search search = new Search();
+	 	search.setCurrentPage(1);
+	 	search.setPageSize(3);
+	 	Map<String,Object> map = communityService.getContentList(search);
+	 	
+	 	List<Object> list = (List<Object>)map.get("list");
+	 	Assert.assertEquals(3, list.size());
+	 	
+	 	Integer totalCount = (Integer)map.get("totalCount");
+	 	System.out.println(totalCount);
+	
+	 	search.setCurrentPage(1);
+	 	search.setPageSize(3);
+	 	search.setSearchCondition("0");
+	 	search.setSearchKeyword("");
+	 	map = communityService.getContentList(search);
+	 	
+	 	totalCount = (Integer)map.get("totalCount");
+	 	System.out.println(totalCount);
+	 }
 }

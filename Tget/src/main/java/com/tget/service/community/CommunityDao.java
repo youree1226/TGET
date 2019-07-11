@@ -10,20 +10,19 @@ import com.tget.service.community.domain.Report;
 
 
 public interface CommunityDao {
-	// 게시글 등록
+	// 게시글 등록 
 	public void InsertContent(Content content) throws Exception;
 	// 신고 등록
 	public void InsertReport(Report report) throws Exception;
-	// 게시글 수정
-	public void updateContent(Content content) throws Exception;
-	// 게시글 삭제
-	public void deleteContent(int contentNo) throws Exception;
-	// 게시글 상세조회
+	// 댓글 등록
+    public void InsertReply(Reply reply) throws Exception;
+    // 게시글 상세조회
     public Content selectContent(int contentNo) throws Exception;
+    // 게시글 수정
+	public void updateContent(Content content) throws Exception;
+	
     // 게시글 리스트 조회
     public List<Content> selectListContent(Search search) throws Exception;
-    // 댓글 등록
-    public void InsertReply(Reply reply) throws Exception;
     // 댓글 수정
     public void updateReply(Reply reply) throws Exception;
     // 댓글 삭제
