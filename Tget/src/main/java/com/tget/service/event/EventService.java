@@ -17,10 +17,13 @@ public interface EventService {
 	public Event getEvent(String eventId) throws Exception;//return event도메인; 
 	public  List<Event> getEventByName(String eventName) throws Exception;//return event도메인 리스트; 
 	public void updateEventViewCount(int viewCount,String eventName) throws Exception;
+	public void addEventImage(String imageName,String eventName) throws Exception;
 	public void updateEventImage(String imageName,String eventName) throws Exception;
+	public void deleteEventImage(String eventName) throws Exception;
 	public List<Event> getInterestedEventList(String userId) throws Exception;
 	public void addInterestedEvent(String eventId, String userId) throws Exception;
 	public void deleteInterestedEvent(String eventId, String userId) throws Exception;
+	public List<String> getYoutubeIdList(String eventName) throws Exception;
 	public void addYoutubeVideo(String youtubeId, String eventName) throws Exception;
 	public List<Event> getPopularEventList() throws Exception;
 	public List<RecommEvent> getRecommendedEventList() throws Exception;
@@ -34,6 +37,6 @@ public interface EventService {
 	public Category getCategory(String categoryTwoEng) throws Exception;
 	public void deleteCategoryTwo(String categoryTwoEng) throws Exception;
 	public List<User> getInterestedByUser(Search search) throws Exception;
-	public Map<String,Object> getEventList(Search search) throws Exception;
-	public Map<String,Object> getYoutubeList(Search search) throws Exception;
+	public Map<String,Object> getEventList(Search search, String requestPageToken, String apiKey) throws Exception;
+	public Map<String,Object> getYoutubeList(Search search, String requestPageToken, String apiKey) throws Exception;
 }

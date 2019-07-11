@@ -45,6 +45,6 @@ public class StubhubSearchList {
 	}
 
 	public String toString() {
-		return "\n[numFound] "+numFound+"\n[events] "+events;
+		return "[StubhubSearchList] \nnumFound : "+numFound+"\n events : "+events;
 	}
 }

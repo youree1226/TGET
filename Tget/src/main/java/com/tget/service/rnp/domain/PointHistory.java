@@ -6,11 +6,12 @@ public class PointHistory {
 
 	///F
 	private String userId;
-	private int pointUpdateCode;
+	private String pointUpdateCode;
 	private Date regDate;
 	private int tranNo;
 	private int totalPoint;
 	private int updatePoint;
+	private int pointHistoryNo;
 	
 	///C
 	public PointHistory() {
@@ -25,11 +26,11 @@ public class PointHistory {
 		this.userId = userId;
 	}
 
-	public int getPointUpdateCode() {
+	public String getPointUpdateCode() {
 		return pointUpdateCode;
 	}
 
-	public void setPointUpdateCode(int pointUpdateCode) {
+	public void setPointUpdateCode(String pointUpdateCode) {
 		this.pointUpdateCode = pointUpdateCode;
 	}
 
@@ -64,11 +65,19 @@ public class PointHistory {
 	public void setUpdatePoint(int updatePoint) {
 		this.updatePoint = updatePoint;
 	}
-	
+
+	public int getPointHistoryNo() {
+		return pointHistoryNo;
+	}
+
+	public void setPointHistoryNo(int pointHistoryNo) {
+		this.pointHistoryNo = pointHistoryNo;
+	}
+
 	public String toString() {
 		return "[PointHistory] userId : "+userId+", "+"pointUpdateCode : "+pointUpdateCode+", " + 
 				"tranNo : "+tranNo+", " +"regDate : "+regDate+", " + 
-				"totalPoint : "+totalPoint+", " + "updatePoint : "+updatePoint;
+				"totalPoint : "+totalPoint+", " + "updatePoint : "+updatePoint+", pointHistoryNo : "+pointHistoryNo;
 	}
 
 }

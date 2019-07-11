@@ -13,7 +13,7 @@ public class Report {
 		private String reportReasonCode;
 		private Date regDate;
 		private String reportCode;
-		private String Check;
+		private String check;
 		
 		public int getReportNo() {
 			return reportNo;
@@ -70,17 +70,17 @@ public class Report {
 			this.reportCode = reportCode;
 		}
 		public String getCheck() {
-			return Check;
+			return check;
 		}
 		public void setCheck(String check) {
-			Check = check;
+			this.check = check;
 		}
 		@Override
 		public String toString() {
 			return "Report [reportNo=" + reportNo + ", whiteId=" + whiteId + ", whiteNickName=" + whiteNickName
 					+ ", blackId=" + blackId + ", contentNo=" + contentNo + ", ReplyNo=" + ReplyNo
 					+ ", reportReasonCode=" + reportReasonCode + ", regDate=" + regDate + ", reportCode=" + reportCode
-					+ ", Check=" + Check + "]";
+					+ ", Check=" + check + "]";
 		}
 		
 		

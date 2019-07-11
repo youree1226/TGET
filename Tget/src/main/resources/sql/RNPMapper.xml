@@ -15,13 +15,13 @@
 	</resultMap>
  	
 	<resultMap id="pointHistorySelectMap" type="pointHistory">
-		<result property="point_history_no" 			column="point_history_no" 			jdbcType="NUMERIC"/>
-		<result property="user_id"	column="user_id" 		jdbcType="VARCHAR" />
-		<result property="point_update_code" 	column="point_update_code" 		jdbcType="CHAR" />
-		<result property="reg_date" 				column="reg_date" 					jdbcType="DATE" />
-		<result property="tran_no" 				column="tran_no" 					jdbcType="NUMERIC" />
-		<result property="total_point" 			column="total_point" 		jdbcType="NUMERIC" />
-		<result property="event_time" 				column="update_point" 					jdbcType="NUMERIC" />
+		<result property="pointHistoryNo" 			column="point_history_no" 			jdbcType="NUMERIC"/>
+		<result property="userId"	column="user_id" 		jdbcType="VARCHAR" />
+		<result property="pointUpdateCode" 	column="point_update_code" 		jdbcType="CHAR" />
+		<result property="regDate" 				column="reg_date" 					jdbcType="DATE" />
+		<result property="tranNo" 				column="tran_no" 					jdbcType="NUMERIC" />
+		<result property="totalPoint" 			column="total_point" 		jdbcType="NUMERIC" />
+		<result property="updatePoint" 				column="update_point" 					jdbcType="NUMERIC" />
 	</resultMap>
 	
 
@@ -31,16 +31,31 @@
 <!-- 		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} ,  -->
 <!-- 							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE ) -->
 <!-- 	 </insert> -->
+
+	<select 	id="selectPointHistory"	parameterType="string"	resultMap="pointHistorySelectMap">
+		SELECT
+		point_history_no , user_id , point_update_code , reg_date , tran_no, total_point, update_point
+		FROM point_history
+		WHERE user_id = #{userId}
+	 </select>
 	 
-	 <select 	id="selectReviewList"	 parameterType="search"	 resultType="review">
+	 <insert 	id="insertPointHistory"		parameterType="pointHistory" >
+	 	INSERT
+		INTO point_history( point_history_no , user_id , point_update_code , reg_date , tran_no, total_point, update_point) 
+		VALUES	 (	seq_point_history_no.nextval , #{userId} , #{pointUpdateCode} , SYSDATE, 
+							#{tranNo} , #{totalPoint} , #{updatePoint}  )
+	 </insert>
+	 
+	 <select 	id="selectReviewList"	 parameterType="search"	 resultMap="reviewSelectMap">
 		SELECT
 		review_score, review_body, review_reg_date, buyer_id, seller_id, tran_no
 		FROM transaction
-		<if test="searchCondition == 0">WHERE buyer_id = #{buyerId}</if>
-		<if test="searchCondition == 1">WHERE seller_id = #{sellerId}</if>
+		<if test="searchCondition == 0">WHERE buyer_id = #{searchKeyword}</if>
+		<if test="searchCondition == 1">WHERE seller_id = #{searchKeyword}</if>
+		AND review_score IS NOT NULL
 	 </select>
 	 
-	 <select 	id="selectReview"	parameterType="int"	resultType="review">
+	 <select 	id="selectReview"	parameterType="int"	resultMap="reviewSelectMap">
 		SELECT
 		review_score, review_body, review_reg_date, buyer_id, seller_id
 		FROM transaction
@@ -57,17 +72,5 @@
 		WHERE tran_no = #{tranNo}
 	 </update>
 	 
-	 <select 	id="selectPointHistory"	parameterType="string"	resultType="pointHistory">
-		SELECT
-		point_history_no , user_id , point_update_code , reg_date , tran_no, total_point, update_point
-		FROM point_history
-		WHERE user_id = #{userId}
-	 </select>
 	 
-	 <insert 	id="insertPointHistory"		parameterType="pointHistory" >
-	 	INSERT
-		INTO point_history( point_history_no , user_id , point_update_code , reg_date , tran_no, total_point, update_point) 
-		VALUES	 (	seq_point_history_no.nextval , #{userId} , #{pointUpdateCode} , SYSDATE, 
-							#{tranNo} , #{totalPoint} , #{updatePoint}  )
-	 </insert>
 </mapper>

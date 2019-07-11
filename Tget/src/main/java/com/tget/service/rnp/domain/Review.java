@@ -3,6 +3,8 @@ package com.tget.service.rnp.domain;
 
 import java.sql.Date;
 
+import com.tget.service.event.domain.Category;
+
 public class Review {
 
 	///F
