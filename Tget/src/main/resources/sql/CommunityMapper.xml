@@ -12,7 +12,7 @@
 		<result property="userId"			column="user_id" 			jdbcType="VARCHAR" />
 		<result property="userNickName" 	column="user_nickname" 		jdbcType="VARCHAR" />
 		<result property="contentName" 		column="content_name" 		jdbcType="VARCHAR" />
-		<result property="contentBody" 		column="content_body" 		jdbcType="CLOB" />
+		<result property="contentBody" 		column="content_body" 		jdbcType="CLOB"	/>
 		<result property="videoName" 		column="video_name" 		jdbcType="VARCHAR" />
 		<result property="fileName" 		column="file_name" 			jdbcType="VARCHAR" />
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
@@ -52,12 +52,15 @@
 	
 	<!-- SQL : INSERT Content -->
 	<insert 	id="insertContent"		parameterType="content" >
+	 	<!-- <selectKey keyProperty="contentNo" resultType="int" order="BEFORE">
+	 			SELECT seq_content_content_no.nextval FROM DUAL  currval 
+		</selectKey> -->
 	 	INSERT
 		INTO content 
-		VALUES	 (	seq_content_content_no.nextval , #{userId} , #{userNickName} , #{contentName} , empty_clob() , 
-					#{fileName:VARCHAR} , #{videoName:VARCHAR} , SYSDATE, 0, #{boardCode}, #{contentCode}, #{open}, 
-					0, 0, #{refundTranNo}, #{refundCheck:CHAR} )
-							
+		VALUES	 (	seq_content_content_no.nextval , #{userId} , #{userNickName} , #{contentName} 
+		, NVL(#{contentBody:VARCHAR}, empty_clob()) , #{fileName:VARCHAR} , #{videoName:VARCHAR} 
+		, SYSDATE, 0, #{boardCode}, #{contentCode}, #{open}, 0, 0, #{refundTranNo}, #{refundCheck:CHAR} )
+					
 	 </insert>
 	 
 	 <insert 	id="insertReport"		parameterType="report">
@@ -86,7 +89,7 @@
 		WHERE content_no = #{value}
 	 </select>
 	 
-	 <!-- SQL :  UPDATE-->
+	 <!-- SQL :  UPDATE CLOB 수정 필요.....-->
 	 <update	id="updateContent"	parameterType="content"  >
 	   	UPDATE content
 	   	<set>
@@ -97,4 +100,83 @@
 	   	</set>
 	   	WHERE content_no = #{contentNo}
 	 </update>
+	
+  	<!-- SQL: DELETE  -->
+	 <delete id="deleteReply" parameterType="int">
+	  	DELETE 
+	  	FROM reply 
+	  	WHERE reply_no = #{replyNo} 
+  	</delete>
+  	
+  	<!-- SQL: SELECT LIST -->
+  	<select  id="selectListContent"  parameterType="search"	resultMap="contentSelectMap">
+	 	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	
+	  									SELECT content_no, user_id, user_nickname
+	  										, content_name, empty_clob() , file_name
+	  										, video_name , SYSDATE , view_count, board_code
+	  										, content_code , open , good_count , bad_count
+	  										, refund_tran_no, refund_check
+											FROM content
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				content_no = #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				and LOWER(content_name) LIKE LOWER('%'|| #{searchKeyword}||'%') 
+													</if>
+												</where>
+											</if>
+											ORDER BY content_no ) inner_table)
+						<!-- WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} --> 
+	 </select>
+	 
+	 <select  id="selectTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  					FROM(			SELECT content_no, user_id, user_nickname
+	  										, content_name, empty_clob() , file_name
+	  										, video_name , SYSDATE , view_count, board_code
+	  										, content_code , open , good_count , bad_count
+	  										, refund_tran_no, refund_check
+											FROM content
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				content_no = #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				and LOWER(content_name) LIKE LOWER('%'|| #{searchKeyword}||'%') 
+													</if>
+													</where>
+									</if>) countTable
+	</select>
+	 
+	 <!-- <select  id="selectListReport"  parameterType="search"	resultMap="reportSelectMap">
+	 	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	
+	  									SELECT report_no, white_id, white_nickname
+	  										, black_id, content_no , reply_no
+	  										, report_reason_code , SYSDATE , report_code, check
+											FROM report
+											
+											) inner_table
+			)		
+	 </select>
+	 
+	 <select  id="selectListReply"  parameterType="search"	resultMap="replySelectMap">
+	 	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	
+	  									SELECT reply_no, user_id, user_nickname
+	  										, content_no, reply_body, SYSDATE
+											FROM reply
+											
+											) inner_table
+			)		
+	 </select> -->
+
 </mapper>

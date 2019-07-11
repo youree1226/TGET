@@ -20,8 +20,7 @@ public interface CommunityDao {
     public Content selectContent(int contentNo) throws Exception;
     // 게시글 수정
 	public void updateContent(Content content) throws Exception;
-	// 게시글 삭제
-	public void deleteContent(int contentNo) throws Exception;
+	
     // 게시글 리스트 조회
     public List<Content> selectListContent(Search search) throws Exception;
     // 댓글 수정

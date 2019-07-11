@@ -55,23 +55,15 @@ public class CommunityDaoImpl implements CommunityDao{
 	}
 	
 	@Override
-	public void deleteContent(int contentNo) throws Exception{
-		sqlSession.delete("CommunityMapper.deleteContent", contentNo);
+	public void updateReply(Reply reply) throws Exception {
+		sqlSession.update("CommunityMapper.updateReply", reply);
 	}
 	
+
+	//// ¥Ò±€ ªË¡¶
 	@Override
 	public void deleteReply(int replyNo) throws Exception{
 		sqlSession.delete("CommunityMapper.deleteReply", replyNo);
-	}
-
-	@Override
-	public List<Content> selectListContent(Search search) throws Exception {
-		return sqlSession.selectList("CommunityMapper.selectListContent", search);
-	}
-	
-	@Override
-	public void updateReply(Reply reply) throws Exception {
-		sqlSession.update("CommunityMapper.updateReply", reply);
 	}
 	
 	@Override
@@ -85,9 +77,14 @@ public class CommunityDaoImpl implements CommunityDao{
 	}
 	
 	@Override
+	public List<Content> selectListContent(Search search) throws Exception {
+		return sqlSession.selectList("CommunityMapper.selectListContent", search);
+	}
+
+	@Override
 	public int selectTotalCount(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("ProductMapper.selectTotalCount", search);
+		return sqlSession.selectOne("CommunityMapper.selectTotalCount", search);
 	}
 	
 	@Override
