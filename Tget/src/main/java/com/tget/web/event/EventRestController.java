@@ -232,17 +232,17 @@ public class EventRestController {
 		return map;
 	}
 	
-	@RequestMapping(value="rest/getEventList/{requestPageToken}")
-	public Map<String,Object> getEventList(@PathVariable String requestPageToken, @RequestBody Search search) throws Exception {
-		System.out.println("===============getEventList===============");
-				
-//		"youtubeList"
-//		"nextPageToken"
-//		"prevPageToken"
-//		"totalResults"
-		
-		return eventService.getEventList(search, requestPageToken, stubhubKey);
-	}
+//	@RequestMapping(value="rest/getEventList/{requestPageToken}")
+//	public Map<String,Object> getEventList(@PathVariable String requestPageToken, @RequestBody Search search) throws Exception {
+//		System.out.println("===============getEventList===============");
+//				
+////		"youtubeList"
+////		"nextPageToken"
+////		"prevPageToken"
+////		"totalResults"
+//		
+//		return eventService.getEventList(search, requestPageToken, stubhubKey);
+//	}
 	
 	@RequestMapping(value="rest/getEventTicketList")
 	public Map<String,Object> getEventTicketList(@RequestBody String eventId) throws Exception {

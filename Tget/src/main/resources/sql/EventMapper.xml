@@ -101,7 +101,7 @@
 	 <insert 	id="insertInterestedEvent"		parameterType="event" >
 	 	INSERT
 		INTO user_interested(interested_category_no, user_id, category_two_no, event_id) 
-		VALUES	 (	seq_user_Interested_no.nextval , #{userId} , #{categoryTwoNo} , #{eventId}  )
+		VALUES	 (	seq_user_Interested_no.nextval , #{userId} , #{categoryTwoNo:NUMERIC} , #{eventId:VARCHAR}  )
 	 </insert>
 	 
 	 <delete id="deleteInterestedEvent" parameterType="event">

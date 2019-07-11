@@ -48,12 +48,12 @@
 <body>
 
 <form>
-
+	<div class="container-fluid">
 <%-- 	<input type="hidden" id="currentPage" name="currentPage" value="${!empty search.currentPage? search.currentPage: ''}"/> --%>
 	<input type="hidden" id="searchCondition" name="searchCondition" value="1"/>
 	<input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어" value="${!empty search.searchKeyword? search.searchKeyword : ''}" >
 	<button type="submit" id="searchSubmit" >검색</button>
-	
+	</div>
 </form>
 
 </body>
