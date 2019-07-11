@@ -68,12 +68,10 @@ public class EventController {
 
 	///Method
 	@RequestMapping(value="test")
-	public String getEventList(Model model) throws Exception {
+	public String test() throws Exception {
 		System.out.println("===============test===============");
-		
-		
+
 		return "forward:/event/test.jsp";
-		
 	}
 	
 	@RequestMapping(value="getEventList")

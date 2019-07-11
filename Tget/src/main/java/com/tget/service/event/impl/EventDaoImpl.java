@@ -284,23 +284,23 @@ public class EventDaoImpl implements EventDao {
 		List<StubhubEvent> returnList = new ArrayList<StubhubEvent>();
 		
 		for (StubhubEvent stubhubEvent : list) {
-//			if (tempName == null) {
-//				tempName = stubhubEvent.getName();
-//				returnList.add(stubhubEvent);
-//			}else {
+			if (tempName == null) {
+				tempName = stubhubEvent.getName();
+				returnList.add(stubhubEvent);
+			}else {
 				if (tempName.equals(stubhubEvent.getName())) {
 					continue;
 				}else {
 					tempName = stubhubEvent.getName();
 					returnList.add(stubhubEvent);
 				}
-//			}
+			}
 		}
 		System.out.println("returnList : "+returnList);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("eventList", returnList);
-		map.put("totalResults", totalEventCount);
+		map.put("totalResults", returnList.size());
 		
 		return map;
 	}

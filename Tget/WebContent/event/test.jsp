@@ -12,19 +12,25 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript">
-	
+	$(function(){
+		$("#testSubmit").on("click",function(){
+			$("form").attr("method" , "POST").attr("action" , "/event/getEventList").submit();
+		});
+	});	
 	</script>
 </head>
 
 <body>
 
-<form target="/event/getEventList" method="post">
+<form>
 	<div class="container-fluid">
-	searchCondition이 0이면 카테고리 검색
-	searchCondition이 1이면 키워드 검색
-	<input type="text" id="searchCondition" name="searchCondition" placeholder="searchKeyword"/>
-	<input type="text"  id="searchKeyword" name="searchKeyword"  placeholder="searchKeyword" value="${!empty search.searchKeyword? search.searchKeyword : ''}" >
-	<button type="submit" id="" >테스트</button>
+	<br/><br/><br/>
+	searchCondition이 0이면 카테고리 검색<br/>
+	searchCondition이 1이면 키워드 검색<br/><br/>
+	<input type="hidden" id="requestPageToken" name="requestPageToken" value="${requestPageToken }"/><br/>
+	<input type="text" id="searchCondition" name="searchCondition" placeholder="searchCondition"/><br/>
+	<input type="text"  id="searchKeyword" name="searchKeyword"  placeholder="searchKeyword" value="${!empty search.searchKeyword? search.searchKeyword : ''}" ><br/>
+	<button type="submit" id="testSubmit" >이벤트검색테스트</button><br/>
 	</div>
 </form>
 
