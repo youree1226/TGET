@@ -11,7 +11,7 @@ public class Content {
 		private String userId;
 		private String userNickName;
 		private String contentName;
-		private String contentBody;
+		private Clob contentBody;
 		private String videoName;
 		private String fileName;
 		private Date regDate;
@@ -48,10 +48,10 @@ public class Content {
 		public void setContentName(String contentName) {
 			this.contentName = contentName;
 		}
-		public String getContentBody() {
+		public Clob getContentBody() {
 			return contentBody;
 		}
-		public void setContentBody(String contentBody) {
+		public void setContentBody(Clob contentBody) {
 			this.contentBody = contentBody;
 		}
 		public String getVideoName() {

@@ -21,6 +21,15 @@ public interface CommunityService {
 		// 게시글 조회
 		public Content getContent(int contentNo) throws Exception;
 		
+		// 게시글 수정
+		public void updateContent(Content content) throws Exception;
+				
+		// 댓글 수정
+		public void updateReply(Reply reply) throws Exception;
+		
+		// 댓글 삭제
+		public void deleteReply(int replyNo) throws Exception;
+		
 		// 게시글 리스트 조회
 		public Map<String,Object> getContentList(Search search) throws Exception;
 		
@@ -29,12 +38,6 @@ public interface CommunityService {
 		
 		// 신고 리스트 조회
 		public Map<String,Object> getReportList(Search search) throws Exception; //getTotalCount, getReportList 
-		
-		// 게시글 수정
-		public void updateContent(Content content) throws Exception;
-		
-		// 댓글 수정
-		public void updateReply(Reply reply) throws Exception;
 		
 		// 공감수
 		public void updateGoodCount(Map<String,Object> goodCount)throws Exception;
