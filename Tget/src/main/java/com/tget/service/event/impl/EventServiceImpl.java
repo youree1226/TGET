@@ -58,6 +58,19 @@ public class EventServiceImpl implements EventService{
 	}
 	
 	
+	public void addEventImage(String imageName,String eventName) throws Exception{
+		this.updateEventImage(imageName, eventName);
+	}
+	
+	
+	public void deleteEventImage(String eventName) throws Exception{
+		Search search = new Search();
+		search.setSearchCondition("1");
+		search.setSearchKeyword(null);
+		eventDao.updateEvent(search,eventName);
+	}
+	
+	
 	public List<Event> getInterestedEventList(String userId) throws Exception{
 		return eventDao.selectListInterestedEvent(userId);
 	}
@@ -70,6 +83,11 @@ public class EventServiceImpl implements EventService{
 	
 	public void deleteInterestedEvent(String eventId, String userId) throws Exception{
 		eventDao.deleteInterestedEvent(eventId,userId);
+	}
+	
+	
+	public List<String> getYoutubeIdList(String eventName) throws Exception{ 
+		return eventDao.selectListYoutubeId(eventName);
 	}
 	
 	
@@ -138,14 +156,15 @@ public class EventServiceImpl implements EventService{
 	}
 	
 	
-	public Map<String,Object> getEventList(Search search) throws Exception{ 
-		return eventDao.getEventList(search);
+	public Map<String,Object> getEventList(Search search, String requestPageToken, String apiKey) throws Exception{ 
+		return eventDao.getEventList(search,requestPageToken,apiKey);
 	}
 	
 	
-	public Map<String,Object> getYoutubeList(Search search) throws Exception{
-		return eventDao.getYoutubeList(search);
+	public Map<String,Object> getYoutubeList(Search search, String requestPageToken, String apiKey) throws Exception{
+		return eventDao.getYoutubeList(search,requestPageToken,apiKey);
 	}
+	
 	
 	
 }

@@ -28,18 +28,18 @@ public class RNPServiceImpl implements RNPService{
 	}
 	
 	public List<PointHistory> getPointHistory(String userId) throws Exception{
-		//rNPDao.selectPointHistory(userId);
-		return null;
+		//
+		return rNPDao.selectPointHistory(userId);
 	}
 	
 	public List<Review> getReviewList(String buyerId) throws Exception{
-		//rNPDao.selectReviewList(buyerId);
-		return null;
+		//
+		return rNPDao.selectReviewList(buyerId);
 	}
 	
 	public List<Review> getSellerEstimationList(String sellerId) throws Exception{
-		//rNPDao.selectSellerEstimationList(sellerId);
-		return null;
+
+		return rNPDao.selectSellerEstimationList(sellerId);
 	}
 	
 	public void updateReview(Review review) throws Exception{

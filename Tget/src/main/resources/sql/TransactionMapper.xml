@@ -7,28 +7,133 @@
 <mapper namespace="TransactionMapper">
  	
  	
-	<resultMap id="userSelectMap" type="user">
-		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR"/>
-		<result property="userName"	column="user_name" 		jdbcType="VARCHAR" />
-		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
-		<result property="role" 				column="role" 					jdbcType="VARCHAR" />
-		<result property="ssn" 				column="ssn" 					jdbcType="VARCHAR" />
-		<result property="phone" 			column="cell_phone" 		jdbcType="VARCHAR" />
-		<result property="addr" 				column="addr" 					jdbcType="VARCHAR" />
-		<result property="email" 			column="email" 				jdbcType="NUMERIC"  />
-		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
-		<result property="kakaoId" 			column="kakao_id" 			jdbcType="VARCHAR"/>
-		<result property="kakaoEmail" 			column="kaccount_email" 			jdbcType="VARCHAR"/>
+	<resultMap id="tranSelectMap" type="transaction">
+		<result property="tranNo" 				column="tran_no" 				jdbcType="NUMERIC"/>
+		<result property="orderAmount"			column="order_amount" 			jdbcType="NUMERIC" />
+		<result property="totalPrice" 			column="total_price" 			jdbcType="NUMERIC" />
+		<result property="orderDate" 			column="order_date" 			jdbcType="DATE" />
+		<result property="paymentOption" 		column="payment_option" 		jdbcType="CHAR" />
+		<result property="paymentNo" 			column="payment_no" 			jdbcType="VARCHAR" />
+		<result property="tranCode" 			column="tran_code" 				jdbcType="CHAR" />
+		<result property="deliveryAddr" 		column="delivery_add" 			jdbcType="VARCHAR"  />
+		<result property="deliveryCompany" 		column="delivery_company" 		jdbcType="VARCHAR" />
+		<result property="deliveryNo" 			column="delivery_no" 			jdbcType="NUMERIC"/>
+		<result property="deliveryStartDate" 	column="delivery_start_date" 	jdbcType="DATE"/>
+		<result property="reviewScore" 			column="review_score" 			jdbcType="NUMERIC"/>
+		<result property="reviewBody" 			column="review_body" 			jdbcType="VARCHAR"/>
+		<result property="reviewRegDate" 		column="review_reg_date" 		jdbcType="DATE"/>
+		<result property="refundAccountNo" 		column="refund_account_no" 		jdbcType="VARCHAR"/>
+		<result property="refundAccountBank" 	column="refund_account_bank" 	jdbcType="VARCHAR"/>
+		<association property="ticket" column="ticket_no" javaType="ticket" select="TicketMapper.selectTicket"/> 
+ 		<association property="event" column="event_id" javaType="event" select="EventMapper.selectEventById"/>
+ 		<association property="seller" column="seller_id" javaType="user" select="UserMapper.selectUser"/> 
+ 		<association property="buyer" column="buyer_id" javaType="user" select="UserMapper.selectUser"/>
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
-	<insert 	id="addUser"		parameterType="user" >
+	<insert 	id="insertTran"		parameterType="transaction" >
 	 	insert 
 	 	into 
 	 	transaction(tran_no, ticket_no, event_id, event_name, seller_id, seller_nickname, buyer_id,
-	 				 buyer_nickname, order_amount, total_price, payment_option, tran_code, delivery_add ) 
-                values( seq_transaction_tran_no.nextval , 10001 , 'testId' , 'EXO' , 'seller' , '판매자얌' ,
-                		 'buyer' , '구매자얌' , 2 , 500000 , '1' , '0' , '서울 강남')
+	 				 buyer_nickname, order_amount, total_price, payment_option, payment_no , tran_code, delivery_add ) 
+        
+        values( seq_transaction_tran_no.nextval , #{ticket.ticketNo} , #{event.eventId} , #{event.eventName} , 
+                #{seller.userId} , #{seller.nickName} , #{buyer.userId} , #{buyer.nickName} ,
+                 #{orderAmount} , #{totalPrice} , #{paymentOption} , #{paymentNo:VARCHAR} , #{tranCode} , #{deliveryAddr})
 	 </insert>
+	 
+	 <update	id="updateDeliveryInfo"	parameterType="transaction" >
+	 	UPDATE transaction
+	 	<set>
+	 		delivery_company = #{deliveryCompany} , 
+	 		delivery_no = #{deliveryNo} , 
+	 		delivery_start_date = SYSDATE 
+		</set>
+		WHERE tran_no = #{tranNo}
+	 </update>
+	 
+	 <update	id="updateDeliveryAddr"	parameterType="transaction" >
+	 	UPDATE transaction
+	 	<set>
+	 		delivery_add = #{deliveryAddr}
+		</set>
+		WHERE tran_no = #{tranNo}
+	 </update>
+	 
+	 <update	id="updateTranCode"	parameterType="transaction" >
+	 	UPDATE transaction
+	 	<set>
+	 		tran_code = #{tranCode}
+		</set>
+		WHERE tran_no = #{tranNo}
+	 </update>
+	 
+	 <select  id="selectTran"  parameterType="int"	resultMap="tranSelectMap">
+	 	SELECT 
+	 	TRAN_NO , TICKET_NO , EVENT_ID , SELLER_ID , BUYER_ID , order_amount , 
+	 	total_price , order_date , payment_option , payment_no , tran_code , delivery_add , 
+	 	delivery_company , delivery_no , delivery_start_date , review_score , review_body , 
+	 	review_reg_date , refund_account_bank , refund_account_no
+	 	FROM transaction
+	 	WHERE tran_no = #{value}	
+	 </select>
+	 
+	 <select  id="selectListTran"  parameterType="search"	resultMap="tranSelectMap">
+	 	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM(	
+	  							SELECT 
+								TRAN_NO , TICKET_NO , EVENT_ID , SELLER_ID , BUYER_ID , order_amount , 
+								total_price , order_date , payment_option , payment_no , tran_code , delivery_add , 
+								delivery_company , delivery_no , delivery_start_date , review_score , review_body , 
+								review_reg_date , refund_account_bank , refund_account_no
+								FROM transaction
+								<where>										
+									<if test="searchCondition != null">												
+									<choose>	
+									<when test="searchCondition == 0 and searchKeyword !='' ">
+										tran_code = #{searchKeyword}
+									</when>
+									<when test="searchCondition == 1 and searchKeyword !='' ">
+										seller_id = #{searchKeyword}
+									</when>
+									<when test="searchCondition == 2 and searchKeyword !='' ">
+										buyer_id = #{searchKeyword}
+									</when>
+									</choose>
+									</if>												
+								</where>
+								) inner_table
+			)	
+	 </select>
+	 
+	  <select  id="selectTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	
+				SELECT 
+				TRAN_NO
+				FROM transaction
+				<where>										
+					<if test="searchCondition != null">												
+					<choose>	
+					<when test="searchCondition == 0 and searchKeyword !='' ">
+						tran_code = #{searchKeyword}
+					</when>
+					<when test="searchCondition == 1 and searchKeyword !='' ">
+						seller_id = #{searchKeyword}
+					</when>
+					<when test="searchCondition == 2 and searchKeyword !='' ">
+						buyer_id = #{searchKeyword}
+					</when>
+					</choose>
+					</if>												
+				</where>
+	  	) countTable						
+	 </select>
+	 
+	 <!-- 
+	 WHERE ROWNUM &lt;= #{endRowNum} )
+	 WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	  -->
 	 
 </mapper>

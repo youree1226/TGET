@@ -1,10 +1,21 @@
 package com.tget.service.event.impl;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.ibatis.session.SqlSession;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -13,6 +24,9 @@ import com.tget.common.domain.Search;
 import com.tget.service.event.domain.Category;
 import com.tget.service.event.domain.Event;
 import com.tget.service.event.domain.RecommEvent;
+import com.tget.service.event.domain.StubhubSearchList;
+import com.tget.service.event.domain.YoutubeVideo;
+import com.tget.service.event.domain.YoutubeVideoList;
 import com.tget.service.user.domain.User;
 import com.tget.service.event.EventDao;
 
@@ -171,15 +185,95 @@ public class EventDaoImpl implements EventDao {
 	}
 	
 	
-	public Map<String,Object> getEventList(Search search) throws Exception{
-		//rest api
-		return null;
+	public Map<String,Object> getEventList(Search search, String requestPageToken, String apiKey) throws Exception{
+
+		HttpClient httpClient = new DefaultHttpClient();
+		
+		String url= 	"https://api.stubhub.com/sellers/search/events/v3?country=KR&start=0";
+		
+		if (search.getSearchKeyword()!=null && search.getSearchKeyword()!="") {
+			url+="&q="+search.getSearchKeyword();
+		}
+		if (requestPageToken !=null && requestPageToken !="") {
+			url+="&start="+requestPageToken;
+		}
+		
+		System.out.println("getEventList URL - "+url+"\n");
+
+		HttpGet httpGet = new HttpGet(url);
+		httpGet.setHeader("Accept", "application/json");
+		httpGet.setHeader("Authorization","Bearer "+apiKey);
+//		httpGet.setHeader("Authorization","Bearer tiY4GRmhcjvBYdRHhr8YmCrXOuSN");
+		httpGet.setHeader("Referer","https://developer.stubhub.com/searchevent/apis/get/search/events/v3");
+		
+		HttpResponse httpResponse = httpClient.execute(httpGet);
+		System.out.println(httpResponse+"\n");
+
+		HttpEntity httpEntity = httpResponse.getEntity();
+		InputStream is = httpEntity.getContent();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+		
+		JSONObject jsonobj = (JSONObject)JSONValue.parse(br);
+		ObjectMapper objectMapper = new ObjectMapper();
+		StubhubSearchList stubhubSearchList = objectMapper.readValue(jsonobj.toString(), StubhubSearchList.class);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("eventList", stubhubSearchList.getEvents());
+		map.put("totalResults", stubhubSearchList.getNumFound());
+		
+		return map;
 	}
 	
 	
-	public Map<String,Object> getYoutubeList(Search search) throws Exception{
-		//rest api
-		return null;
+	public Map<String,Object> getYoutubeList(Search search, String requestPageToken, String apiKey) throws Exception{
+		
+		HttpClient httpClient = new DefaultHttpClient();
+		String url= 	"https://www.googleapis.com/youtube/v3/search?"
+				+ "part=snippet&type=video&key="+apiKey;		
+//		String url= 	"https://www.googleapis.com/youtube/v3/search?"
+//				+ "part=snippet&type=video&key=AIzaSyD64J615aLBGn7BP1BurRuewagN43Q0j8A";
+		
+		if (search.getSearchKeyword()!=null) {
+			url += "&q="+search.getSearchKeyword();
+		}		
+		if (requestPageToken != null && requestPageToken !="") {
+			url += "&pageToken="+requestPageToken;
+		}
+
+		System.out.println("getYoutubeList URL - "+url+"\n");
+
+		// HttpGet : Http Protocol ÀÇ GET ¹æ½Ä Request
+		HttpGet httpGet = new HttpGet(url);
+		httpGet.setHeader("Accept", "application/json");
+		httpGet.setHeader("Content-Type", "application/json");
+		
+		HttpResponse httpResponse = httpClient.execute(httpGet);
+		
+		System.out.println(httpResponse);
+		System.out.println();
+
+		HttpEntity httpEntity = httpResponse.getEntity();
+		
+		InputStream is = httpEntity.getContent();
+		BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+	
+		JSONObject jsonobj = (JSONObject)JSONValue.parse(br);
+		System.out.println(jsonobj);
+	
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		YoutubeVideoList youtubeVideoList = objectMapper.readValue(jsonobj.toString(), YoutubeVideoList.class);
+		System.out.println("youtubeVideoList : "+youtubeVideoList);
+		
+		List<YoutubeVideo> youtubeList = youtubeVideoList.getItems();
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("youtubeList", youtubeList);
+		map.put("nextPageToken", youtubeVideoList.getNextPageToken());
+		map.put("prevPageToken", youtubeVideoList.getPrevPageToken());
+		map.put("totalResults", youtubeVideoList.getTotalResults());
+		
+		return map;
 	}
 	
 	

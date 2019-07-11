@@ -25,10 +25,10 @@
   	</resultMap>
 	
 	<resultMap id="sellProbSelectMap" type="sellProb">
-		<result property="highPrice"  column="TICKET_NO" jdbcType="NUMERIC"/>
-		<result property="avgPrice"  column="TICKET_NO" jdbcType="NUMERIC"/>
-		<result property="lowPrice"  column="TICKET_NO" jdbcType="NUMERIC"/>
-		<result property="totalCount"  column="TICKET_NO" jdbcType="NUMERIC"/>
+		<result property="highPrice"  column="high_price" jdbcType="NUMERIC"/>
+		<result property="avgPrice"  column="avg_price" jdbcType="NUMERIC"/>
+		<result property="lowPrice"  column="low_price" jdbcType="NUMERIC"/>
+		<result property="totalCount"  column="total_count" jdbcType="NUMERIC"/>
 	</resultMap>
 		
 	<insert id="insertTicket" parameterType="ticket">
@@ -66,7 +66,18 @@
 	  										, TICKET_CODE , TICKET_SEAT , TICKET_OPTION
 	  										, REG_DATE , TICKET_IMAGE , CHECK_YN , COUPON_NO , COUPON_CODE
 											FROM ticket
-											
+											<where>										
+												<if test="searchCondition != null">												
+												<choose>	
+												<when test="searchCondition == 0 and searchKeyword !='' ">
+													event_id = #{searchKeyword}
+												</when>
+												<when test="searchCondition == 1 and searchKeyword !='' ">
+													seller_id = #{searchKeyword}
+												</when>
+												</choose>
+												</if>												
+											</where>
 											) inner_table
 			)		
 	 </select>
@@ -80,17 +91,32 @@
 	 	WHERE TICKET_NO = #{value}	
 	 </select>
 	 
-	 
-	 
+	 <select  id="selectSellProb"  parameterType="search"	resultMap="sellProbSelectMap">
+	 	select 
+		
+		max(ticket_price) high_price, 
+		min(ticket_price) low_price,
+		round(avg(ticket_price),0) avg_price ,
+		count(*) total_count 
+		
+		from ticket	
+		<where>										
+			<if test="searchCondition != null">												
+			<choose>	
+			<when test="searchCondition == 0 and searchKeyword !='' ">
+				event_id = #{searchKeyword}
+			</when>
+			<when test="searchCondition == 1 and searchKeyword !='' ">
+				seller_id = #{searchKeyword}
+			</when>
+			</choose>
+			</if>												
+		</where>
+	</select>
+	 	 
 	 <!-- 
 	 WHERE ROWNUM &lt;= #{endRowNum} )
 	 WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	  -->
 	  
-	<!-- select 
-	max(ticket_price) highPrice, 
-	min(ticket_price) lowPrice,
-	round(avg(ticket_price),0) avgPrice ,
-	count(*) totalCount 
-	from ticket -->
 </mapper>
