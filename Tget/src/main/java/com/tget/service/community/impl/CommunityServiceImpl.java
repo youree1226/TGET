@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,8 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public void addContent(Content content) throws Exception {
 		// TODO Auto-generated method stub
+//		ObjectMapper om = new ObjectMapper();
+//		HashMap<String,String> map = om.convertValue(content, HashMap.class);
 		communityDao.InsertContent(content);
 	}
 
@@ -70,7 +73,7 @@ public class CommunityServiceImpl implements CommunityService{
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list );
-		map.put("totalCount", new Integer(totalCount));
+		map.put("totalCount", totalCount);
 		
 		return map;
 	}
@@ -84,7 +87,7 @@ public class CommunityServiceImpl implements CommunityService{
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list );
-		map.put("totalCount", new Integer(totalCount));
+		map.put("totalCount", totalCount);
 		
 		return map;
 	}
@@ -98,7 +101,7 @@ public class CommunityServiceImpl implements CommunityService{
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list );
-		map.put("totalCount", new Integer(totalCount));
+		map.put("totalCount", totalCount);
 		
 		return map;
 	}
@@ -116,7 +119,13 @@ public class CommunityServiceImpl implements CommunityService{
 		communityDao.updateReply(reply);
 	}
 
-
+	
+	@Override
+	public void deleteReply(int replyNo) throws Exception {
+		// TODO Auto-generated method stub
+		communityDao.deleteReply(replyNo);
+	}
+	
 	@Override
 	public void updateGoodCount(Map<String, Object> goodCount) throws Exception {
 		// TODO Auto-generated method stub

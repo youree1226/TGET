@@ -15,7 +15,7 @@ import com.tget.service.user.domain.User;
 
 
 
-//==> ȸ������ DAO CRUD ����
+
 @Repository("userDaoImpl")
 public class UserDaoImpl implements UserDao{
 	
@@ -58,19 +58,31 @@ public class UserDaoImpl implements UserDao{
 
 
 	@Override
-	public User selectSellerEval(User user) throws Exception {
-		return sqlSession.selectOne("UserMapper.selectSellerEval", user);
+	public User selectSellerEval(String userId) throws Exception {
+		return sqlSession.selectOne("UserMapper.selectUser", userId);
 	
 	}
 
 	@Override
-	public User selectSalesGrade(String sellerCode) throws Exception {
-		return sqlSession.selectOne("UserMapper.selectSalesGrade", sellerCode);
+	public User selectSalesGrade(String userId) throws Exception {
+		return sqlSession.selectOne("UserMapper.selectUser", userId);
 	}
 
 	@Override
 	public int selectTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("UserMapper.selectTotalCount", search);
+	}
+
+	@Override
+	public void insertBlacklist(User user) throws Exception {
+		sqlSession.update("UserMapper.insertBlacklist",user);
+		
+	}
+
+	@Override
+	public User nickNameCheck(String nickName) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("UserMapper.nickNameCheck",nickName);
 	}
 
 	

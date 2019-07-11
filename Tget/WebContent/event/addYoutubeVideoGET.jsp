@@ -46,14 +46,14 @@
 <body>
 
 <form>
-<input type="hidden" id="eventName" name="eventName" value="${eventName}"/>
-	<div class="form">
+	<div class="container-fluid">
+		<input type="hidden" id="eventName" name="eventName" value="${eventName}"/>
 		<div>
 			<input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어" value="${!empty search.searchKeyword? search.searchKeyword : ''}" >
 			<button type="button"  id="searchSubmit" >검색</button>
 		</div>
 	
-		<c:forEach items="${youtubeListAfterSearch.items}"  var="i">
+		<c:forEach items="${youtubeList}"  var="i">
 			<div class="videoInfo">
 				<input type="hidden" id="videoId" name="videoId" value="${i.videoId}"/>
 				<img src="${i.thumbnails}"><br/>
@@ -70,7 +70,7 @@
 			<button id="prevPageToken" name="prevPageToken" value="${!empty prevPageToken? prevPageToken : ''}">◀</button>&nbsp;&nbsp;
 			<button id="nextPageToken" name="nextPageToken" value="${!empty nextPageToken? nextPageToken : ''}">▶</button>
 		</div>
-</div>
+	</div>
 	
 </form>
 

@@ -9,6 +9,7 @@ public class Category {
 	private char categoryOneCode;
 	private String categoryTwoName;
 	private String categoryTwoEng;
+	private String userId;
 	
 	///C
 	public Category() {
@@ -47,6 +48,22 @@ public class Category {
 
 	public void setCategoryTwoEng(String categoryTwoEng) {
 		this.categoryTwoEng = categoryTwoEng;
+	}
+
+
+	/**
+	 * @return the userId
+	 */
+	public String getUserId() {
+		return userId;
+	}
+
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 

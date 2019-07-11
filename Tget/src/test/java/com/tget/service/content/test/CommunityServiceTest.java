@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
+import com.tget.common.domain.Search;
 import com.tget.service.community.CommunityService;
 import com.tget.service.community.domain.Content;
 import com.tget.service.community.domain.Reply;
@@ -42,27 +42,21 @@ public class CommunityServiceTest {
 	private CommunityService communityService;
 
 /////////////////testaddContent////////////////////////////////
-//	//@Test
+	@Test
 	public void testAddContent() throws Exception {
 		
-		Content content = new Content();
-		System.out.println("content"+content);
-	
-//////////////////////CLOB/////////////////////////	
-////		String str="";
-////		StringBuffer stOut= new StringBuffer();
-////		
-////		
-////		BufferedReader br = new BufferedReader(clob.getCharacterStream());
-////		while((str= br.readLine()!= null)) {
-////			stOut.append(str+"\n");
-////		}
-////		br.close();
-////		return stOut.toString();
 		
+		Content content = new Content();
+//		Clob clob = new Clob();
+//		Object c = null;
+//		
+//		if(content.getContentBody() instanceof java.sql.Clob) {
+//			c = 
+//		}
 		content.setUserId("admin");
 		content.setUserNickName("나관리자얌");
 		content.setContentName("게시글");
+		content.setContentBody("sdafsdafasadfasdfdsa");
 		content.setBoardCode("1");
 		content.setContentCode("2");
 		content.setOpen("1");
@@ -116,7 +110,7 @@ public class CommunityServiceTest {
 	}	
 
 //////////////////////////////////////////////////////////
-	/////////////testUpdateContent////////////////////////
+	/////////////testUpdateContent//////////////////////// CLOB......
 	//@Test
 	 public void testUpdateContent() throws Exception{
 
@@ -129,7 +123,7 @@ public class CommunityServiceTest {
 		//Assert.assertEquals(
 
 		content.setContentName("게시글게시글게시글");
-		content.setContentBody("게시글게시글게시글");////null을 어떻게;;;;;;;;;;;
+		//content.setContentBody("게시글게시글게시글");////null을 어떻게;;;;;;;;;;;
 		
 		communityService.updateContent(content);
 		content = communityService.getContent(10002);
@@ -137,109 +131,37 @@ public class CommunityServiceTest {
 		Assert.assertEquals("게시글게시글게시글", content.getContentName());
 		Assert.assertEquals("게시글게시글게시글", content.getContentBody());////null을 어떻게;;;;;;;;;;;
 	 }
+//////////////////////////////////////////////////////////
+	 //////////////testDeleteContent////////////////////// content는 필요없고 reply는 필요할거같음 Test필요 
+	//@Test
+//			public void deleteContent() throws Exception {
 //
-//	 @Test
-//	 public void testGetProductListAll() throws Exception{
-//		 
-//	 	Search search = new Search();
-//	 	search.setCurrentPage(1);
-//	 	search.setPageSize(3);
-//	 	Map<String,Object> map = productService.getProductList(search);
-//	 	
-//	 	List<Object> list = (List<Object>)map.get("list");
-//	 	Assert.assertEquals(3, list.size());
-//	 	
-//		//==> console 확인
-//	 	//System.out.println(list);
-//	 	
-//	 	Integer totalCount = (Integer)map.get("totalCount");
-//	 	System.out.println(totalCount);
-//	 	
-//	 	System.out.println("=======================================");
-//	 	
-//	 	search.setCurrentPage(1);
-//	 	search.setPageSize(3);
-//	 	search.setSearchCondition("0");
-//	 	search.setSearchKeyword("");
-//	 	map = productService.getProductList(search);
-//	 	
-//	 	list = (List<Object>)map.get("list");
-//	 	Assert.assertEquals(3, list.size());
-//	 	
-//	 	//==> console 확인
-//	 	//System.out.println(list);
-//	 	
-//	 	totalCount = (Integer)map.get("totalCount");
-//	 	System.out.println(totalCount);
-//	 }
-//	 
-//	 //@Test
-//	 public void testGetProductListByProdNo() throws Exception{
-//		 
-//	 	Search search = new Search();
-//	 	search.setCurrentPage(1);
-//	 	search.setPageSize(3);
-//	 	search.setSearchCondition("0");
-//	 	search.setSearchKeyword("admin");
-//	 	Map<String,Object> map = productService.getProductList(search);
-//	 	
-//	 	List<Object> list = (List<Object>)map.get("list");
-//	 	Assert.assertEquals(1, list.size());
-//	 	
-//		//==> console 확인
-//	 	//System.out.println(list);
-//	 	
-//	 	Integer totalCount = (Integer)map.get("totalCount");
-//	 	System.out.println(totalCount);
-//	 	
-//	 	System.out.println("=======================================");
-//	 	
-//	 	search.setSearchCondition("0");
-//	 	search.setSearchKeyword(""+System.currentTimeMillis());
-//	 	map = productService.getProductList(search);
-//	 	
-//	 	list = (List<Object>)map.get("list");
-//	 	Assert.assertEquals(0, list.size());
-//	 	
-//		//==> console 확인
-//	 	//System.out.println(list);
-//	 	
-//	 	totalCount = (Integer)map.get("totalCount");
-//	 	System.out.println(totalCount);
-//	 }
-//	 
-//	 //@Test
-//	 public void testGetProductListByProdName() throws Exception{
-//		 
-//	 	Search search = new Search();
-//	 	search.setCurrentPage(1);
-//	 	search.setPageSize(3);
-//	 	search.setSearchCondition("1");
-//	 	search.setSearchKeyword("SCOTT");
-//	 	Map<String,Object> map = productService.getProductList(search);
-//	 	
-//	 	List<Object> list = (List<Object>)map.get("list");
-//	 	Assert.assertEquals(3, list.size());
-//	 	
-//		//==> console 확인
-//	 	System.out.println(list);
-//	 	
-//	 	Integer totalCount = (Integer)map.get("totalCount");
-//	 	System.out.println(totalCount);
-//	 	
-//	 	System.out.println("=======================================");
-//	 	
-//	 	search.setSearchCondition("1");
-//	 	search.setSearchKeyword(""+System.currentTimeMillis());
-//	 	map = productService.getProductList(search);
-//	 	
-//	 	list = (List<Object>)map.get("list");
-//	 	Assert.assertEquals(0, list.size());
-//	 	
-//		//==> console 확인
-//	 	System.out.println(list);
-//	 	
-//	 	totalCount = (Integer)map.get("totalCount");
-//	 	System.out.println(totalCount);
-//	 }	 
+//				communityService.deleteContent(10002);
+//	}
+
+//////////////////////////////////////////////////////////
+	 //////////////testselectListContent//////////////////////
+	 //@Test
+	 public void selectListContent() throws Exception{
+		 
+	 	Search search = new Search();
+	 	search.setCurrentPage(1);
+	 	search.setPageSize(3);
+	 	Map<String,Object> map = communityService.getContentList(search);
+	 	
+	 	List<Object> list = (List<Object>)map.get("list");
+	 	Assert.assertEquals(3, list.size());
+	 	
+	 	Integer totalCount = (Integer)map.get("totalCount");
+	 	System.out.println(totalCount);
+	
+	 	search.setCurrentPage(1);
+	 	search.setPageSize(3);
+	 	search.setSearchCondition("0");
+	 	search.setSearchKeyword("");
+	 	map = communityService.getContentList(search);
+	 	
+	 	totalCount = (Integer)map.get("totalCount");
+	 	System.out.println(totalCount);
+	 }
 }

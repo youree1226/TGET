@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +31,7 @@ import com.tget.service.event.domain.Category;
 import com.tget.service.event.domain.Event;
 import com.tget.service.event.domain.RecommEvent;
 import com.tget.service.event.domain.StubhubEvent;
+import com.tget.service.event.domain.YoutubeVideo;
 import com.tget.service.event.domain.YoutubeVideoList;
 import com.tget.service.ticket.TicketService;
 import com.tget.service.ticket.domain.SellProb;
@@ -65,6 +67,13 @@ public class EventController {
 	
 
 	///Method
+	@RequestMapping(value="test")
+	public String test() throws Exception {
+		System.out.println("===============test===============");
+
+		return "forward:/event/test.jsp";
+	}
+	
 	@RequestMapping(value="getEventList")
 	public String getEventList(@ModelAttribute("search") Search search, @RequestParam String requestPageToken,Model model) throws Exception {
 		System.out.println("===============getEventList===============");
@@ -153,6 +162,20 @@ public class EventController {
 		
 	}
 	
+	@RequestMapping(value="addYoutubeVideo", method=RequestMethod.GET)
+	public String addYoutubeVideo(Model model) throws Exception {
+		System.out.println("===============addYoutubeVideo===============");
+		//youtube테이블에 add하기위해 창을 요청하는 때
+		Map<String,Object> map = eventService.getYoutubeList(null, null, youtubeKey);
+
+		model.addAttribute("youtubeList", (List<YoutubeVideo>)map.get("youtubeList"));
+		model.addAttribute("nextPageToken",  (String)map.get("nextPageToken"));
+		model.addAttribute("prevPageToken",  (String)map.get("prevPageToken"));
+		model.addAttribute("totalResults",  (Integer)map.get("totalResults"));
+		
+		return "forward:/event/addYoutubeVideoGET.jsp";
+	}
+	
 	@RequestMapping(value="getYoutubePlayer")
 	public String getYoutubePlayer(@RequestParam String youtubeId,Model model) throws Exception {
 		System.out.println("===============getYoutubePlayer===============");
@@ -162,6 +185,8 @@ public class EventController {
 		
 		return "forward:/event/getYoutubePlayer.jsp";
 	}
+	
+	
 	
 	
 	

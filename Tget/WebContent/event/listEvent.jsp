@@ -13,26 +13,24 @@
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript">
 	
-	var videoList = [];
+	var events = [];
 	$(function(){
-		$("#searchSubmit").on("click",function(){
-			//alert("searchKeyword : "+$("#searchKeyword").val());
-			//$("form").attr("method" , "POST").attr("action" , "/event/youtubeSearch").submit();
-			
+		$("#addEvent").on("click",function(){
+			alert("requestPageToken+1 : "+parseInt($("#requestPageToken").val())+1);
+			var requestPT = parseInt($("#requestPageToken").val())+1;
 			$.ajax(
 					{
-						url : "/event/json/youtubeSearch",
+						url : "/event/rest/getEventList/"+requestPT,
 						method : "POST",
 						data : {
-										searchCondition : $("#searchCondition").val(),
-										searchKeyword : $("#searchKeyword").val(),
-
+										searchKeyword : $("#searchKeyword").val()
 									},
 						dataType : "json",
 						success : function(JSONData, status){
 							alert(status);
 							alert("JSONData : \n"+JSONData);		
-					
+							alert("eventList : \n"+JSONData.eventList);		
+							alert("totalResults : \n"+JSONData.totalResults);		
 						},
 						error : function(request, status, error ) {   
 						 	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -48,12 +46,27 @@
 <body>
 
 <form>
-
-<%-- 	<input type="hidden" id="currentPage" name="currentPage" value="${!empty search.currentPage? search.currentPage: ''}"/> --%>
-	<input type="hidden" id="searchCondition" name="searchCondition" value="1"/>
-	<input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어" value="${!empty search.searchKeyword? search.searchKeyword : ''}" >
-	<button type="submit" id="searchSubmit" >검색</button>
-	
+	<div class="container-fluid">	
+	<%-- 	<input type="hidden" id="currentPage" name="currentPage" value="${!empty search.currentPage? search.currentPage: ''}"/> --%>
+		<input type="hidden"  id="searchKeyword" name="searchKeyword"  placeholder="검색어" value="${!empty search.searchKeyword? search.searchKeyword : ''}" >
+		<input type="hidden"  id="requestPageToken" name="requestPageToken"  value="0"/>
+		
+		총 ${totalResults} 건의 검색 결과</br></br>
+		eventList
+		<c:forEach items="${eventList}"  var="i">
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10 event">
+					이벤트명 : ${i.name }</br>
+					이벤트 장소 : ${i.venueName }</br>
+					============================</br>
+				</div>
+				<div class="col-md-1"></div>
+			</div>
+		</c:forEach>
+		<button type="button"  id="addEvent" >더보기</button>
+		
+	</div>
 </form>
 
 </body>
