@@ -13,7 +13,11 @@ public interface UserDao {
 		public User selectUser(String userId) throws Exception;
 		public List<User> selectUserList(Search search) throws Exception;
 		public void updateUser(User user) throws Exception;
-		public User selectSellerEval(User user)throws Exception;
-		public User selectSalesGrade(String sellerCode)throws Exception;
+		public void insertBlacklist(User user)throws Exception;
+		public User selectSellerEval(String userId)throws Exception;
+		public User selectSalesGrade(String userId)throws Exception;
 		public int selectTotalCount(Search search) throws Exception ;
+		public User nickNameCheck(String nickName) throws Exception ;
+
+
 }

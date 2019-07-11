@@ -13,17 +13,10 @@ import com.tget.service.coupon.domain.Coupon;
 import com.tget.service.user.domain.User;
 import com.tget.service.coupon.CouponService;
 
-/*
- *	FileName :  UserServiceTest.java
- * 占쏙옙 JUnit4 (Test Framework) 占쏙옙 Spring Framework 占쏙옙占쏙옙 Test( Unit Test)
- * 占쏙옙 Spring 占쏙옙 JUnit 4占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 클占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占� 占쏙옙占쏙옙 占쌓쏙옙트 占쌘드를 占쌜쇽옙 占쏙옙 占쏙옙 占쌍댐옙.
- * 占쏙옙 @RunWith : Meta-data 占쏙옙 占쏙옙占쏙옙 wiring(占쏙옙占쏙옙,DI) 占쏙옙 占쏙옙체 占쏙옙占쏙옙체 占쏙옙占쏙옙
- * 占쏙옙 @ContextConfiguration : Meta-data location 占쏙옙占쏙옙
- * 占쏙옙 @Test : 占쌓쏙옙트 占쏙옙占쏙옙 占쌀쏙옙 占쏙옙占쏙옙
- */
+
 @RunWith(SpringJUnit4ClassRunner.class)
 
-//==> Meta-Data 占쏙옙 占쌕억옙占싹곤옙 Wiring 占쏙옙占쏙옙...
+//==> Meta-Data 
 //@ContextConfiguration(locations = { "classpath:config/context-*.xml" })
 @ContextConfiguration	(locations = {	"classpath:config/context-common.xml",
 																	"classpath:config/context-aspect.xml",
@@ -32,7 +25,7 @@ import com.tget.service.coupon.CouponService;
 //@ContextConfiguration(locations = { "classpath:config/context-common.xml" })
 public class CouponServiceTest {
 
-	//==>@RunWith,@ContextConfiguration 占싱울옙 Wiring, Test 占쏙옙 instance DI
+	//==>@RunWith,@ContextConfiguration 
 	@Autowired
 	@Qualifier("couponServiceImpl")
 	private CouponService couponService;
@@ -51,10 +44,10 @@ public class CouponServiceTest {
 		
 		coupon = couponService.getCoupon(1);
 
-		//==> console 확占쏙옙
+		//==> console
 		//System.out.println(user);
 		
-		//==> API 확占쏙옙
+		//==> API
 		
 		Assert.assertEquals("1", coupon.getCouponCode());
 		Assert.assertEquals("testUserId", coupon.getUserId());
@@ -74,10 +67,10 @@ Coupon coupon = new Coupon();
 	
 		coupon = couponService.getCoupon(10008);
 
-		//==> console 확占쏙옙
+		//==> console
 		//System.out.println(user);
 		
-		//==> API 확占쏙옙
+		//==> API 
 		Assert.assertEquals("1", coupon.getCouponCode());
 		Assert.assertEquals("testUserId", coupon.getUserId());
 		Assert.assertEquals("1", coupon.getCouponStatement());
