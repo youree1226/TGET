@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.tget.common.domain.Search;
@@ -28,6 +29,26 @@ public class AlarmServiceImpl implements AlarmService{
 		// TODO Auto-generated constructor stub
 		System.out.println(this.getClass());
 	}	
+
+	@Value("#{alarmProperties['0']}")
+	String endPaymentAlarm;
+	@Value("#{alarmProperties['1']}")	
+	String addTicketAlarm;
+	@Value("#{alarmProperties['2']}")
+	String endDeliveryAlarm;
+	@Value("#{alarmProperties['3']}")
+	String startDeliveryAlarm;
+	@Value("#{alarmProperties['4']}")
+	String addCouponAlarm;
+	@Value("#{alarmProperties['5']}")
+	String addReportAlarm;
+	@Value("#{alarmProperties['6']}")
+	String addReplyAlarm;
+	@Value("#{alarmProperties['7']}")
+	String checkRefundAlarm;
+	@Value("#{alarmProperties['8']}")
+	String changeSellerCodeAlarm;
+	
 	
 	//MetaData화 하기
 	@Override
@@ -35,36 +56,37 @@ public class AlarmServiceImpl implements AlarmService{
 		// TODO Auto-generated method stub
 		switch (alarm.getAlarmCode()) {
 		case 0:
-			alarm.setAlarmBody("티켓결제가 완료되었습니다.");
+			alarm.setAlarmBody(endPaymentAlarm);
 			break;
 		case 1:
-			alarm.setAlarmBody("관심이벤트의 신규티켓이 등록되었습니다.");
+			alarm.setAlarmBody(addTicketAlarm);
 			break;	
 		case 2:
-			alarm.setAlarmBody("판매티켓이 배송완료 되었습니다.");
+			alarm.setAlarmBody(endDeliveryAlarm);
 			break;
 		case 3:	
-			alarm.setAlarmBody("구매티켓의 배송이 시작되었습니다.");
+			alarm.setAlarmBody(startDeliveryAlarm);
 			break;
 		case 4:
-			alarm.setAlarmBody("쿠폰이 발급되었습니다.");
+			alarm.setAlarmBody(addCouponAlarm);
 			break;
 		case 5:
-			alarm.setAlarmBody("신고된 글이 있습니다. 확인해주세요.");
+			alarm.setAlarmBody(addReportAlarm);
 			break;
 		case 6:
-			alarm.setAlarmBody("작성글에 댓글이 등록되었습니다.");
+			alarm.setAlarmBody(addReplyAlarm);
 			break;
 		case 7:
-			alarm.setAlarmBody("환불이 처리되었습니다.");
+			alarm.setAlarmBody(checkRefundAlarm);
 			break;
 		case 8:
-			alarm.setAlarmBody("판매등급이 조정되었습니다. 확인해주세요.");
+			alarm.setAlarmBody(changeSellerCodeAlarm);
 			break;	
 		default:
 			break;
 		}
 		
+		System.out.println(alarm.getAlarmBody());
 		alarmDao.insertAlarm(alarm);
 		
 	}

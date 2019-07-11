@@ -29,43 +29,43 @@ public class TranDaoImpl implements TranDao{
 	@Override
 	public void insertTran(Transaction transaction) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.insert("TranMapper.insertTran", transaction);
+		sqlSession.insert("TransactionMapper.insertTran", transaction);
 	}
 
 	@Override
 	public void updateDeliveryInfo(Transaction transaction) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.update("TranMapper.updateDeliveryInfo", transaction);
+		sqlSession.update("TransactionMapper.updateDeliveryInfo", transaction);
 	}
 
 	@Override
 	public void updateDeliveryAddr(Transaction transaction) {
 		// TODO Auto-generated method stub
-		sqlSession.update("TranMapper.updateDeliveryAddr", transaction);
+		sqlSession.update("TransactionMapper.updateDeliveryAddr", transaction);
 	}
 
 	@Override
 	public void updateTranCode(Transaction transaction) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.update("TranMapper.updateTranCode", transaction);
+		sqlSession.update("TransactionMapper.updateTranCode", transaction);
 	}
 
 	@Override
 	public Transaction selectTran(int tranNo) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("TranMapper.selectTran", tranNo);
+		return sqlSession.selectOne("TransactionMapper.selectTran", tranNo);
 	}
 
 	@Override
 	public List<Transaction> selectListTran(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("TranMapper.selectListTran", search);
+		return sqlSession.selectList("TransactionMapper.selectListTran", search);
 	}
 
 	@Override
 	public int selectTotalCount(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("TranMapper.selectTotalCount", search);
+		return sqlSession.selectOne("TransactionMapper.selectTotalCount", search);
 	}
 
 }
