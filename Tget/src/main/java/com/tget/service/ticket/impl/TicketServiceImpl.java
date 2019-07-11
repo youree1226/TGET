@@ -52,6 +52,8 @@ public class TicketServiceImpl implements TicketService {
 		// TODO Auto-generated method stub
 		return ticketDao.selectTicket(ticketNo);
 	}
+	
+	
 
 	@Override
 	public Map<String, Object> getTicketList(Search search) throws Exception {
@@ -79,6 +81,19 @@ public class TicketServiceImpl implements TicketService {
 			sellProb.setSellprob(2);
 		}	
 			
+		return sellProb;
+	}
+
+	@Override
+	public SellProb getTicketPrice(String eventId) throws Exception {
+		// TODO Auto-generated method stub
+		
+		Search search = new Search();
+		search.setSearchCondition("0");
+		search.setSearchKeyword(eventId);
+				
+		SellProb sellProb = ticketDao.selectSellProb(search);
+		
 		return sellProb;
 	}
 

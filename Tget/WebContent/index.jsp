@@ -5,12 +5,6 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!-- ///////////////////////////// 로그인시 Forward  /////////////////////////////////////// -->
- <c:if test="${ ! empty user }">
- 	<jsp:forward page="main.jsp"/>
- </c:if>
- <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
 
 <!DOCTYPE html>
 
@@ -33,7 +27,13 @@
    	
    	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
-		
+		$( function(){
+			
+			$("a:contains('티켓판매')").on("click",function(){
+				self.location = "/ticket/addTicketInfo?eventId=testId";
+			});
+			
+		});
 		
 		
 	</script>	
@@ -46,22 +46,25 @@
 	<div class="navbar  navbar-default">
 		
         <div class="container">
-        
-        	<a class="navbar-brand" href="#">T-GET</a>
+        	
+        	<a class="navbar-brand" href="#"><img src="/resources/images/logo.png" width="100" height="50"></img></a>
 			
-			<!-- toolBar Button Start //////////////////////// -->
-			<div class="navbar-header">
-			    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#target">
-			        <span class="sr-only">Toggle navigation</span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			    </button>
-			</div>
-			<!-- toolBar Button End //////////////////////// -->
 			
-			<div class="collapse navbar-collapse"  id="target">
+			<div class="collapse navbar-collapse"  id="target" >
 	             <ul class="nav navbar-nav navbar-right">
+	            
+	            <li class="dropdown">
+		        <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		           <span >티켓</span>
+		           <span class="caret"></span>
+		        </a>
+		        <ul class="dropdown-menu">
+		           <li><a href="#">티켓구매</a></li>
+		           <li><a href="#">티켓판매</a></li>
+		           <li><a href="#">티켓목록</a></li>
+		           <li class="divider"></li>
+		        </ul>
+		    	</li>
 	                 <li><a href="#">회원가입</a></li>
 	                 <li><a href="#">로 그 인</a></li>
 	                 <li><a href="#">채팅</a></li>

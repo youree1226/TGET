@@ -6,7 +6,7 @@ public class SellProb {
 	private int avgPrice;
 	private int lowPrice;
 	private int totalCount;
-	private int sellprob;
+	private int sellProb;
 		
 	public SellProb() {
 		// TODO Auto-generated constructor stub
@@ -46,11 +46,11 @@ public class SellProb {
 	}
 
 	public int getSellprob() {
-		return sellprob;
+		return sellProb;
 	}
 
 	public void setSellprob(int sellprob) {
-		this.sellprob = sellprob;
+		this.sellProb = sellprob;
 	}
 	
 	public int getAvgPrice() {
@@ -64,7 +64,7 @@ public class SellProb {
 	@Override
 	public String toString() {
 		return "SellProb [highPrice=" + highPrice + ", avgPrice=" + avgPrice + ", lowPrice=" + lowPrice
-				+ ", totalCount=" + totalCount + ", sellprob=" + sellprob + "]";
+				+ ", totalCount=" + totalCount + ", sellprob=" + sellProb + "]";
 	}
 	
 	

@@ -25,5 +25,5 @@ public interface TicketService {
 	
 	public SellProb getTicketSellProb(Search search, int price) throws Exception;
 		
-	
+	public SellProb getTicketPrice(String eventId) throws Exception;
 }
