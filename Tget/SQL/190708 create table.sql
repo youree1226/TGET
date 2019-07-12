@@ -12,10 +12,19 @@ CREATE SEQUENCE seq_transaction_tran_no			INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_point_history_no 			INCREMENT BY 1 START WITH 10000;
 
 
+
+CREATE TABLE category_two(
+	category_two_no		NUMBER(5) 	NOT NULL,
+	category_one_code	CHAR(1) 		NOT NULL,
+	category_two_name	 VARCHAR2(30) 	NOT NULL UNIQUE,
+	category_two_eng		VARCHAR2(30) 	NOT NULL UNIQUE,
+	PRIMARY KEY(category_two_no)
+);
+
 CREATE TABLE event(
 	event_id		VARCHAR2(10) 	NOT NULL,
 	view_count	NUMBER(10) 	DEFAULT 1,
-	category_two_no	NUMBER(10) 	NOT NULL,
+	category_two_eng	VARCHAR2(30) 	NOT NULL REFERENCES category_two(category_two_eng),
 	event_image	VARCHAR2(100),
 	event_name	VARCHAR2(10) 	NOT NULL,
 	event_location	VARCHAR2(50) 	NOT NULL,
@@ -38,14 +47,6 @@ CREATE TABLE youtube(
 	youtube_id	VARCHAR2(10) 	NOT NULL,
 	event_name	VARCHAR2(10) 	NOT NULL,
 	PRIMARY KEY(youtube_no)
-);
-
-CREATE TABLE category_two(
-	category_two_no		NUMBER(5) 	NOT NULL,
-	category_one_code	CHAR(1) 		NOT NULL,
-	category_two_name	VARCHAR2(20) 	NOT NULL,
-	category_two_eng		VARCHAR2(20) 	NOT NULL,
-	PRIMARY KEY(category_two_no)
 );
 
 CREATE TABLE users(
@@ -126,7 +127,7 @@ CREATE TABLE user_Interested(
 	Interested_category_no	NUMBER(5) 	NOT NULL,
 	user_id			VARCHAR2(30) 	NOT NULL 	REFERENCES users(user_id),
 	event_id			VARCHAR2(10) 	NOT NULL 	REFERENCES event(event_id),
-	category_two_no		NUMBER(10) 	NOT NULL 	REFERENCES category_two(category_two_no),
+	category_two_eng		VARCHAR2(30) 	NOT NULL 	REFERENCES category_two(category_two_eng),
 	PRIMARY KEY (Interested_category_no)
 );
 
@@ -213,21 +214,20 @@ INSERT INTO users VALUES ('seller','판매자','1111','01000000000','판매자얌','서�
 
 
 INSERT INTO category_two VALUES (seq_category_two_no.nextval,'0','콘서트','concert'); 
-INSERT INTO category_two VALUES (seq_category_two_no.nextval,'0','뮤지컬','musicals');
-INSERT INTO category_two VALUES (seq_category_two_no.nextval,'0','오페라','opera');
+INSERT INTO category_two VALUES (seq_category_two_no.nextval,'0','페스티벌','festival');
 INSERT INTO category_two VALUES (seq_category_two_no.nextval,'1','축구','soccer');
 INSERT INTO category_two VALUES (seq_category_two_no.nextval,'1','야구','baseball'); 
 INSERT INTO category_two VALUES (seq_category_two_no.nextval,'1','골프','golf');
-INSERT INTO category_two VALUES (seq_category_two_no.nextval,'2','댄스','dance');
-INSERT INTO category_two VALUES (seq_category_two_no.nextval,'2','페스티벌','festival');
+INSERT INTO category_two VALUES (seq_category_two_no.nextval,'2','뮤지컬','musicals');
+INSERT INTO category_two VALUES (seq_category_two_no.nextval,'2','클래식/오페라','opera');
 
 
-INSERT INTO event	VALUES ('104175821',120408,10000,NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/19', 'YYYY/MM/DD'),'2000'); 
-INSERT INTO event	VALUES ('104175823',120408,10000,NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/20', 'YYYY/MM/DD'),'1800'); 
-INSERT INTO event	VALUES ('104175819',120408,10000,NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/21', 'YYYY/MM/DD'),'1600'); 
-INSERT INTO event	VALUES ('104175345',120408,10000,NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/26', 'YYYY/MM/DD'),'2000'); 
-INSERT INTO event	VALUES ('104175822',120408,10000,NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/27', 'YYYY/MM/DD'),'1800'); 
-INSERT INTO event	VALUES ('104175824',120408,10000,NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/28', 'YYYY/MM/DD'),'1600'); 
+INSERT INTO event	VALUES ('104175821',120408,'concert',NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/19', 'YYYY/MM/DD'),'2000'); 
+INSERT INTO event	VALUES ('104175823',120408,'concert',NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/20', 'YYYY/MM/DD'),'1800'); 
+INSERT INTO event	VALUES ('104175819',120408,'concert',NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/21', 'YYYY/MM/DD'),'1600'); 
+INSERT INTO event	VALUES ('104175345',120408,'concert',NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/26', 'YYYY/MM/DD'),'2000'); 
+INSERT INTO event	VALUES ('104175822',120408,'concert',NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/27', 'YYYY/MM/DD'),'1800'); 
+INSERT INTO event	VALUES ('104175824',120408,'concert',NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/28', 'YYYY/MM/DD'),'1600'); 
 
 INSERT INTO ticket VALUES (seq_ticket_ticket_no.nextval,'104175823',100 ,'seller',200000,'1','1','스탠딩37번','알콜프리존', sysdate , 'aaa.png','1', null , null ); 
 INSERT INTO ticket VALUES (seq_ticket_ticket_no.nextval,'104175822',100 ,'seller',200000,'1','1','스탠딩38번','알콜프리존', sysdate , 'aaa.png','1', null , null ); 
