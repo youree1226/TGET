@@ -51,8 +51,8 @@ public class CommuityController {
 		//@Value("#{commonProperties['pageSize'] ?: 2}")
 		int pageSize;
 		
-		@Value("#{commonProperties['fileroot']}")
-		String fileroot;
+		//@Value("#{commonProperties['fileroot']}")
+		//String fileroot;
 		
 		
 		
@@ -61,33 +61,33 @@ public class CommuityController {
 
 			System.out.println("content/addContent: GET");
 			
-			return "forward:/community.addContent.jsp";
+			return "forward:/community/addContent.jsp";
 		}
 		
 		@RequestMapping(value="addContent", method=RequestMethod.POST)
-		public String addContent( @ModelAttribute("content") Content content, @RequestParam("file") MultipartFile file) throws Exception {
-
+		public String addContent( @ModelAttribute("content") Content content) throws Exception {
+			//, @RequestParam("file") MultipartFile file
 			System.out.println("content/addContent: POST");
 			//Business Logic
 			//String fileName = file.getOriginalFilename();
 			
 			//File f = new File(fileroot, fileName);
-			String originFileName =  file.getOriginalFilename();
+			//String originFileName =  file.getOriginalFilename();
 					
-			String uploadFile = System.currentTimeMillis()+ originFileName;
-			String safeFile = fileroot + uploadFile;
-			
-			try {
-				file.transferTo(new File(fileroot , uploadFile ));
-				
-			} catch(IOException e) {
-				e.printStackTrace();
-			}
-			
-			content.setFileName(uploadFile);
+			//String uploadFile = System.currentTimeMillis()+ originFileName;
+//			String safeFile = fileroot + uploadFile;
+//			
+//			try {
+//				file.transferTo(new File(fileroot , uploadFile ));
+//				
+//			} catch(IOException e) {
+//				e.printStackTrace();
+//			}
+//			
+//			content.setFileName(uploadFile);
 			communityService.addContent(content);
 			
-			return "forward:/community/getContentList.jsp";
+			return "forward:/community/getContentList";
 		}
 		
 		@RequestMapping(value="addReport", method=RequestMethod.GET)
@@ -109,7 +109,7 @@ public class CommuityController {
 			report.getBlackId();
 			//userService.addBlacklist();
 
-			return "forward:/community/addBlackList.jsp";
+			return "forward:/community/addBlackList";
 		}
 		
 		@RequestMapping(value="addReply", method=RequestMethod.GET)
@@ -130,35 +130,42 @@ public class CommuityController {
 			return "forward:/community/addReply.jsp";
 		}
 		
-		@RequestMapping(value="getContent")// View의 요청 경로 지정
-		public String getContent( @RequestParam("contentNo") int contentNo , @RequestParam("menu") String menu, Model model) throws Exception {
+		@RequestMapping(value="getContent" , method= RequestMethod.GET)// View의 요청 경로 지정 
+		public String getContent( @RequestParam("contentNo") int contentNo , Model model) throws Exception {
 			
 			System.out.println("/community/getContent: GET");
 			
-			Content contnet = communityService.getContent(contentNo);
+			Content content = communityService.getContent(contentNo);
 
 			//Model객체를 이용해서 View로 데이터 전달
-			model.addAttribute("contentNo", contentNo);
+			model.addAttribute("content", content);
 			//System.out.println("menu : "+menu);
 			
-//			if (menu.equals("manage")) {
-//			
-//				return "forward:/product/updateProduct.jsp?menu=manage";
-//			}
-				return "forward:/community/getContent.jsp?menu=search"; //search로 할지 manage할지 뭐 선택하는 사람이 되기
+			return "forward:/community/getContent.jsp";
 		}
 	
-		@RequestMapping(value="updateContent", method=RequestMethod.POST)
-		public String updateContent( @ModelAttribute("content") Content content  , Model model) throws Exception{
+		@RequestMapping(value="updateContent" , method= RequestMethod.GET)
+		public String updateContent( @RequestParam("contentNo") int contentNo , Model model) throws Exception{
 
 			System.out.println("/community/updateContent: POST");
-			//Business Logic
+			//Business Logic			
 			
-			communityService.updateContent(content);
 			
-			model.addAttribute("content", content);
+			model.addAttribute("content", communityService.getContent(contentNo));
 			
-			return "forward:/content/getContent.jsp?menu=manage";
+			return "forward:/community/updateContent.jsp";
+		}
+		
+		@RequestMapping(value="updateContent" , method= RequestMethod.POST)
+		public String updateContent( @ModelAttribute("content") Content content , Model model) throws Exception{
+
+			System.out.println("/community/updateContent: POST");
+			//Business Logic			
+			
+			
+			//model.addAttribute("content", communityService.getContent(contentNo));
+			
+			return "forward:/community/updateContent.jsp";
 		}
 		
 		@RequestMapping(value="updateReply", method=RequestMethod.POST)

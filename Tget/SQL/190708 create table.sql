@@ -80,7 +80,7 @@ CREATE TABLE content(
 	user_id 		VARCHAR2(30) 	NOT NULL 	REFERENCES users(user_id),
 	user_nickname 	VARCHAR2(20) 	NOT NULL,
 	content_name 	VARCHAR2(30) 	NOT NULL,
-	content_body 	CLOB 		NOT NULL,
+	content_body 	VARCHAR2(4000) 		NOT NULL,
 	file_name 	VARCHAR2(100),
 	video_name 	VARCHAR2(100),
 	reg_date 		DATE 		NOT NULL,
