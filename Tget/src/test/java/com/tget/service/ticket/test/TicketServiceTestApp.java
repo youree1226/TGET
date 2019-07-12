@@ -1,5 +1,7 @@
 package com.tget.service.ticket.test;
 
+import java.text.SimpleDateFormat;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
