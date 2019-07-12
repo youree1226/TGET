@@ -9,7 +9,7 @@ public class Content {
 		//Field
 		private int contentNo;
 		private String userId;
-		private String userNickName;
+		private String userNickname;
 		private String contentName;
 		private String contentBody;
 		private String videoName;
@@ -37,10 +37,10 @@ public class Content {
 			this.userId = userId;
 		}
 		public String getUserNickName() {
-			return userNickName;
+			return userNickname;
 		}
 		public void setUserNickName(String userNickName) {
-			this.userNickName = userNickName;
+			this.userNickname = userNickName;
 		}
 		public String getContentName() {
 			return contentName;
@@ -122,7 +122,7 @@ public class Content {
 		}
 		@Override
 		public String toString() {
-			return "Content [contentNo=" + contentNo + ", userId=" + userId + ", userNickName=" + userNickName
+			return "Content [contentNo=" + contentNo + ", userId=" + userId + ", userNickName=" + userNickname
 					+ ", contentName=" + contentName + ", contentBody=" + contentBody + ", videoName=" + videoName
 					+ ", fileName=" + fileName + ", regDate=" + regDate + ", viewCount=" + viewCount + ", boardCode="
 					+ boardCode + ", contentCode=" + contentCode + ", goodCount=" + goodCount + ", badCount=" + badCount

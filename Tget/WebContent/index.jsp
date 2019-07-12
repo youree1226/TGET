@@ -35,6 +35,13 @@
 			
 		});
 		
+		$( function(){
+			
+			$("a:contains('공지 게시판')").on("click", function(){
+				self.location="/community/getContentList"
+			});
+		});
+		
 		
 	</script>	
 	
@@ -64,6 +71,19 @@
 		           <li><a href="#">티켓목록</a></li>
 		           <li class="divider"></li>
 		        </ul>
+		        
+		        <li class="dropdown">
+		        <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		           <span >게시판</span>
+		           <span class="caret"></span>
+		        </a>
+		        <ul class="dropdown-menu">
+		           <li><a href="#">공지 게시판</a></li>
+		           <li><a href="#">자유 게시판</a></li>
+		           <!-- <li><a href="#">티켓목록</a></li> -->
+		           <li class="divider"></li>
+		        </ul>
+		        
 		    	</li>
 	                 <li><a href="#">회원가입</a></li>
 	                 <li><a href="#">로 그 인</a></li>

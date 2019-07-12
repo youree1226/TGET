@@ -62,11 +62,16 @@
 		
 		//============= userId 에 회원정보보기  Event  처리(Click) =============	
 		 $(function() {
-		
+			
+			 $( "button.btn.btn-danger:contains('등록')" ).on("click" , function() {
+					self.location="/community/addContent"	
+				});
+				
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "td:nth-child(2)" ).on("click" , function() {
-				 self.location ="/user/getUser?userId="+$(this).text().trim();
+				self.location ="/community/getContent?contentNo="+$(this).children('#contentNo').text().trim();
 			});
+			
 						
 			//==> userId LINK Event End User 에게 보일수 있도록 
 			$( "td:nth-child(2)" ).css("color" , "black");
@@ -85,18 +90,8 @@
 				};
 				$(this).css(style);
 			});
-			//==> 아래와 같이 정의한 이유는 ??
-			//$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "yellow");//whitesmoke
-		});	
-		
-		
-		//============= userId 에 회원정보보기  Event  처리 (double Click)=============
-		 
-			
-			
-			//==> 아래와 같이 정의한 이유는 ??
-			//$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "yellow");//whitesmoke
-		});	
+	
+	});	
 	
 	</script>
 	
@@ -112,7 +107,7 @@
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>게시글 목록조회</h3>
+	       <h3>게시글 목록 조회</h3>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -126,6 +121,8 @@
 		    
 		    <div class="col-md-6 text-right">
 			    <form class="form-inline" name="detailForm">
+			    
+			    <button type="button" class="btn btn-danger">등록</button>
 			    
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" >
@@ -169,25 +166,19 @@
 		<tbody>
 		
 		  <c:set var="i" value="0" />
-		  <c:forEach var="product" items="${list}">
+		  <c:forEach var="content" items="${list}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td align="center">${ i }</td>
-			  <td align="left" > ${content.contentNo}</td>
-			  <!-- <div id="prodNo" style="display:none;">${product.prodNo}</div> -->
-			  
-			  <td align="left">${content.contentName}</td>
+			  <td align="left">${content.contentName}
+			  <div id="contentNo" style="display:none;">${content.contentNo}</div></td>
 			  <td align="left">${content.contentBody}</td>
 			  <td align="left">${content.userId}</td>
+			  <!-- <div id="userId" style="display:none;">${content.userId}</div></td> -->
 			  <td align="left">${content.regDate}</td>
 			  <!-- <span class="glyphicon glyphicon-search" id="${content.userId}"></span>
 			  </td> --> 
-			<td></td>
-			<td align="left">
-			<c:if test="${param.menu eq 'manage'}">
-			<input type="button" class="btn btn-warning" value="수정">
-			</c:if>
-			</td>
+			  
 			</tr>
           <tr>
 		</tr>

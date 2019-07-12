@@ -12,7 +12,7 @@
 		<result property="userId"			column="user_id" 			jdbcType="VARCHAR" />
 		<result property="userNickName" 	column="user_nickname" 		jdbcType="VARCHAR" />
 		<result property="contentName" 		column="content_name" 		jdbcType="VARCHAR" />
-		<result property="contentBody" 		column="content_body" 		jdbcType="CLOB"	/>
+		<result property="contentBody" 		column="content_body" 		jdbcType="VARCHAR"	/>
 		<result property="videoName" 		column="video_name" 		jdbcType="VARCHAR" />
 		<result property="fileName" 		column="file_name" 			jdbcType="VARCHAR" />
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
@@ -55,10 +55,10 @@
 	 	<!-- <selectKey keyProperty="contentNo" resultType="int" order="BEFORE">
 	 			SELECT seq_content_content_no.nextval FROM DUAL  currval 
 		</selectKey> -->
-	 	INSERT
+	 	INSERT <!-- NVL(#{contentBody:VARCHAR}, empty_clob()) -->
 		INTO content 
 		VALUES	 (	seq_content_content_no.nextval , #{userId} , #{userNickName} , #{contentName} 
-		, NVL(#{contentBody:VARCHAR}, empty_clob()) , #{fileName:VARCHAR} , #{videoName:VARCHAR} 
+		, #{contentBody} , #{fileName:VARCHAR} , #{videoName:VARCHAR} 
 		, SYSDATE, 0, #{boardCode}, #{contentCode}, #{open}, 0, 0, #{refundTranNo}, #{refundCheck:CHAR} )
 					
 	 </insert>
@@ -83,7 +83,7 @@
 	<!-- SQL : SELECT ONE -->
 	 <select 	id="selectContent"	parameterType="content"	resultMap="contentSelectMap">
 		SELECT
-		content_no , user_id, user_nickname, content_name, empty_clob(), file_name, video_name, SYSDATE, view_count,
+		content_no , user_id, user_nickname, content_name, content_body, file_name, video_name, SYSDATE, view_count,
 		board_code, content_code, open, good_count, bad_count, refund_tran_no, refund_check  		
 		FROM content 
 		WHERE content_no = #{value}
@@ -94,7 +94,7 @@
 	   	UPDATE content
 	   	<set>
 			content_name	= #{contentName},
-			content_Body = empty_clob(),
+			content_Body = #{contentBody},
 			file_name	= #{fileName},
 			video_name = #{videoName}
 	   	</set>
@@ -113,8 +113,8 @@
 	 	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	
-	  									SELECT content_no, user_id, user_nickname
-	  										, content_name, empty_clob() , file_name
+	  									SELECT content_no, user_id, user_nickName
+	  										, content_name, content_body , file_name
 	  										, video_name , SYSDATE , view_count, board_code
 	  										, content_code , open , good_count , bad_count
 	  										, refund_tran_no, refund_check
@@ -136,8 +136,8 @@
 	 
 	 <select  id="selectTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  					FROM(			SELECT content_no, user_id, user_nickname
-	  										, content_name, empty_clob() , file_name
+	  					FROM(			SELECT content_no, user_id, user_nickName
+	  										, content_name, content_body , file_name
 	  										, video_name , SYSDATE , view_count, board_code
 	  										, content_code , open , good_count , bad_count
 	  										, refund_tran_no, refund_check
