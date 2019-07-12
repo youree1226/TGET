@@ -39,7 +39,31 @@
 			
 			
 		});
+		$( function() {
+			//==> 추가된부분 : "addUser"  Event 연결
+			$("a[href='#' ]:contains('회원가입')").on("click" , function() {
+				self.location = "/Tget/user/addUser"
+			});
+		});
+		$( function() {
+			//==> 추가된부분 : "addUser"  Event 연결
+			$("a[href='#' ]:contains('로 그 인')").on("click" , function() {
+				self.location = "/Tget/user/login"
+			});
+		});
 		
+		$( function() {
+			//==> 추가된부분 : "addUser"  Event 연결
+			$("a[href='#' ]:contains('블랙리스트관리')").on("click" , function() {
+				self.location = "/Tget/user/listUser"
+			});
+		});
+		$( function(){
+			
+			$("a:contains('공지 게시판')").on("click", function(){
+				self.location="/community/getContentList"
+			});
+		});
 		
 	</script>	
 	
@@ -59,20 +83,37 @@
 	            <ul class="nav navbar-nav navbar-right">
 	            <li><a href="#">이벤트검색</a></li>
 	            <li class="dropdown">
-			        <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-			           <span >티켓</span>
-			           <span class="caret"></span>
-			        </a>
-			        <ul class="dropdown-menu">
-			           <li><a href="#">티켓구매</a></li>
-			           <li><a href="#">티켓판매</a></li>
-			           <li><a href="#">티켓목록</a></li>
-			           <li class="divider"></li>
-			        </ul>
+		        <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		           <span >티켓</span>
+		           <span class="caret"></span>
+		        </a>
+		        <ul class="dropdown-menu">
+		           <li><a href="#">티켓구매</a></li>
+		           <li><a href="#">티켓판매</a></li>
+		           <li><a href="#">티켓목록</a></li>
+		           <li class="divider"></li>
+		        </ul>
+		    	   <li class="dropdown">
+		        <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		           <span >게시판</span>
+		           <span class="caret"></span>
+		        </a>
+		        <ul class="dropdown-menu">
+		           <li><a href="#">공지 게시판</a></li>
+		           <li><a href="#">자유 게시판</a></li>
+		           <!-- <li><a href="#">티켓목록</a></li> -->
+		           <li class="divider"></li>
+		        </ul>
 		    	</li>
 	             <li><a href="#">회원가입</a></li>
 	             <li><a href="#">로 그 인</a></li>
 	             <li><a href="#">채팅</a></li>
+	           	</ul>
+	           	</li>
+		    		 <li><a href="#">블랙리스트관리</a></li>
+	                 <li><a href="#">회원가입</a></li>
+	                 <li><a href="#">로 그 인</a></li>
+	                 <li><a href="#">채팅</a></li>
 	           	</ul>
 	       </div>
    		
