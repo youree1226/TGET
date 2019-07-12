@@ -166,7 +166,7 @@ public class EventServiceTest {
 		public void addCategoryTwo() throws Exception {
 					
 			Category category = new Category();
-			category.setCategoryOneCode('0');
+			category.setCategoryOneCode("0");
 			category.setCategoryTwoName("오페라");
 			category.setCategoryTwoEng("opera");
 			eventService.addCategoryTwo(category);			
@@ -182,7 +182,7 @@ public class EventServiceTest {
 		//@Test
 		public void updateCategoryTwo() throws Exception {
 			Category category = new Category();
-			category.setCategoryOneCode('0');
+			category.setCategoryOneCode("0");
 			category.setCategoryTwoName("뮤지컬");
 			category.setCategoryTwoEng("musical");
 			category.setCategoryTwoNo(10001);
