@@ -43,11 +43,16 @@
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
+		
+	function button1_click() {
+		alert("버튼1을 누르셨습니다.");
+		$("form").attr("method" , "POST").attr("action" , "/Tget/user/addblacklist").submit();
+	}
 	
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
 		function fncGetUserList(currentPage) {
 			$("#currentPage").val(currentPage)
-			$("form").attr("method" , "POST").attr("action" , "/community/getContentList").submit();
+			$("form").attr("method" , "POST").attr("action" , "/user/listUser").submit();
 		}
 		
 		
@@ -61,53 +66,72 @@
 		
 		
 		//============= userId 에 회원정보보기  Event  처리(Click) =============	
-		 $(function() {
-			
-			 $( "button.btn.btn-danger:contains('등록')" ).on("click" , function() {
-					self.location="/community/addContent"	
-				});
-				
+		/*  $(function() {
+		
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "td:nth-child(2)" ).on("click" , function() {
-				self.location ="/community/getContent?contentNo="+$(this).children('#contentNo').text().trim();
+				 self.location ="/user/getUser?userId="+$(this).text().trim();
 			});
-			
 						
 			//==> userId LINK Event End User 에게 보일수 있도록 
-			$( "td:nth-child(2)" ).css("color" , "black");
+			$( "td:nth-child(2)" ).css("color" , "red");
+			
+		});	
+		 */
+		
+		//============= userId 에 회원정보보기  Event  처리 (double Click)=============
+		/*  $(function() {
+			 
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$(  "td:nth-child(5) > i" ).on("click" , function() {
+
+					var userId = $(this).next().val();
+				
+					$.ajax( 
+							{
+								url : "/user/json/getUser/"+userId ,
+								method : "GET" ,
+								dataType : "json" ,
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								success : function(JSONData , status) {
+
+									var displayValue = "<h6>"
+																+"아이디 : "+JSONData.userId+"<br/>"
+																+"이  름 : "+JSONData.userName+"<br/>"
+																+"이메일 : "+JSONData.email+"<br/>"
+																+"ROLE : "+JSONData.role+"<br/>"
+																+"등록일 : "+JSONData.regDate+"<br/>"
+																+"</h6>";
+									$("h6").remove();
+									$( "#"+userId+"" ).html(displayValue);
+								}
+						});
+						////////////////////////////////////////////////////////////////////////////////////////////
+					
+			});
+			
+			//==> userId LINK Event End User 에게 보일수 있도록 
+			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
 			$("h7").css("color" , "red");
 			
-			$(".ct_list_pop:nth-child(n)").on("mouseenter", function(){
-				$(this).css({
-					"background-color":"#808080",
-					"font-weight":"bolder"
-				});
-			})
-			.on("mouseleave", function(){
-				var style = {
-						backgroundColor: "",//#ddd
-						fontWeight:""
-				};
-				$(this).css(style);
-			});
-	
-	});	
+			//==> 아래와 같이 정의한 이유는 ??
+			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
+		});	 */
 	
 	</script>
 	
 </head>
 
 <body>
-	
-	<!-- ToolBar Start /////////////////////////////////////-->
-	
-   	<!-- ToolBar End /////////////////////////////////////-->
-	
+
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>게시글 목록 조회</h3>
+	       <h3>블랙리스트</h3>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -122,12 +146,10 @@
 		    <div class="col-md-6 text-right">
 			    <form class="form-inline" name="detailForm">
 			    
-			    <button type="button" class="btn btn-danger">등록</button>
-			    
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" >
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>게시글 번호</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>게시글 명</option>
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>회원ID</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원명</option>
 					</select>
 				  </div>
 				  
@@ -155,10 +177,12 @@
         <thead>
           <tr>
             <th align="center">No</th>
-            <th align="left" >글 제목</th>
-            <th align="left">글 내용</th>
-            <th align="left">작성자</th>
-            <th align="left">작성일</th>
+            <th align="left" >회원 ID</th>
+            <th align="left">블랙리스트코드</th>
+            <th align="left">블랙리스트신고사유</th>
+            <th align="left">블랙리스트시작일</th>
+            <th align="left">블랙리스트종료일</th>
+            
             
           </tr>
         </thead>
@@ -166,28 +190,26 @@
 		<tbody>
 		
 		  <c:set var="i" value="0" />
-		  <c:forEach var="content" items="${list}">
+		  <c:forEach var="user" items="${list}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td align="center">${ i }</td>
-			  <td align="left">${content.contentName}
-			  <div id="contentNo" style="display:none;">${content.contentNo}</div></td>
-			  <td align="left">${content.contentBody}</td>
-			  <td align="left">${content.userId}</td>
-			  <!-- <div id="userId" style="display:none;">${content.userId}</div></td> -->
-			  <td align="left">${content.regDate}</td>
-			  <!-- <span class="glyphicon glyphicon-search" id="${content.userId}"></span>
-			  </td> --> 
-			  
+			  <td align="left"  title="Click : 회원정보 확인">${user.userId}</td>
+			  <td align="left">${user.blacklistCode}</td>
+			  <td align="left">신고사유?</td>
+			  <td align="left">${user.blacklistStartDate}</td>
+			  <td align="left">${user.blacklistEndDate}
+			  	<button type="button" id="button1" onclick="button1_click();" class="btn btn-default">확인</button>
+			  	<input type="hidden" value="${user.userId}">
+			
+			  </td>
+			
+			  	
 			</tr>
-          <tr>
-		</tr>
           </c:forEach>
-		
         </tbody>
       
       </table>
-      
 	  <!--  table End /////////////////////////////////////-->
 	  
  	</div>

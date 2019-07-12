@@ -43,7 +43,7 @@ CREATE TABLE youtube(
 CREATE TABLE category_two(
 	category_two_no		NUMBER(5) 	NOT NULL,
 	category_one_code	CHAR(1) 		NOT NULL,
-	category_two_name	VARCHAR2(10) 	NOT NULL,
+	category_two_name	VARCHAR2(20) 	NOT NULL,
 	category_two_eng		VARCHAR2(20) 	NOT NULL,
 	PRIMARY KEY(category_two_no)
 );
@@ -80,7 +80,7 @@ CREATE TABLE content(
 	user_id 		VARCHAR2(30) 	NOT NULL 	REFERENCES users(user_id),
 	user_nickname 	VARCHAR2(20) 	NOT NULL,
 	content_name 	VARCHAR2(30) 	NOT NULL,
-	content_body 	CLOB 		NOT NULL,
+	content_body 	VARCHAR2(4000) 		NOT NULL,
 	file_name 	VARCHAR2(100),
 	video_name 	VARCHAR2(100),
 	reg_date 		DATE 		NOT NULL,
@@ -213,11 +213,13 @@ INSERT INTO users VALUES ('seller','판매자','1111','01000000000','판매자얌','서�
 
 
 INSERT INTO category_two VALUES (seq_category_two_no.nextval,'0','콘서트','concert'); 
-INSERT INTO category_two VALUES (seq_category_two_no.nextval,'0','뮤지컬','musical');
-INSERT INTO category_two VALUES (seq_category_two_no.nextval,'1','야구','baseball'); 
+INSERT INTO category_two VALUES (seq_category_two_no.nextval,'0','뮤지컬','musicals');
+INSERT INTO category_two VALUES (seq_category_two_no.nextval,'0','오페라','opera');
 INSERT INTO category_two VALUES (seq_category_two_no.nextval,'1','축구','soccer');
+INSERT INTO category_two VALUES (seq_category_two_no.nextval,'1','야구','baseball'); 
+INSERT INTO category_two VALUES (seq_category_two_no.nextval,'1','골프','golf');
 INSERT INTO category_two VALUES (seq_category_two_no.nextval,'2','댄스','dance');
-INSERT INTO category_two VALUES (seq_category_two_no.nextval,'2','발레','ballet');
+INSERT INTO category_two VALUES (seq_category_two_no.nextval,'2','페스티벌','festival');
 
 
 INSERT INTO event	VALUES ('104175821',120408,10000,NULL,'EXO Seoul','Seoul Olympic Park Gymnastics Stadium (KSPO DOME)',to_date('2019/07/19', 'YYYY/MM/DD'),'2000'); 

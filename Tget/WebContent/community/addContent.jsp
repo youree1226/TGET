@@ -44,7 +44,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-primary" ).on("click" , function() {
 				alert("등록되었습니다.")
-				fncAddContent();
+				$("form").attr("method" , "POST").attr("action" , "/community/addContent").submit();
 			});
 		});	
 		
@@ -67,7 +67,7 @@
 	//var manuDate = document.detailForm.manuDate.value;
 	//var price = document.detailForm.price.value;
 	
-	var name= $("input[content='contentName']").val();
+	//var name= $("input[content='contentName']").val();
 	
 	
 	if(content == null || content.length<1){
@@ -102,8 +102,29 @@
 	    </div>
 	    
 	    <!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal" enctype="multipart/form-data">
-		
+		<form class="form-horizontal" >
+		<!-- enctype="multipart/form-data" -->
+		<div class="form-group">
+		    <label for="boardCode" class="col-sm-offset-1 col-sm-3 control-label">게시판 코드</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="boardCode" name="boardCode" value="${content.boardCode}">
+		      
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="contentCode" class="col-sm-offset-1 col-sm-3 control-label">게시글 코드</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="contentCode" name="contentCode" value="${content.contentCode}">  
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="open" class="col-sm-offset-1 col-sm-3 control-label">공개 여부</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="open" name="open" value="${content.open}">
+		      
+		    </div>
+		  </div>
 		<div class="form-group">
 		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">회원 아이디</label>
 		    <div class="col-sm-4">
@@ -113,9 +134,9 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="userNickname" class="col-sm-offset-1 col-sm-3 control-label">회원 닉네임</label>
+		    <label for="userNickName" class="col-sm-offset-1 col-sm-3 control-label">회원 닉네임</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userNickname" name="userNickname" value="${content.userNickname}">
+		      <input type="text" class="form-control" id="userNickName" name="userNickName" value="${content.userNickName}">
 		      
 		    </div>
 		  </div>
@@ -131,15 +152,15 @@
 		  <label for="contentBody" class="col-sm-offset-1 col-sm-3 control-label">글 내용</label>
 		  <hr>
 		
-		<textarea class="form-control" id="contentBody"></textarea>
+		<textarea class="form-control" id="contentBody" name="contentBody" value="${content.contentBody}"></textarea>
 		<script type="text/javascript">
 		CKEDITOR.replace('contentBody'
 				, {height: 200});
 		</script>
 					
-			<div class="custom-file">
+			<!-- <div class="custom-file">
 					&nbsp;<input type="file" class="form-control-file" id="exampleFormControlFile1">
-					</div>
+					</div> -->
 	
 			<br/>  
 		  

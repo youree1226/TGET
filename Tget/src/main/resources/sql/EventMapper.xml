@@ -201,14 +201,15 @@
 	 <select 	id="selectCategory"	parameterType="string"	resultMap="categorySelectMap">
 		 SELECT category_one_code, category_two_name, category_two_eng, category_two_no
 		 FROM category_two
-		 <if test="value != null" >WHERE category_two_eng = #{categoryTwoEng}</if>
+<!-- 		 WHERE category_two_eng = #{categoryTwoEng:NUMERIC} -->
+		 <if test="value != null and value != '' "  >WHERE category_two_eng = #{categoryTwoEng}</if>
 	 </select>
 	 
-	 <select 	id="selectCategoryCount"	 parameterType="string"	resultType="int">
+	 <select 	id="selectListCategoryCount"	resultType="int">
 		SELECT COUNT(*)
 	  	FROM( SELECT category_one_code,category_two_name,category_two_eng 
-		 				FROM category_two
-		 				<if test="categoryTwoEng != null" >WHERE category_two_eng = #{categoryTwoEng}</if>)  countTable	
+		 				FROM category_two  
+		 				ORDER BY category_two_no)  countTable	
 	 </select>
 	 
 	 <delete id="deleteCategoryTwo" parameterType="string">
