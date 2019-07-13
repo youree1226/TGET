@@ -1,3 +1,35 @@
+
+DROP TABLE point_history;
+DROP TABLE transaction;
+DROP TABLE ticket;
+DROP TABLE coupon;
+DROP TABLE alarm;
+DROP TABLE user_interested;
+DROP TABLE report;
+DROP TABLE reply;
+DROP TABLE image_file;
+DROP TABLE content;
+DROP TABLE users;
+DROP TABLE youtube;
+DROP TABLE recommended_event;
+DROP TABLE event;
+DROP TABLE category_two;
+
+
+DROP SEQUENCE seq_youtube_youtube_no 			INCREMENT BY 1 START WITH 10000;
+DROP SEQUENCE seq_category_two_no 			INCREMENT BY 1 START WITH 10000;
+DROP SEQUENCE seq_user_Interested_no			INCREMENT BY 1 START WITH 10000;
+DROP SEQUENCE seq_content_content_no			INCREMENT BY 1 START WITH 10000;
+DROP SEQUENCE seq_image_file_file_no			INCREMENT BY 1 START WITH 10000;
+DROP SEQUENCE seq_reply_reply_no 			INCREMENT BY 1 START WITH 10000;
+DROP SEQUENCE seq_report_report_no 			INCREMENT BY 1 START WITH 10000;
+DROP SEQUENCE seq_alarm_alarm_no			INCREMENT BY 1 START WITH 10000;
+DROP SEQUENCE seq_coupon_coupon_no			INCREMENT BY 1 START WITH 10000;
+DROP SEQUENCE seq_ticket_ticket_no			INCREMENT BY 1 START WITH 10000;
+DROP SEQUENCE seq_transaction_tran_no			INCREMENT BY 1 START WITH 10000;
+DROP SEQUENCE seq_point_history_no 			INCREMENT BY 1 START WITH 10000;
+
+
 CREATE SEQUENCE seq_youtube_youtube_no 			INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_category_two_no 			INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_user_Interested_no			INCREMENT BY 1 START WITH 10000;
@@ -10,8 +42,6 @@ CREATE SEQUENCE seq_coupon_coupon_no			INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_ticket_ticket_no			INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_transaction_tran_no			INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_point_history_no 			INCREMENT BY 1 START WITH 10000;
-
-
 
 CREATE TABLE category_two(
 	category_two_no		NUMBER(5) 	NOT NULL,

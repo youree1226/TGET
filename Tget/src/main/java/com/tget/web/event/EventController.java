@@ -130,18 +130,22 @@ public class EventController {
 				stubhubEvent.setCategoryTwoEng(category.toLowerCase());
 				eventService.addEvent(stubhubEvent);
 			}
+			eventListByName = eventService.getEventByName(eventName);
+		}else {
+			for (Event event : eventListByName) {
+				search.setSearchCondition("0");
+				search.setSearchKeyword(event.getEventId());
+				int ticketLowestPrice = ((SellProb)ticketService.getTicketList(search).get("sellProb")).getLowPrice();
+				event.setTicketLowestPrice(ticketLowestPrice);
+				event.setTotalTicketCount(((SellProb)ticketService.getTicketList(search).get("sellProb")).getTotalCount());
+			}			
 		}
 		
-		for (Event event : eventListByName) {
-			search.setSearchCondition("0");
-			search.setSearchKeyword(event.getEventId());
-			int ticketLowestPrice = ((SellProb)ticketService.getTicketList(search).get("sellProb")).getLowPrice();
-			event.setTicketLowestPrice(ticketLowestPrice);
-			event.setTotalTicketCount(((SellProb)ticketService.getTicketList(search).get("sellProb")).getTotalCount());
-		}
 		System.out.println(eventListByName);
 		
 		model.addAttribute("eventListByName", eventListByName);
+		model.addAttribute("totalResults", eventListByName.size());
+		model.addAttribute("eventName", eventName);
 		
 		return "forward:/event/getEvent.jsp";
 	}
