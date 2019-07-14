@@ -12,8 +12,8 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript">
-	
-	var events = [];
+	var str = "";
+	var arr = [];
 	$(function(){
 		$("#addEvent").on("click",function(){
 			alert("requestPageToken+1 : "+parseInt($("#requestPageToken").val())+1);
@@ -39,9 +39,14 @@
 		});		
 		
 		$("#getEvent").on("click",function(){
-
-// 			alert($(this).parent().children("input").val());
-			self.location = "/event/getEvent?category="+$(this).parent().children("input").val()+"&eventName="+$(this).val();
+// 			alert($(this).val());
+// 			str = $(this).parent().children("input").val();
+			arr = $(this).parent().children("input").val().split(' ');
+// 			alert(arr);
+// 			if (arr.length != null) {
+// 				alert(arr[arr.length-1]);
+// 			}	
+			self.location = "/event/getEvent?category="+arr[arr.length-1]+"&eventName="+$(this).val();
 // 			alert($(this).parent().children("input[type='hidden']").val());
 // 			self.location = "/event/getEvent?eventName="+$(this).parent().children("input[type='hidden']").val();
 		});		

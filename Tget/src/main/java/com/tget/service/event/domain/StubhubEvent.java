@@ -51,6 +51,9 @@ public class StubhubEvent {
 
 	///M
 	public String getId() {
+		if (id != null) {
+			return id.trim();
+		}
 		return id;
 	}
 	public void setId(String id) {
@@ -212,18 +215,14 @@ public class StubhubEvent {
 	}
 	public void setAncestors(Map<String, Object> ancestors) {
 		this.ancestors = ancestors;
-		String tempCategory = (String)((Map<String,Object>)(((List)ancestors.get("categories")).get(1))).get("name");
-		if (tempCategory != null) {
-			if (tempCategory.toLowerCase().equals("concert") && ((List)ancestors.get("categories")).size() <= 2) {
-				setAncestorsCategory(tempCategory);
-			} else {
-				tempCategory = (String)((Map<String,Object>)(((List)ancestors.get("categories")).get(2))).get("name");
-//				if(tempCategory.indexOf(" ") != -1) {
-//					String[] arr = tempCategory.split(" ");
-//					tempCategory = arr[arr.length].toLowerCase();				
-//				}
-				setAncestorsCategory(tempCategory);
-			}
+		int temp = ((List)ancestors.get("categories")).size();
+		List<Map<String,Object>> categoriesMap = ((List)ancestors.get("categories"));
+		//String tempCategory = (String)((Map<String,Object>)(((List)ancestors.get("categories")).get(1))).get("name");
+		
+		if (temp == 2) {
+			setAncestorsCategory((String)categoriesMap.get(1).get("name"));
+		} else if (temp >= 2){
+			setAncestorsCategory((String)categoriesMap.get(2).get("name"));
 		}
 //		setAncestorsCategory((String)((Map<String,Object>)(((List)ancestors.get("categories")).get(1))).get("name"));		
 	}
@@ -232,11 +231,6 @@ public class StubhubEvent {
 		this.ancestorsCategory = ancestorsCategory.toLowerCase();
 	}
 	public String getAncestorsCategory() {
-//		if(ancestorsCategory.indexOf(" ") != -1) {
-//			System.out.println("=====");
-//			String[] arr = ancestorsCategory.split(" ");
-//			return arr[arr.length].toLowerCase();				
-//		}
 		return ancestorsCategory;
 	}
 	public String getCurrencyCode() {

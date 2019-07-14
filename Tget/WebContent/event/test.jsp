@@ -16,7 +16,7 @@
 	$(function(){
 		
 		$("li").on("click",function(){
-			alert($(this).text());
+			//alert($(this).text());
 			$("#searchCondition").val("0");
 			 $.ajax(
 						{
