@@ -264,7 +264,8 @@ public class EventDaoImpl implements EventDao {
 			}
 		}else if(search.getSearchCondition().equals("2")) {
 			if (search.getSearchKeyword()!=null && search.getSearchKeyword()!="") {
-				url+="&name="+search.getSearchKeyword();
+//				url+="&name="+search.getSearchKeyword();
+				url+="&q="+search.getSearchKeyword();
 			}
 		}
 		
