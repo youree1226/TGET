@@ -1,6 +1,5 @@
 # T-GET 
 ### Ticket resale platform    
-![Alt text](/tgetmain.gif "Optional title")
 
 ## Stacks
 ### Client 
