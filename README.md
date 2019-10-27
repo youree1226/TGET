@@ -36,5 +36,4 @@ open api(REST) used in this project:
 
 ## Reference
 * 유튜브     
-         - [구현 영상](https://youtu.be/WkNdfJ11B2M)   
          - [발표 영상](https://www.youtube.com/watch?v=6gp4n4FbjIg)
